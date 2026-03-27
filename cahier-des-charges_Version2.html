@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cahier des Charges — UCAO-ORIENTATION</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:      #003087;
+      --blue-dark: #001f5b;
+      --blue-mid:  #00409a;
+      --gold:      #FFD700;
+      --gold-dark: #e6c200;
+      --white:     #ffffff;
+      --gray-bg:   #F5F7FA;
+      --gray-line: #DDE3ED;
+      --gray-text: #555e70;
+      --black:     #1a1e2e;
+      --green:     #1b7f45;
+      --red:       #c0392b;
+      --font-main: 'Segoe UI', 'Arial', sans-serif;
+      --radius:    8px;
+      --shadow:    0 2px 18px rgba(0,48,135,.10);
+    }
+    html { font-size: 15px; }
+    body { font-family: var(--font-main); background: var(--gray-bg); color: var(--black); line-height: 1.7; }
+
+    @media print {
+      body { background: #fff; font-size: 13px; }
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      .card { box-shadow: none !important; border: 1px solid #dde3ed !important; }
+      header, .section-badge, .tag, table thead { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    .container { max-width: 1050px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+      color: var(--white); padding: 0; position: relative; overflow: hidden;
+    }
+    header::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 340px; height: 340px; background: rgba(255,215,0,.07);
+      border-radius: 50%; transform: translate(100px, 100px);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 40px 48px 36px; flex-wrap: wrap; gap: 24px;
+    }
+    .header-logo { display: flex; align-items: center; gap: 18px; }
+    .logo-circle {
+      width: 72px; height: 72px; background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 22px; color: var(--blue-dark);
+      flex-shrink: 0; box-shadow: 0 4px 18px rgba(255,215,0,.35);
+    }
+    .header-logo-text h1 { font-size: 1.7rem; font-weight: 800; letter-spacing: .5px; }
+    .header-logo-text p { font-size: .88rem; color: rgba(255,255,255,.75); margin-top: 2px; }
+    .header-meta { text-align: right; font-size: .82rem; color: rgba(255,255,255,.70); }
+    .header-meta strong { display: block; font-size: 1rem; color: var(--gold); margin-bottom: 6px; }
+    .version-badge {
+      display: inline-block; background: var(--gold); color: var(--blue-dark);
+      padding: 3px 12px; border-radius: 20px; font-weight: 700; font-size: .80rem; margin-top: 6px;
+    }
+
+    .toc { background: var(--blue); padding: 0 48px; }
+    .toc-inner { display: flex; flex-wrap: wrap; gap: 0; padding: 0; }
+    .toc a {
+      color: rgba(255,255,255,.80); text-decoration: none; font-size: .80rem;
+      padding: 12px 14px; display: block; transition: background .2s, color .2s;
+      border-bottom: 3px solid transparent;
+    }
+    .toc a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+    .print-btn-bar {
+      text-align: right; padding: 16px 48px;
+      background: var(--white); border-bottom: 1px solid var(--gray-line);
+    }
+    .btn-print {
+      background: var(--blue); color: var(--white); border: none;
+      padding: 10px 28px; border-radius: 6px; font-size: .88rem;
+      cursor: pointer; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px; transition: background .2s;
+    }
+    .btn-print:hover { background: var(--blue-dark); }
+    .btn-print svg { width: 16px; height: 16px; fill: currentColor; }
+
+    main { padding: 40px 48px 60px; max-width: 1050px; margin: 0 auto; }
+
+    .section { margin-bottom: 50px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .section-badge {
+      background: var(--blue); color: var(--white); font-weight: 800;
+      font-size: .88rem; padding: 6px 14px; border-radius: 30px; white-space: nowrap;
+    }
+    .section-title {
+      font-size: 1.22rem; font-weight: 800; color: var(--blue-dark);
+      border-bottom: 3px solid var(--gold); padding-bottom: 6px; flex: 1;
+    }
+
+    .card {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 28px 32px; margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 1rem; font-weight: 700; color: var(--blue);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .card-title::before {
+      content: ''; display: inline-block; width: 4px; height: 18px;
+      background: var(--gold); border-radius: 2px;
+    }
+
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); }
+    table {
+      width: 100%; border-collapse: collapse; font-size: .88rem;
+      background: var(--white); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    thead tr { background: var(--blue); color: var(--white); }
+    thead th { padding: 12px 16px; text-align: left; font-weight: 700; font-size: .82rem; letter-spacing: .4px; }
+    tbody tr { border-bottom: 1px solid var(--gray-line); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(even) { background: #f0f4fb; }
+    tbody td { padding: 11px 16px; vertical-align: top; }
+    td strong { color: var(--blue-dark); }
+
+    pre {
+      background: #0d1b3e; color: #c9d6f5; border-radius: var(--radius);
+      padding: 22px 26px; font-size: .80rem; overflow-x: auto;
+      line-height: 1.65; box-shadow: var(--shadow);
+    }
+    code { font-family: 'Consolas', 'Courier New', monospace; }
+    .sql-comment { color: #5d8bc5; }
+    .sql-kw      { color: #63b3ed; font-weight: 700; }
+    .sql-type    { color: #f6ad55; }
+
+    .tree {
+      background: #0d1b3e; color: #c9d6f5; border-radius: var(--radius);
+      padding: 24px 28px; font-size: .80rem;
+      font-family: 'Consolas', 'Courier New', monospace;
+      line-height: 1.9; box-shadow: var(--shadow); overflow-x: auto;
+    }
+    .tree .folder  { color: #63b3ed; font-weight: 700; }
+    .tree .file    { color: #c9d6f5; }
+    .tree .comment { color: #5d8bc5; }
+    .tree .root    { color: var(--gold); font-weight: 900; font-size: .90rem; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tag { background: #e8eef8; color: var(--blue); padding: 4px 12px; border-radius: 20px; font-size: .78rem; font-weight: 600; }
+    .tag.gold  { background: #fff8cc; color: #8a6800; }
+    .tag.green { background: #e6f7ed; color: var(--green); }
+
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 6px; }
+    .info-item { background: #f0f4fb; border-left: 4px solid var(--blue); border-radius: 6px; padding: 14px 16px; }
+    .info-item label { font-size: .75rem; color: var(--gray-text); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; display: block; margin-bottom: 4px; }
+    .info-item span  { font-size: .92rem; font-weight: 700; color: var(--blue-dark); }
+
+    .box-info { background: #e8f0fe; border-left: 5px solid var(--blue); border-radius: 6px; padding: 16px 20px; margin: 12px 0; }
+    .box-warn { background: #fff8e1; border-left: 5px solid var(--gold-dark); border-radius: 6px; padding: 16px 20px; margin: 12px 0; }
+    .box-ok   { background: #e6f7ed; border-left: 5px solid var(--green); border-radius: 6px; padding: 16px 20px; margin: 12px 0; }
+
+    ul.checklist { list-style: none; padding: 0; }
+    ul.checklist li { padding: 5px 0; padding-left: 26px; position: relative; font-size: .90rem; }
+    ul.checklist li::before { content: '✅'; position: absolute; left: 0; }
+    ul.checklist.arrow li::before { content: '→'; color: var(--blue); font-weight: 900; }
+
+    .process-box {
+      background: var(--white); border: 2px solid var(--gray-line);
+      border-radius: var(--radius); padding: 20px 24px;
+      text-align: center; font-weight: 700; font-size: .88rem; color: var(--blue-dark);
+    }
+    .process-connector { text-align: center; color: var(--blue); font-size: 1.5rem; line-height: 1.2; margin: 4px 0; }
+
+    footer {
+      background: var(--blue-dark); color: rgba(255,255,255,.65);
+      text-align: center; padding: 22px; font-size: .80rem; margin-top: 20px;
+    }
+    footer strong { color: var(--gold); }
+
+    @media(max-width: 700px) {
+      .header-inner { padding: 24px 20px; }
+      main { padding: 24px 16px 40px; }
+      .toc, .print-btn-bar { padding: 12px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="logo-circle">UO</div>
+      <div class="header-logo-text">
+        <h1>UCAO-ORIENTATION</h1>
+        <p>Université Catholique de l'Afrique de l'Ouest — Plateforme d'orientation numérique</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <strong>📄 Cahier des Charges</strong>
+      Date : 24 Mars 2026<br>
+      Auteur : william1z2020<br>
+      Client : UCAO-UUC<br>
+      <span class="version-badge">Version 1.1 — Révisée</span>
+    </div>
+  </div>
+</header>
+
+<!-- TOC -->
+<nav class="toc no-print">
+  <div class="toc-inner">
+    <a href="#s1">1. Contexte</a>
+    <a href="#s2">2. Périmètre</a>
+    <a href="#s3">3. Pages</a>
+    <a href="#s4">4. Backend</a>
+    <a href="#s5">5. Technique</a>
+    <a href="#s6">6. Base de données</a>
+    <a href="#s7">7. Arborescence</a>
+    <a href="#s8">8. Charte graphique</a>
+    <a href="#s9">9. Rapport PDF</a>
+    <a href="#s10">10. Processus</a>
+    <a href="#s11">11. Livrables</a>
+    <a href="#s12">12. Planning</a>
+    <a href="#s13">13. Contraintes</a>
+  </div>
+</nav>
+
+<!-- PRINT BUTTON -->
+<div class="print-btn-bar no-print">
+  <button class="btn-print" onclick="window.print()">
+    <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+    Imprimer / Enregistrer en PDF
+  </button>
+</div>
+
+<main>
+
+  <!-- ===== 01 CONTEXTE ===== -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-badge">01</span>
+      <h2 class="section-title">Contexte &amp; Objectifs du Projet</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Fiche d'identification du projet</div>
+      <div class="info-grid">
+        <div class="info-item"><label>Nom du projet</label><span>UCAO-ORIENTATION</span></div>
+        <div class="info-item"><label>Type</label><span>Site web d'orientation universitaire</span></div>
+        <div class="info-item"><label>Client</label><span>UCAO-UUC</span></div>
+        <div class="info-item"><label>Date de rédaction</label><span>24 Mars 2026</span></div>
+        <div class="info-item"><label>Version</label><span>1.1 — Révisée</span></div>
+        <div class="info-item"><label>Auteur</label><span>william1z2020</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Contexte</div>
+      <p>L'UCAO (Université Catholique de l'Afrique de l'Ouest) souhaite se doter d'une plateforme numérique dédiée à <strong>l'orientation des étudiants</strong> — notamment les nouveaux bacheliers, les étudiants en réorientation et toute personne désirant s'inscrire pour la première fois à l'UCAO. Cette plateforme viendra <strong>digitaliser et personnaliser</strong> l'expérience d'orientation qui se fait actuellement de manière manuelle et peu structurée.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Objectifs principaux</div>
+      <ul class="checklist">
+        <li><strong>Présenter l'UCAO</strong> : ses filières, écoles, facultés et formations.</li>
+        <li><strong>Orienter les visiteurs</strong> : via un formulaire intelligent qui propose des filières adaptées au métier souhaité.</li>
+        <li><strong>Générer un rapport d'orientation personnalisé</strong> : envoyé par e-mail et téléchargeable en PDF.</li>
+        <li><strong>Collecter les préinscriptions</strong> : avec envoi automatique d'un e-mail de confirmation de réception.</li>
+        <li><strong>Administrer la plateforme</strong> : via un tableau de bord sécurisé réservé aux administrateurs.</li>
+        <li><strong>Améliorer la communication</strong> : en utilisant les données collectées pour cibler les futurs étudiants.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 02 PÉRIMÈTRE ===== -->
+  <div class="section page-break" id="s2">
+    <div class="section-header">
+      <span class="section-badge">02</span>
+      <h2 class="section-title">Périmètre Fonctionnel</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Pages Front-End (Visiteurs)</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Fichier</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>index.php</code></td><td>Page d'accueil avec slider de bienvenue</td></tr>
+            <tr><td><code>decouvrir-ucao.php</code></td><td>Vie estudiantine, activités extra-universitaires</td></tr>
+            <tr><td><code>nos-formations.php</code></td><td>Écoles, facultés et filières de l'UCAO</td></tr>
+            <tr><td><code>orientation.php</code></td><td>Formulaire d'orientation intelligent</td></tr>
+            <tr><td><code>preinscription.php</code></td><td>Formulaire de préinscription</td></tr>
+            <tr><td><code>a-propos.php</code></td><td>Présentation de l'UCAO et de la plateforme</td></tr>
+            <tr><td><code>contact.php</code></td><td>Formulaire de contact</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Modules Back-End (Administration)</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Module Admin</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tableau de bord</strong></td><td>Vue d'ensemble : statistiques, orientations récentes, préinscriptions récentes</td></tr>
+            <tr><td><strong>Gestion des orientations</strong></td><td>Liste complète + rapports PDF générés + réponses personnalisées</td></tr>
+            <tr><td><strong>Gestion des préinscriptions</strong></td><td>Liste complète des préinscrits avec toutes leurs informations + export PDF</td></tr>
+            <tr><td><strong>Notifications</strong></td><td>Envoi d'e-mails groupés ou ciblés aux visiteurs</td></tr>
+            <tr><td><strong>Filières / Métiers</strong></td><td>Gestion de la correspondance Métiers ↔ Filières</td></tr>
+            <tr><td><strong>Gestion des admins</strong></td><td>Ajout, modification, désactivation des comptes administrateurs</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 03 PAGES ===== -->
+  <div class="section page-break" id="s3">
+    <div class="section-header">
+      <span class="section-badge">03</span>
+      <h2 class="section-title">Description Détaillée des Pages</h2>
+    </div>
+
+    <!-- index.php -->
+    <div class="card">
+      <div class="card-title">Page d'Accueil — index.php</div>
+      <ul class="checklist arrow" style="margin-top:10px">
+        <li><strong>Header fixe</strong> : Logo UCAO, menu de navigation, bouton CTA "Je m'oriente"</li>
+        <li><strong>Slider Hero (5 slides)</strong> : Bienvenue / UCAO-UUC / Œuvres universitaires / UCAO-Tech / CTA inscription</li>
+        <li><strong>Section Chiffres clés</strong> : Nombre d'étudiants, filières, années d'existence, taux d'insertion</li>
+        <li><strong>Section "Pourquoi l'UCAO ?"</strong> : 3 à 4 arguments forts</li>
+        <li><strong>Section "Comment ça marche ?"</strong> : Processus d'orientation en 3 étapes</li>
+        <li><strong>Section Témoignages</strong> : Citations d'étudiants / anciens</li>
+        <li><strong>Footer</strong> : Liens rapides, contacts, réseaux sociaux, mentions légales</li>
+      </ul>
+    </div>
+
+    <!-- decouvrir-ucao.php -->
+    <div class="card">
+      <div class="card-title">Page Découvrir UCAO — decouvrir-ucao.php</div>
+      <ul class="checklist arrow" style="margin-top:10px">
+        <li>Présentation générale de l'UCAO et de ses valeurs (Foi, Science, Action)</li>
+        <li>Galerie photo / vidéo de la vie sur le campus</li>
+        <li>Activités sportives (football, basketball, arts martiaux…)</li>
+        <li>Clubs et associations étudiantes</li>
+        <li>Événements culturels et semaines thématiques</li>
+        <li>Œuvres universitaires (cantine, bibliothèque, hébergement, services médicaux)</li>
+        <li>Partenariats et échanges internationaux</li>
+      </ul>
+    </div>
+
+    <!-- nos-formations.php -->
+    <div class="card">
+      <div class="card-title">Page Nos Formations — nos-formations.php</div>
+      <p style="margin-bottom:12px">Structure en onglets ou accordéon par entité :</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>École / Faculté</th><th>Licences</th><th>Masters</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>EGEI</strong><br><small>École de Génie Électrique et Informatique</small></td>
+              <td>Électronique, Génie Télécoms et TIC, Informatique Industrielle, Électrotechnique</td>
+              <td>Automatique, Télécommunications, Informatique</td>
+            </tr>
+            <tr>
+              <td><strong>ESMEA</strong><br><small>École de Management et Économie Appliquée</small></td>
+              <td>Banques-Finances-Assurances, Audit-Comptabilité, RH, Marketing, Transport-Logistique</td>
+              <td>Audit, GRH, Marketing, Commerce International, Transport</td>
+            </tr>
+            <tr>
+              <td><strong>FSAE</strong><br><small>Faculté des Sciences de l'Agronomie et de l'Environnement</small></td>
+              <td>Agronomie, Gestion de l'Environnement, Ressources animales, Production végétale</td>
+              <td>Environnement, Gestion des ressources naturelles, Espace urbain</td>
+            </tr>
+            <tr>
+              <td><strong>FDE</strong><br><small>Faculté de Droit et d'Économie</small></td>
+              <td>Sciences Juridiques, Sciences Économiques</td>
+              <td>Droit privé fondamental, Droit public fondamental</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box-info" style="margin-top:14px">
+        Chaque fiche filière affiche : durée, niveau d'entrée, débouchés, compétences acquises et un bouton <strong>"Me faire orienter vers cette filière"</strong>.
+      </div>
+    </div>
+
+    <!-- orientation.php -->
+    <div class="card">
+      <div class="card-title">Page Orientation — orientation.php</div>
+      <p style="margin-bottom:12px"><strong>Formulaire d'orientation :</strong></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Champ</th><th>Type</th><th>Obligatoire</th><th>Condition</th></tr></thead>
+          <tbody>
+            <tr><td>Nom</td><td>Texte</td><td><span class="tag green">✅ Oui</span></td><td>—</td></tr>
+            <tr><td>Prénom</td><td>Texte</td><td><span class="tag green">✅ Oui</span></td><td>—</td></tr>
+            <tr><td>Adresse e-mail</td><td>E-mail</td><td><span class="tag green">✅ Oui</span></td><td>—</td></tr>
+            <tr><td>Numéro de téléphone</td><td>Téléphone</td><td><span class="tag green">✅ Oui</span></td><td>—</td></tr>
+            <tr><td>Série du baccalauréat</td><td>Liste déroulante</td><td><span class="tag green">✅ Oui</span></td><td>A, C, D, E, F, G…</td></tr>
+            <tr><td>Numéro de table (Bac)</td><td>Texte</td><td><span class="tag gold">⚡ Conditionnel</span></td><td>Activé uniquement pendant la période nouveaux bacheliers (paramètre admin)</td></tr>
+            <tr><td>Métier souhaité</td><td>Texte + Autocomplete</td><td><span class="tag green">✅ Oui</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box-ok" style="margin-top:14px">
+        <strong>Logique de traitement :</strong> Après soumission → analyse du métier → consultation de la base <code>metiers_filieres</code> → génération du rapport PDF → envoi par e-mail + téléchargement immédiat sur la page.
+      </div>
+    </div>
+
+    <!-- preinscription.php -->
+    <div class="card">
+      <div class="card-title">Page Préinscription — preinscription.php</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Champ</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td>Nom &amp; Prénom</td><td>Texte</td></tr>
+            <tr><td>Date de naissance</td><td>Date</td></tr>
+            <tr><td>Nationalité</td><td>Liste</td></tr>
+            <tr><td>Série du baccalauréat</td><td>Liste</td></tr>
+            <tr><td>Année d'obtention du Bac</td><td>Année</td></tr>
+            <tr><td>Établissement d'origine</td><td>Texte</td></tr>
+            <tr><td>Filière choisie</td><td>Liste dynamique (depuis DB)</td></tr>
+            <tr><td>Niveau d'entrée souhaité</td><td>Liste (Licence 1, Licence 2…)</td></tr>
+            <tr><td>Documents joints</td><td>Fichier (Relevé de notes, Bac, Pièce d'identité)</td></tr>
+            <tr><td>E-mail</td><td>E-mail</td></tr>
+            <tr><td>Téléphone</td><td>Téléphone</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box-ok" style="margin-top:14px">
+        <strong>Après soumission :</strong> Envoi automatique d'un <strong>e-mail de confirmation de réception</strong> indiquant que la préinscription a bien été reçue et que l'équipe UCAO prendra contact. Enregistrement complet en base de données.
+      </div>
+    </div>
+
+    <!-- a-propos & contact -->
+    <div class="card">
+      <div class="card-title">Pages À Propos &amp; Contact</div>
+      <p><strong>À Propos :</strong> Histoire et mission de l'UCAO, présentation de la plateforme, valeurs de l'université, équipe d'orientation.</p>
+      <p style="margin-top:10px"><strong>Contact :</strong> Formulaire de contact, carte Google Maps, informations de contact par campus, liens réseaux sociaux.</p>
+    </div>
+  </div>
+
+  <!-- ===== 04 BACKEND ===== -->
+  <div class="section page-break" id="s4">
+    <div class="section-header">
+      <span class="section-badge">04</span>
+      <h2 class="section-title">Tableau de Bord Administrateur</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Accès &amp; Authentification</div>
+      <ul class="checklist arrow">
+        <li>URL d'accès : <code>/admin/</code></li>
+        <li>Authentification sécurisée (login + mot de passe hashé bcrypt)</li>
+        <li>Protection CSRF sur tous les formulaires admin</li>
+        <li>Gestion des sessions avec expiration automatique</li>
+        <li>Niveaux d'accès : <strong>Super Admin</strong> / <strong>Admin standard</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Module — Dashboard Principal</div>
+      <ul class="checklist arrow">
+        <li>Nombre d'orientations effectuées (total / ce mois)</li>
+        <li>Nombre de préinscriptions reçues (total / ce mois)</li>
+        <li>Nombre de rapports PDF générés et envoyés</li>
+        <li>Métiers les plus demandés (graphique en barres — Chart.js)</li>
+        <li>Filières les plus recommandées (graphique en camembert — Chart.js)</li>
+        <li>Dernières orientations et préinscriptions (tableau récapitulatif)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Module — Gestion des Orientations</div>
+      <ul class="checklist arrow">
+        <li>Liste paginée : Nom/Prénom, E-mail, Métier souhaité, Filières recommandées, Date, Statut envoi e-mail</li>
+        <li>Bouton : <strong>Télécharger le rapport PDF</strong> généré pour chaque orientation</li>
+        <li>Bouton : <strong>Envoyer une réponse personnalisée</strong> (pop-up)</li>
+        <li>Filtres : par date, série bac, métier, filière recommandée</li>
+        <li>Export CSV / Excel</li>
+      </ul>
+      <div class="box-info" style="margin-top:12px">
+        <strong>Pop-up "Réponse personnalisée" :</strong> Message pré-rempli automatiquement selon le métier choisi par le visiteur, modifiable par l'admin avant envoi direct par e-mail depuis l'interface.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Module — Gestion des Préinscriptions</div>
+      <ul class="checklist arrow">
+        <li>Liste complète paginée de tous les préinscrits avec l'ensemble de leurs informations</li>
+        <li>Bouton : Voir le dossier complet d'un préinscrit</li>
+        <li>Bouton : Télécharger les documents soumis par le préinscrit</li>
+        <li>Bouton : Envoyer un e-mail de notification au préinscrit</li>
+        <li>Bouton : <strong>Exporter la liste complète en PDF</strong></li>
+        <li>Export CSV / Excel</li>
+        <li>Filtres : par filière, par date, par série bac</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Module — Notifications</div>
+      <ul class="checklist arrow">
+        <li>Composer et envoyer des e-mails groupés : à tous les orientés, à tous les préinscrits</li>
+        <li>Ciblage par filière ou par série bac</li>
+        <li>Historique complet des notifications envoyées (sujet, message, destinataires, date)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Module — Filières &amp; Métiers</div>
+      <ul class="checklist arrow">
+        <li>Gestion de la table de correspondance <strong>Métiers ↔ Filières</strong> (CRUD complet)</li>
+        <li>Gestion des filières : ajout, modification, description, débouchés</li>
+        <li>Activation / désactivation de la <strong>période nouveaux bacheliers</strong> (active le champ "Numéro de table" dans le formulaire d'orientation)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 05 TECHNIQUE ===== -->
+  <div class="section page-break" id="s5">
+    <div class="section-header">
+      <span class="section-badge">05</span>
+      <h2 class="section-title">Spécifications Techniques</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Stack Technologique</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Couche</th><th>Technologie</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Front-end</strong></td><td>HTML5, CSS3, JavaScript (Vanilla + jQuery)</td></tr>
+            <tr><td><strong>Framework CSS</strong></td><td>Bootstrap 5.3</td></tr>
+            <tr><td><strong>Slider</strong></td><td>SwiperJS</td></tr>
+            <tr><td><strong>Icônes</strong></td><td>Font Awesome 6</td></tr>
+            <tr><td><strong>Back-end</strong></td><td>PHP 8.x (architecture MVC simplifiée)</td></tr>
+            <tr><td><strong>Base de données</strong></td><td>MySQL 8.x</td></tr>
+            <tr><td><strong>Génération PDF</strong></td><td>TCPDF ou DOMPDF</td></tr>
+            <tr><td><strong>Envoi d'e-mails</strong></td><td>PHPMailer + SMTP (Gmail / Mailgun / SendGrid)</td></tr>
+            <tr><td><strong>Graphiques admin</strong></td><td>Chart.js</td></tr>
+            <tr><td><strong>Tables admin</strong></td><td>DataTables.js</td></tr>
+            <tr><td><strong>Sécurité</strong></td><td>PDO + requêtes préparées, CSRF tokens, sessions sécurisées</td></tr>
+            <tr><td><strong>Hébergement recommandé</strong></td><td>Serveur VPS Linux (Apache/Nginx + PHP + MySQL)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sécurité</div>
+      <ul class="checklist">
+        <li>Hashage des mots de passe admins (<code>password_hash</code> / bcrypt)</li>
+        <li>Protection contre les injections SQL (PDO + requêtes préparées)</li>
+        <li>Protection CSRF sur tous les formulaires</li>
+        <li>Validation et sanitisation de toutes les entrées utilisateurs</li>
+        <li>Limitation des tentatives de connexion admin (anti brute-force)</li>
+        <li>HTTPS obligatoire (certificat SSL)</li>
+        <li>Upload de fichiers sécurisé (types autorisés, taille max, renommage automatique)</li>
+        <li>Accès direct aux uploads bloqué via <code>.htaccess</code></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Performance</div>
+      <ul class="checklist">
+        <li>Mise en cache des pages statiques</li>
+        <li>Optimisation des images (compression WebP)</li>
+        <li>Minification CSS / JS en production</li>
+        <li>Chargement lazy des images</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 06 BDD ===== -->
+  <div class="section page-break" id="s6">
+    <div class="section-header">
+      <span class="section-badge">06</span>
+      <h2 class="section-title">Base de Données — Schéma</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Table : orientations</div>
+      <pre><code><span class="sql-comment">-- Toutes les orientations effectuées via le formulaire</span>
+<span class="sql-kw">TABLE</span> orientations (
+  id                    <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  nom                   <span class="sql-type">VARCHAR(100)</span>,
+  prenom                <span class="sql-type">VARCHAR(100)</span>,
+  email                 <span class="sql-type">VARCHAR(150)</span>,
+  telephone             <span class="sql-type">VARCHAR(20)</span>,
+  serie_bac             <span class="sql-type">VARCHAR(10)</span>,
+  numero_table          <span class="sql-type">VARCHAR(30) NULL</span>,
+  metier_souhaite       <span class="sql-type">VARCHAR(200)</span>,
+  filieres_recommandees <span class="sql-type">TEXT</span>,
+  rapport_pdf_path      <span class="sql-type">VARCHAR(255)</span>,
+  email_envoye          <span class="sql-type">TINYINT(1) DEFAULT 0</span>,
+  created_at            <span class="sql-type">DATETIME DEFAULT CURRENT_TIMESTAMP</span>
+)</code></pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Table : preinscriptions</div>
+      <pre><code><span class="sql-comment">-- Préinscriptions reçues — confirmation par e-mail uniquement</span>
+<span class="sql-kw">TABLE</span> preinscriptions (
+  id                    <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  nom                   <span class="sql-type">VARCHAR(100)</span>,
+  prenom                <span class="sql-type">VARCHAR(100)</span>,
+  date_naissance        <span class="sql-type">DATE</span>,
+  nationalite           <span class="sql-type">VARCHAR(80)</span>,
+  serie_bac             <span class="sql-type">VARCHAR(10)</span>,
+  annee_bac             <span class="sql-type">YEAR</span>,
+  etablissement_origine <span class="sql-type">VARCHAR(200)</span>,
+  filiere_choisie       <span class="sql-type">INT</span> <span class="sql-comment">-- FK → filieres.id</span>,
+  niveau_entree         <span class="sql-type">VARCHAR(20)</span>,
+  email                 <span class="sql-type">VARCHAR(150)</span>,
+  telephone             <span class="sql-type">VARCHAR(20)</span>,
+  doc_releve            <span class="sql-type">VARCHAR(255) NULL</span>,
+  doc_bac               <span class="sql-type">VARCHAR(255) NULL</span>,
+  doc_identite          <span class="sql-type">VARCHAR(255) NULL</span>,
+  orientation_id        <span class="sql-type">INT NULL</span> <span class="sql-comment">-- FK → orientations.id (si venu via orientation)</span>,
+  created_at            <span class="sql-type">DATETIME DEFAULT CURRENT_TIMESTAMP</span>
+)</code></pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tables : filieres, metiers, metiers_filieres</div>
+      <pre><code><span class="sql-kw">TABLE</span> filieres (
+  id            <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  ecole_faculte <span class="sql-type">VARCHAR(100)</span>,
+  nom_filiere   <span class="sql-type">VARCHAR(200)</span>,
+  niveau        <span class="sql-type">VARCHAR(50)</span>,
+  duree         <span class="sql-type">VARCHAR(20)</span>,
+  description   <span class="sql-type">TEXT</span>,
+  debouches     <span class="sql-type">TEXT</span>,
+  slug          <span class="sql-type">VARCHAR(200)</span>
+)
+
+<span class="sql-kw">TABLE</span> metiers (
+  id         <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  nom_metier <span class="sql-type">VARCHAR(200)</span>,
+  slug       <span class="sql-type">VARCHAR(200)</span>
+)
+
+<span class="sql-kw">TABLE</span> metiers_filieres (
+  id         <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  metier_id  <span class="sql-type">INT</span> <span class="sql-comment">-- FK → metiers.id</span>,
+  filiere_id <span class="sql-type">INT</span> <span class="sql-comment">-- FK → filieres.id</span>,
+  priorite   <span class="sql-type">INT DEFAULT 1</span>
+)</code></pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tables : notifications, admins, parametres</div>
+      <pre><code><span class="sql-kw">TABLE</span> notifications (
+  id            <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  sujet         <span class="sql-type">VARCHAR(255)</span>,
+  message       <span class="sql-type">TEXT</span>,
+  destinataires <span class="sql-type">TEXT</span>,
+  type_cible    <span class="sql-type">VARCHAR(50)</span>,
+  envoye_le     <span class="sql-type">DATETIME</span>,
+  admin_id      <span class="sql-type">INT</span> <span class="sql-comment">-- FK → admins.id</span>
+)
+
+<span class="sql-kw">TABLE</span> admins (
+  id            <span class="sql-type">INT AUTO_INCREMENT PRIMARY KEY</span>,
+  nom           <span class="sql-type">VARCHAR(100)</span>,
+  email         <span class="sql-type">VARCHAR(150) UNIQUE</span>,
+  password_hash <span class="sql-type">VARCHAR(255)</span>,
+  role          <span class="sql-type">ENUM('super_admin','admin')</span>,
+  actif         <span class="sql-type">TINYINT(1) DEFAULT 1</span>,
+  created_at    <span class="sql-type">DATETIME DEFAULT CURRENT_TIMESTAMP</span>,
+  last_login    <span class="sql-type">DATETIME NULL</span>
+)
+
+<span class="sql-kw">TABLE</span> parametres (
+  cle         <span class="sql-type">VARCHAR(100) PRIMARY KEY</span>,
+  valeur      <span class="sql-type">TEXT</span>,
+  description <span class="sql-type">VARCHAR(255)</span>
+)
+<span class="sql-comment">-- Exemple : periode_nouveaux_bacheliers = '1' active le champ numéro de table</span></code></pre>
+    </div>
+  </div>
+
+  <!-- ===== 07 ARBORESCENCE ===== -->
+  <div class="section page-break" id="s7">
+    <div class="section-header">
+      <span class="section-badge">07</span>
+      <h2 class="section-title">Arborescence des Fichiers</h2>
+    </div>
+
+    <div class="tree">
+<span class="root">UCAO-ORIENTATION/</span>
+│
+├── <span class="file">index.php</span>                          <span class="comment">← Page d'accueil</span>
+├── <span class="file">decouvrir-ucao.php</span>                 <span class="comment">← Vie étudiante &amp; activités</span>
+├── <span class="file">nos-formations.php</span>                 <span class="comment">← Écoles, Facultés, Filières</span>
+├── <span class="file">orientation.php</span>                    <span class="comment">← Formulaire d'orientation</span>
+├── <span class="file">preinscription.php</span>                 <span class="comment">← Formulaire de préinscription</span>
+├── <span class="file">a-propos.php</span>                       <span class="comment">← À propos de la plateforme</span>
+├── <span class="file">contact.php</span>                        <span class="comment">← Page de contact</span>
+├── <span class="file">telecharger-rapport.php</span>            <span class="comment">← Téléchargement PDF orientation sécurisé</span>
+│
+├── <span class="folder">/assets/</span>
+│   ├── <span class="folder">/css/</span>
+│   │   ├── <span class="file">style.css</span>                  <span class="comment">← Styles globaux</span>
+│   │   ├── <span class="file">slider.css</span>                 <span class="comment">← Styles du slider</span>
+│   │   ├── <span class="file">orientation.css</span>            <span class="comment">← Styles formulaire orientation</span>
+│   │   ├── <span class="file">formations.css</span>             <span class="comment">← Styles page formations</span>
+│   │   └── <span class="file">responsive.css</span>             <span class="comment">← Media queries</span>
+│   │
+│   ├── <span class="folder">/js/</span>
+│   │   ├── <span class="file">main.js</span>                    <span class="comment">← JS global (menu, animations)</span>
+│   │   ├── <span class="file">slider.js</span>                  <span class="comment">← Initialisation SwiperJS</span>
+│   │   ├── <span class="file">orientation.js</span>             <span class="comment">← Autocomplete + activation champ conditionnel</span>
+│   │   ├── <span class="file">preinscription.js</span>          <span class="comment">← Validation formulaire préinscription</span>
+│   │   └── <span class="file">validation.js</span>              <span class="comment">← Fonctions de validation globales</span>
+│   │
+│   ├── <span class="folder">/images/</span>
+│   │   ├── <span class="folder">/slides/</span>                   <span class="comment">← Images des slides du slider</span>
+│   │   ├── <span class="folder">/formations/</span>               <span class="comment">← Images des filières et écoles</span>
+│   │   ├── <span class="folder">/activites/</span>                <span class="comment">← Photos vie étudiante</span>
+│   │   ├── <span class="file">logo-ucao.png</span>
+│   │   └── <span class="file">favicon.ico</span>
+│   │
+│   └── <span class="folder">/vendor/</span>
+│       ├── <span class="folder">/bootstrap/</span>
+│       ├── <span class="folder">/swiper/</span>
+│       ├── <span class="folder">/fontawesome/</span>
+│       └── <span class="folder">/jquery/</span>
+│
+├── <span class="folder">/includes/</span>
+│   ├── <span class="file">header.php</span>                     <span class="comment">← Header commun (nav, meta)</span>
+│   ├── <span class="file">footer.php</span>                     <span class="comment">← Footer commun</span>
+│   ├── <span class="file">navbar.php</span>                     <span class="comment">← Barre de navigation</span>
+│   └── <span class="file">flash-messages.php</span>             <span class="comment">← Affichage des messages flash</span>
+│
+├── <span class="folder">/config/</span>
+│   ├── <span class="file">database.php</span>                   <span class="comment">← Connexion PDO à la base de données</span>
+│   ├── <span class="file">config.php</span>                     <span class="comment">← Variables globales (URL, nom du site…)</span>
+│   ├── <span class="file">email.php</span>                      <span class="comment">← Configuration PHPMailer (SMTP)</span>
+│   └── <span class="file">constantes.php</span>                 <span class="comment">← Constantes de l'application</span>
+│
+├── <span class="folder">/classes/</span>
+│   ├── <span class="file">Database.php</span>                   <span class="comment">← Classe connexion DB (Singleton)</span>
+│   ├── <span class="file">Orientation.php</span>                <span class="comment">← Logique métier orientation</span>
+│   ├── <span class="file">Preinscription.php</span>             <span class="comment">← Logique métier préinscription</span>
+│   ├── <span class="file">Rapport.php</span>                    <span class="comment">← Génération PDF (TCPDF/DOMPDF)</span>
+│   ├── <span class="file">Mailer.php</span>                     <span class="comment">← Envoi d'e-mails</span>
+│   ├── <span class="file">Notification.php</span>               <span class="comment">← Gestion des notifications admin</span>
+│   └── <span class="file">Auth.php</span>                       <span class="comment">← Authentification admin</span>
+│
+├── <span class="folder">/handlers/</span>
+│   ├── <span class="file">orientation-handler.php</span>        <span class="comment">← Traitement AJAX formulaire orientation</span>
+│   ├── <span class="file">preinscription-handler.php</span>     <span class="comment">← Traitement formulaire préinscription + envoi email confirmation</span>
+│   └── <span class="file">contact-handler.php</span>            <span class="comment">← Traitement formulaire contact</span>
+│
+├── <span class="folder">/templates/</span>
+│   ├── <span class="folder">/emails/</span>
+│   │   ├── <span class="file">email-orientation.html</span>     <span class="comment">← Template e-mail rapport d'orientation</span>
+│   │   ├── <span class="file">email-preinscription.html</span>  <span class="comment">← Template e-mail confirmation de réception préinscription</span>
+│   │   └── <span class="file">email-notification.html</span>    <span class="comment">← Template notification admin → visiteur</span>
+│   └── <span class="folder">/pdf/</span>
+│       └── <span class="file">rapport-orientation.php</span>    <span class="comment">← Template PDF du rapport d'orientation</span>
+│
+├── <span class="folder">/uploads/</span>
+│   ├── <span class="folder">/rapports/</span>                     <span class="comment">← Rapports PDF d'orientation générés</span>
+│   └── <span class="folder">/dossiers/</span>                     <span class="comment">← Documents uploadés lors des préinscriptions</span>
+│       └── <span class="file">.htaccess</span>                  <span class="comment">← Blocage accès direct aux fichiers</span>
+│
+├── <span class="folder">/admin/</span>
+│   ├── <span class="file">index.php</span>                      <span class="comment">← Dashboard principal admin</span>
+│   ├── <span class="file">login.php</span>                      <span class="comment">← Page de connexion admin</span>
+│   ├── <span class="file">logout.php</span>                     <span class="comment">← Déconnexion</span>
+│   │
+│   ├── <span class="folder">/orientations/</span>
+│   │   ├── <span class="file">index.php</span>                  <span class="comment">← Liste des orientations</span>
+│   │   ├── <span class="file">voir.php</span>                   <span class="comment">← Détail d'une orientation</span>
+│   │   ├── <span class="file">repondre.php</span>               <span class="comment">← Envoi réponse personnalisée (pop-up AJAX)</span>
+│   │   └── <span class="file">export.php</span>                 <span class="comment">← Export CSV/Excel des orientations</span>
+│   │
+│   ├── <span class="folder">/preinscriptions/</span>
+│   │   ├── <span class="file">index.php</span>                  <span class="comment">← Liste complète des préinscrits</span>
+│   │   ├── <span class="file">voir.php</span>                   <span class="comment">← Dossier complet d'un préinscrit</span>
+│   │   ├── <span class="file">notifier.php</span>               <span class="comment">← Envoi e-mail à un préinscrit</span>
+│   │   ├── <span class="file">export-pdf.php</span>             <span class="comment">← Export PDF de la liste des préinscrits</span>
+│   │   └── <span class="file">export-csv.php</span>             <span class="comment">← Export CSV/Excel</span>
+│   │
+│   ├── <span class="folder">/formations/</span>
+│   │   ├── <span class="file">index.php</span>      <span class="comment">← Liste des filières</span>
+│   │   ├── <span class="file">ajouter.php</span>    <span class="comment">← Ajout d'une filière</span>
+│   │   ├── <span class="file">modifier.php</span>   <span class="comment">← Modification d'une filière</span>
+│   │   └── <span class="file">supprimer.php</span>  <span class="comment">← Suppression d'une filière</span>
+│   │
+│   ├── <span class="folder">/metiers/</span>
+│   │   ├── <span class="file">index.php</span>      <span class="comment">← Liste des métiers</span>
+│   │   ├── <span class="file">ajouter.php</span>    <span class="comment">← Ajout + association filières</span>
+│   │   ├── <span class="file">modifier.php</span>   <span class="comment">← Modification</span>
+│   │   └── <span class="file">supprimer.php</span>  <span class="comment">← Suppression</span>
+│   │
+│   ├── <span class="folder">/notifications/</span>
+│   │   ├── <span class="file">index.php</span>                  <span class="comment">← Historique des notifications envoyées</span>
+│   │   └── <span class="file">composer.php</span>               <span class="comment">← Composer et envoyer une notification</span>
+│   │
+│   ├── <span class="folder">/admins/</span>
+│   │   ├── <span class="file">index.php</span>                  <span class="comment">← Liste des comptes admins</span>
+│   │   ├── <span class="file">ajouter.php</span>                <span class="comment">← Ajouter un admin</span>
+│   │   └── <span class="file">modifier.php</span>               <span class="comment">← Modifier / désactiver un admin</span>
+│   │
+│   ├── <span class="folder">/parametres/</span>
+│   │   └── <span class="file">index.php</span>                  <span class="comment">← Paramètres site (activation période bac, SMTP…)</span>
+│   │
+│   ├── <span class="folder">/assets/</span>
+│   │   ├── <span class="folder">/css/</span>
+│   │   │   ├── <span class="file">admin.css</span>              <span class="comment">← Styles du tableau de bord</span>
+│   │   │   └── <span class="file">charts.css</span>             <span class="comment">← Styles des graphiques</span>
+│   │   └── <span class="folder">/js/</span>
+│   │       ├── <span class="file">admin.js</span>               <span class="comment">← JS global admin</span>
+│   │       ├── <span class="file">charts.js</span>              <span class="comment">← Initialisation Chart.js</span>
+│   │       └── <span class="file">datatables.js</span>          <span class="comment">← Tableaux dynamiques DataTables</span>
+│   │
+│   └── <span class="folder">/includes/</span>
+│       ├── <span class="file">header-admin.php</span>           <span class="comment">← Header du backoffice</span>
+│       ├── <span class="file">sidebar.php</span>                <span class="comment">← Menu latéral admin</span>
+│       ├── <span class="file">footer-admin.php</span>           <span class="comment">← Footer du backoffice</span>
+│       └── <span class="file">auth-check.php</span>             <span class="comment">← Vérification de session admin</span>
+│
+├── <span class="folder">/sql/</span>
+│   ├── <span class="file">ucao_orientation.sql</span>           <span class="comment">← Script de création de la base de données</span>
+│   └── <span class="file">data_seed.sql</span>                  <span class="comment">← Données initiales (filières, métiers)</span>
+│
+├── <span class="file">.htaccess</span>                         <span class="comment">← Réécriture d'URL, protection dossiers</span>
+├── <span class="file">.env</span>                              <span class="comment">← Variables d'environnement (DB, SMTP…)</span>
+├── <span class="file">.gitignore</span>                        <span class="comment">← Fichiers ignorés par Git</span>
+└── <span class="file">README.md</span>                         <span class="comment">← Documentation du projet</span>
+    </div>
+  </div>
+
+  <!-- ===== 08 CHARTE GRAPHIQUE ===== -->
+  <div class="section page-break" id="s8">
+    <div class="section-header">
+      <span class="section-badge">08</span>
+      <h2 class="section-title">Charte Graphique</h2>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Élément</th><th>Valeur</th><th>Aperçu</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Couleur primaire</strong></td>
+              <td><code>#003087</code> — Bleu UCAO</td>
+              <td><span style="display:inline-block;width:28px;height:18px;background:#003087;border-radius:4px;vertical-align:middle;"></span></td>
+            </tr>
+            <tr>
+              <td><strong>Couleur secondaire</strong></td>
+              <td><code>#FFD700</code> — Or</td>
+              <td><span style="display:inline-block;width:28px;height:18px;background:#FFD700;border-radius:4px;vertical-align:middle;"></span></td>
+            </tr>
+            <tr>
+              <td><strong>Couleur d'accent</strong></td>
+              <td><code>#FFFFFF</code> — Blanc</td>
+              <td><span style="display:inline-block;width:28px;height:18px;background:#fff;border:1px solid #ddd;border-radius:4px;vertical-align:middle;"></span></td>
+            </tr>
+            <tr>
+              <td><strong>Fond général</strong></td>
+              <td><code>#F5F7FA</code> — Gris clair</td>
+              <td><span style="display:inline-block;width:28px;height:18px;background:#F5F7FA;border:1px solid #ddd;border-radius:4px;vertical-align:middle;"></span></td>
+            </tr>
+            <tr><td><strong>Police principale</strong></td><td>Poppins (Google Fonts)</td><td>—</td></tr>
+            <tr><td><strong>Police secondaire</strong></td><td>Open Sans</td><td>—</td></tr>
+            <tr><td><strong>Style général</strong></td><td>Moderne, épuré, professionnel, accessible</td><td>—</td></tr>
+            <tr><td><strong>Boutons CTA</strong></td><td>Arrondis, fond bleu ou or avec hover animé</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 09 RAPPORT PDF ===== -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <span class="section-badge">09</span>
+      <h2 class="section-title">Contenu du Rapport PDF d'Orientation</h2>
+    </div>
+    <div class="card">
+      <ol style="padding-left:20px; line-height:2.2; font-size:.92rem">
+        <li>En-tête avec logo UCAO et date de génération</li>
+        <li>Informations personnelles du candidat (Nom, Prénom, E-mail, Téléphone, Série bac)</li>
+        <li>Résumé du profil — Métier souhaité</li>
+        <li><strong>Filières recommandées</strong> (par ordre de pertinence) :
+          <ul style="padding-left:20px; margin-top:6px">
+            <li>Nom de la filière + École / Faculté</li>
+            <li>Description de la formation + Durée et niveau d'entrée</li>
+            <li>Compétences acquises + Débouchés professionnels</li>
+          </ul>
+        </li>
+        <li><strong>Pourquoi choisir l'UCAO ?</strong> : Qualité de l'enseignement, réseau alumni, vie campus, valeurs</li>
+        <li>Prochaines étapes recommandées</li>
+        <li>Lien de préinscription en ligne</li>
+        <li>Contacts de l'UCAO par campus</li>
+        <li>Pied de page avec mentions légales</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ===== 10 PROCESSUS ===== -->
+  <div class="section page-break" id="s10">
+    <div class="section-header">
+      <span class="section-badge">10</span>
+      <h2 class="section-title">Processus Métier Complet</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Parcours Visiteur → Orientation → Préinscription</div>
+      <div style="margin-top:14px">
+        <div class="process-box" style="background:#e8f0fe;border-color:#003087;">👤 Le visiteur arrive sur la plateforme UCAO-ORIENTATION</div>
+        <div class="process-connector">↓</div>
+        <div class="process-box">Remplit le formulaire d'orientation (Nom, Bac, Métier souhaité…)</div>
+        <div class="process-connector">↓</div>
+        <div class="process-box" style="background:#fff8cc;">⚙️ Le système analyse le métier → Consulte la base <code>metiers_filieres</code></div>
+        <div class="process-connector">↓</div>
+        <div class="process-box" style="background:#e6f7ed;">📄 Génération du Rapport PDF d'orientation personnalisé</div>
+        <div class="process-connector">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0;">
+          <div class="process-box" style="background:#e6f7ed;font-size:.82rem;">📧 Envoi par e-mail<br>(avec lien de préinscription)</div>
+          <div class="process-box" style="background:#e6f7ed;font-size:.82rem;">⬇️ Téléchargement immédiat<br>sur la page</div>
+        </div>
+        <div class="process-connector">↓ (optionnel)</div>
+        <div class="process-box">Le visiteur remplit le formulaire de Préinscription</div>
+        <div class="process-connector">↓</div>
+        <div class="process-box" style="background:#e6f7ed;">✅ E-mail automatique de confirmation de réception envoyé au visiteur</div>
+        <div class="process-connector">↓</div>
+        <div class="process-box" style="background:#e8f0fe;border-color:#003087;">🗄️ Dossier complet enregistré en base de données — visible par l'admin</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">Parcours Admin</div>
+      <ul class="checklist arrow" style="margin-top:8px">
+        <li>Connexion sécurisée au tableau de bord <code>/admin/</code></li>
+        <li>Consultation du dashboard (statistiques, dernières activités)</li>
+        <li>Consultation de la liste des orientations effectuées + téléchargement des rapports PDF</li>
+        <li>Envoi de réponses personnalisées aux orientés (pop-up pré-rempli selon le métier)</li>
+        <li>Consultation de la liste complète des préinscrits avec toutes leurs informations</li>
+        <li>Export de la liste des préinscrits en PDF</li>
+        <li>Envoi d'e-mails individuels ou groupés aux visiteurs</li>
+        <li>Gestion de la correspondance Métiers ↔ Filières</li>
+        <li>Activation / désactivation de la période nouveaux bacheliers</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 11 LIVRABLES ===== -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <span class="section-badge">11</span>
+      <h2 class="section-title">Livrables du Projet</h2>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Livrable</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><strong>Script SQL</strong></td><td>Base de données complète avec données initiales (filières, métiers pré-remplis)</td></tr>
+            <tr><td>2</td><td><strong>Code source complet</strong></td><td>Ensemble du projet PHP / HTML / CSS / JS</td></tr>
+            <tr><td>3</td><td><strong>Documentation technique</strong></td><td>Guide d'installation et configuration du serveur</td></tr>
+            <tr><td>4</td><td><strong>Manuel administrateur</strong></td><td>Guide d'utilisation du tableau de bord</td></tr>
+            <tr><td>5</td><td><strong>Table Métiers ↔ Filières</strong></td><td>Base de correspondance pré-remplie selon les filières UCAO</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 12 PLANNING ===== -->
+  <div class="section page-break" id="s12">
+    <div class="section-header">
+      <span class="section-badge">12</span>
+      <h2 class="section-title">Planning Prévisionnel</h2>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Phase</th><th>Durée</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag">Phase 1</span></td><td><strong>1 sem.</strong></td><td>Structure HTML/CSS + charte graphique + slider Hero (5 slides)</td></tr>
+            <tr><td><span class="tag">Phase 2</span></td><td><strong>1 sem.</strong></td><td>Pages front-end (Accueil, Formations, Découvrir UCAO, À propos, Contact)</td></tr>
+            <tr><td><span class="tag">Phase 3</span></td><td><strong>1,5 sem.</strong></td><td>Formulaire d'orientation + logique PHP + génération et envoi rapport PDF</td></tr>
+            <tr><td><span class="tag">Phase 4</span></td><td><strong>1 sem.</strong></td><td>Formulaire de préinscription + upload documents + envoi e-mail de confirmation</td></tr>
+            <tr><td><span class="tag">Phase 5</span></td><td><strong>1,5 sem.</strong></td><td>Tableau de bord admin complet (orientations + préinscriptions + export PDF)</td></tr>
+            <tr><td><span class="tag">Phase 6</span></td><td><strong>1 sem.</strong></td><td>Tests, corrections, sécurisation, optimisation des performances</td></tr>
+            <tr><td><span class="tag">Phase 7</span></td><td><strong>0,5 sem.</strong></td><td>Déploiement sur serveur + documentation finale</td></tr>
+            <tr style="background:#e8f0fe;">
+              <td><strong>TOTAL</strong></td><td><strong>~7,5 semaines</strong></td><td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 13 CONTRAINTES ===== -->
+  <div class="section" id="s13">
+    <div class="section-header">
+      <span class="section-badge">13</span>
+      <h2 class="section-title">Contraintes &amp; Exigences Non Fonctionnelles</h2>
+    </div>
+    <div class="card">
+      <ul class="checklist">
+        <li><strong>Responsive design</strong> : Compatible mobile, tablette et desktop (Bootstrap 5)</li>
+        <li><strong>Performance</strong> : Temps de chargement cible &lt; 3 secondes</li>
+        <li><strong>Accessibilité</strong> : Respect des normes WCAG 2.1 niveau AA</li>
+        <li><strong>Compatibilité navigateurs</strong> : Chrome, Firefox, Edge, Safari (dernières versions)</li>
+        <li><strong>Sécurité RGPD</strong> : Mention de collecte de données, consentement, suppression sur demande</li>
+        <li><strong>Sauvegarde</strong> : Backup automatique de la base de données recommandé (cron quotidien)</li>
+        <li><strong>Langue</strong> : Français uniquement (version 1.0)</li>
+        <li><strong>HTTPS</strong> : Certificat SSL obligatoire sur le serveur de production</li>
+        <li><strong>Uploads sécurisés</strong> : Types de fichiers restreints (PDF, JPG, PNG), taille max 5 Mo par fichier</li>
+      </ul>
+    </div>
+
+    <div class="box-warn">
+      <strong>⚠️ Note importante :</strong> Ce cahier des charges constitue la référence technique et fonctionnelle officielle du projet <strong>UCAO-ORIENTATION v1.1</strong>. Toute modification ultérieure du périmètre devra faire l'objet d'un avenant écrit validé par les deux parties avant toute implémentation.
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>UCAO-ORIENTATION</strong> — Cahier des Charges v1.1 | Rédigé le 24 Mars 2026<br>
+  Université Catholique de l'Afrique de l'Ouest — Unité Universitaire à Cotonou (UCAO-UUC)<br>
+  <span style="opacity:.5; font-size:.75rem; margin-top:6px; display:block;">Document confidentiel — Usage interne</span>
+</footer>
+
+</body>
+</html>
