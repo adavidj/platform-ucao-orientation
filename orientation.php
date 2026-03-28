@@ -5,6 +5,7 @@
  */
 
 // Include configuration
+require_once 'config/config.php';
 require_once 'config/app.php';
 
 // Page settings

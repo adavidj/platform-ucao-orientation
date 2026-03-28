@@ -5,6 +5,7 @@
  */
 
 // Inclure la configuration globale (autoload, session, db)
+require_once dirname(__DIR__) . '/config/config.php';
 require_once dirname(__DIR__) . '/config/app.php';
 
 header('Content-Type: application/json');

@@ -3,6 +3,7 @@
  * Script de téléchargement du rapport d'orientation PDF
  */
 
+require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/config/app.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
