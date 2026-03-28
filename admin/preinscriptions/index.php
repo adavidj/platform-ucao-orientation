@@ -67,7 +67,7 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
 
 <div class="admin-card">
     <div class="admin-card-header">
-        <h2 class="admin-card-title"><?= $total ?> préinscription(s)</h2>
+        <h2 class="admin-card-title"><?= $total ?> préinscription(s)<?= !empty(array_filter($filters)) ? ' trouvée(s)' : '' ?></h2>
         <div class="admin-card-actions">
             <a href="export-csv.php?<?= http_build_query($filters) ?>" class="btn-admin btn-admin-outline btn-admin-sm">Export CSV</a>
             <a href="export-pdf.php?<?= http_build_query($filters) ?>" class="btn-admin btn-admin-outline btn-admin-sm">Export PDF</a>

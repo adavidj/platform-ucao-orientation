@@ -15,7 +15,24 @@ class Rapport {
         $orientation = Orientation::getById($orientationId);
         if (!$orientation) return null;
 
-        $html = self::getOrientationTemplate($orientation);
+        $pdo = Database::getInstance();
+        $stmtM = $pdo->prepare("SELECT id FROM metiers WHERE nom_metier LIKE ? LIMIT 1");
+        $stmtM->execute(['%' . $orientation['metier_souhaite'] . '%']);
+        $metier = $stmtM->fetch();
+
+        $filieres_details = [];
+        if ($metier) {
+            $stmtF = $pdo->prepare("
+                SELECT f.nom_filiere, f.ecole_faculte, f.description, f.niveau_requis, f.duree_formation, f.competences, f.debouches
+                FROM filieres f
+                JOIN metiers_filieres mf ON f.id = mf.filiere_id
+                WHERE mf.metier_id = ?
+            ");
+            $stmtF->execute([$metier['id']]);
+            $filieres_details = $stmtF->fetchAll();
+        }
+
+        $html = self::getOrientationTemplate($orientation, $filieres_details);
         
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
@@ -38,9 +55,8 @@ class Rapport {
         file_put_contents($filepath, $dompdf->output());
 
         // Mettre à jour le chemin en BD
-        $pdo = Database::getInstance();
-        $stmt = $pdo->prepare("UPDATE orientations SET rapport_pdf_path = ? WHERE id = ?");
-        $stmt->execute([$filename, $orientationId]);
+        $stmtUpdate = $pdo->prepare("UPDATE orientations SET rapport_pdf_path = ? WHERE id = ?");
+        $stmtUpdate->execute([$filename, $orientationId]);
 
         return $filepath;
     }
@@ -66,78 +82,150 @@ class Rapport {
     /**
      * Template HTML pour le rapport d'orientation
      */
-    private static function getOrientationTemplate($orientation) {
-        $filieres = $orientation['filieres_recommandees'] ?? 'Aucune filière recommandée';
+    private static function getOrientationTemplate($orientation, $filieres_details = []) {
         $date = date('d/m/Y', strtotime($orientation['created_at']));
         
+        $htmlFilieres = '';
+        if (!empty($filieres_details)) {
+            foreach ($filieres_details as $f) {
+                // Formatting specific fields if empty
+                $niveau = !empty($f['niveau_requis']) ? $f['niveau_requis'] : 'Baccalauréat';
+                $duree = !empty($f['duree_formation']) ? $f['duree_formation'] : '3 ans (Licence)';
+                $desc = !empty($f['description']) ? nl2br(e($f['description'])) : '<em>Description non disponible</em>';
+                $comp = !empty($f['competences']) ? nl2br(e($f['competences'])) : '<em>Non renseigné</em>';
+                $deb = !empty($f['debouches']) ? nl2br(e($f['debouches'])) : '<em>Non renseigné</em>';
+
+                $htmlFilieres .= '
+                <div class="filiere-card-detail">
+                    <h3 class="filiere-title">' . e($f['nom_filiere']) . '</h3>
+                    <div class="filiere-ecole">Établissement : ' . e($f['ecole_faculte']) . '</div>
+                    <div class="filiere-desc">' . $desc . '</div>
+                    
+                    <table class="filiere-table">
+                        <tr>
+                            <td class="filiere-td-label">🎓 Niveau Requis :</td><td class="filiere-td-val">' . e($niveau) . '</td>
+                            <td class="filiere-td-label">⏱️ Durée :</td><td class="filiere-td-val">' . e($duree) . '</td>
+                        </tr>
+                    </table>
+
+                    <div style="font-size: 11px; margin-bottom:5px; padding-left:10px;">
+                        <strong style="color:#180391;">Compétences acquises :</strong><br>' . $comp . '
+                    </div>
+                    <div style="font-size: 11px; padding-left:10px;">
+                        <strong style="color:#180391;">Débouchés professionnels :</strong><br>' . $deb . '
+                    </div>
+                </div>';
+            }
+        } else {
+            // Support texte fallback
+            $texte = $orientation['filieres_recommandees'] ?? 'Aucune filière exacte trouvée pour ce métier.';
+            // Attention: Ne pas utiliser e() sur un string contenant déjà des <br> injectés
+            $htmlFilieres = '<div class="filiere-card-detail"><p>' . $texte . '</p></div>';
+        }
+
         return '<!DOCTYPE html>
         <html lang="fr">
         <head>
             <meta charset="UTF-8">
             <style>
-                body { font-family: Helvetica, Arial, sans-serif; color: #1a1a2e; line-height: 1.6; margin: 0; padding: 0; }
-                .header { background: linear-gradient(135deg, #180391, #5c0000); color: white; padding: 30px 40px; }
-                .header h1 { margin: 0; font-size: 24px; }
-                .header p { margin: 5px 0 0; opacity: 0.8; font-size: 12px; }
+                body { font-family: Helvetica, Arial, sans-serif; color: #1a1a2e; line-height: 1.5; margin: 0; padding: 0; }
+                .header { background: linear-gradient(135deg, #180391, #3017a1); color: white; padding: 25px 40px; border-bottom: 5px solid #FFD700; text-align: center; }
+                .header h1 { margin: 0 0 5px 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+                .header p { margin: 0; opacity: 0.9; font-size: 13px; }
                 .content { padding: 30px 40px; }
                 .section { margin-bottom: 25px; }
-                .section-title { color: #180391; font-size: 16px; font-weight: bold; border-bottom: 3px solid #FFD700; padding-bottom: 8px; margin-bottom: 15px; }
-                .info-grid { display: table; width: 100%; }
+                
+                .section-title { 
+                    color: #5c0000; 
+                    font-size: 16px; 
+                    font-weight: bold; 
+                    border-bottom: 2px solid #e1e1e1; 
+                    padding-bottom: 5px; 
+                    margin-bottom: 15px; 
+                    text-transform: uppercase;
+                }
+                
+                .info-grid { display: table; width: 100%; margin-bottom: 10px; }
                 .info-row { display: table-row; }
-                .info-label { display: table-cell; padding: 6px 15px 6px 0; font-weight: bold; color: #555; width: 180px; font-size: 13px; }
-                .info-value { display: table-cell; padding: 6px 0; font-size: 13px; }
-                .filiere-card { background: #f0f0ff; border-left: 4px solid #180391; padding: 15px; margin-bottom: 12px; border-radius: 4px; }
-                .filiere-card h3 { margin: 0 0 5px; color: #180391; font-size: 14px; }
-                .filiere-card p { margin: 3px 0; font-size: 12px; color: #555; }
-                .footer { background: #f5f5f5; padding: 20px 40px; font-size: 11px; color: #888; border-top: 2px solid #FFD700; }
-                .badge { display: inline-block; background: #FFD700; color: #180391; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+                .info-label { display: table-cell; padding: 4px 10px 4px 0; font-weight: bold; color: #444; width: 150px; font-size: 12px; border-bottom: 1px dashed #eee; }
+                .info-value { display: table-cell; padding: 4px 0; font-size: 13px; border-bottom: 1px dashed #eee; }
+                
+                .metier-box { background: #fdfbf1; border: 1px solid #FFD700; padding: 15px; text-align: center; font-size: 16px; font-weight: bold; color: #180391; margin-bottom: 25px; border-radius: 5px; }
+                
+                .filiere-card-detail { background: #ffffff; border: 1px solid #e8e8e8; border-left: 5px solid #180391; padding: 15px; margin-bottom: 18px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+                .filiere-title { margin: 0 0 2px 0; color: #180391; font-size: 15px; }
+                .filiere-ecole { font-size: 11px; color: #888; font-style: italic; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+                .filiere-desc { font-size: 12px; color: #555; margin-bottom: 10px; text-align: justify; }
+                .filiere-table { width: 100%; font-size: 11px; margin-bottom: 10px; background: #fafafa; border: 1px solid #eee; }
+                .filiere-td-label { padding: 5px; font-weight: bold; width: 25%; color: #333; }
+                .filiere-td-val { padding: 5px; width: 25%; }
+                
+                .arg-box p { font-size: 12px; margin: 0 0 8px 0; text-align: justify; }
+                .arg-list { font-size: 12px; margin: 0; padding-left: 20px; }
+                
+                .footer { background: #1a1a2e; padding: 20px 40px; font-size: 10px; color: #ccc; text-align: center; }
+                .badge { display: inline-block; background: #FFD700; color: #1a1a2e; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
             </style>
         </head>
         <body>
             <div class="header">
-                <h1>📄 Rapport d\'Orientation — UCAO</h1>
-                <p>Université Catholique de l\'Afrique de l\'Ouest — Généré le ' . $date . '</p>
+                <h1>Rapport d\'Orientation</h1>
+                <p>Université Catholique de l\'Afrique de l\'Ouest — ' . $date . '</p>
             </div>
+            
             <div class="content">
                 <div class="section">
-                    <div class="section-title">Informations Personnelles</div>
+                    <div class="section-title">1. Informations Personnelles</div>
                     <div class="info-grid">
-                        <div class="info-row"><div class="info-label">Nom :</div><div class="info-value">' . e($orientation['nom']) . '</div></div>
-                        <div class="info-row"><div class="info-label">Prénom :</div><div class="info-value">' . e($orientation['prenom']) . '</div></div>
-                        <div class="info-row"><div class="info-label">Email :</div><div class="info-value">' . e($orientation['email']) . '</div></div>
+                        <div class="info-row"><div class="info-label">Nom(s) & Prénom(s) :</div><div class="info-value">' . e($orientation['nom'] . ' ' . $orientation['prenom']) . '</div></div>
+                        <div class="info-row"><div class="info-label">Email de contact :</div><div class="info-value">' . e($orientation['email']) . '</div></div>
                         <div class="info-row"><div class="info-label">Téléphone :</div><div class="info-value">' . e($orientation['telephone']) . '</div></div>
-                        <div class="info-row"><div class="info-label">Série du Bac :</div><div class="info-value"><span class="badge">' . e($orientation['serie_bac']) . '</span></div></div>
+                        <div class="info-row"><div class="info-label">Série du Baccalauréat :</div><div class="info-value"><span class="badge">' . e($orientation['serie_bac']) . '</span></div></div>
                     </div>
                 </div>
 
                 <div class="section">
-                    <div class="section-title">Métier Souhaité</div>
-                    <p style="font-size: 16px; font-weight: bold; color: #180391;">' . e($orientation['metier_souhaite']) . '</p>
-                </div>
-
-                <div class="section">
-                    <div class="section-title">Filières Recommandées</div>
-                    <div class="filiere-card">
-                        <p>' . e($filieres) . '</p>
+                    <div class="section-title">2. Résumé du Profil</div>
+                    <div class="metier-box">
+                        Métier souhaité : ' . mb_strtoupper(e($orientation['metier_souhaite']), 'UTF-8') . '
                     </div>
                 </div>
 
                 <div class="section">
-                    <div class="section-title">Pourquoi Choisir l\'UCAO ?</div>
-                    <p style="font-size: 13px;">L\'UCAO offre un environnement académique d\'excellence, reconnu dans toute l\'Afrique de l\'Ouest. Avec plus de 45 formations, un taux d\'insertion professionnelle de 95% et un réseau de partenaires internationaux, votre avenir commence ici.</p>
+                    <div class="section-title">3. Filières Recommandées</div>
+                    ' . $htmlFilieres . '
                 </div>
 
                 <div class="section">
-                    <div class="section-title">Prochaines Étapes</div>
-                    <p style="font-size: 13px;">1. Consultez en détail les filières recommandées sur notre site<br>
-                    2. Effectuez votre pré-inscription en ligne<br>
-                    3. Préparez votre dossier (relevés de notes, diplômes, pièce d\'identité)<br>
-                    4. Notre équipe vous contactera pour finaliser votre inscription</p>
+                    <div class="section-title">4. Pourquoi choisir l\'UCAO ?</div>
+                    <div class="arg-box">
+                        <p>L\'UCAO offre un environnement académique d\'excellence, reconnu dans toute l\'Afrique de l\'Ouest.</p>
+                        <ul class="arg-list">
+                            <li><strong>Excellence Académique</strong> : Un corps professoral qualifié et des programmes accrédités CAMES.</li>
+                            <li><strong>Insertion Professionnelle</strong> : Plus de 95% de nos diplômés trouvent un emploi qualifié.</li>
+                            <li><strong>Réseau Alumni</strong> : Profitez d\'un vaste réseau de professionnels à travers le monde.</li>
+                            <li><strong>Campus Moderne</strong> : Des infrastructures à la pointe de la technologie.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section" style="page-break-inside: avoid;">
+                    <div class="section-title">5. Prochaines Étapes</div>
+                    <div class="arg-box">
+                        <ol class="arg-list" style="margin-left:5px;">
+                            <li>Explorez davantage les filières listées ci-dessus sur notre site web.</li>
+                            <li><strong>Procédez à votre préinscription gratuite</strong> sur notre plateforme officielle.</li>
+                            <li>Rassemblez vos relevés de notes, diplômes et documents de candidature.</li>
+                            <li>Discutez avec nos conseillers pédagogiques si vous avez la moindre interrogation.</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
+            
             <div class="footer">
-                <strong>UCAO-UUC</strong> — Lot 246 St Jean, Cotonou | Tél: +229 01 21 60 40 70 | Email: contact@ucaobenin.org<br>
-                Ce rapport a été généré automatiquement par la plateforme UCAO-Orientation. © ' . date('Y') . '
+                <strong>UCAO-UUC</strong> — Lot 246 St Jean, Cotonou<br>
+                Téléphone : +229 01 21 60 40 70 | Email : contact@ucaobenin.org<br>
+                <div style="margin-top:10px; font-size:9px; color:#888;">Ce rapport a été généré automatiquement par la plateforme décisionnelle UCAO-Orientation. © ' . date('Y') . '</div>
             </div>
         </body>
         </html>';
