@@ -90,6 +90,7 @@ include 'includes/header.php';
                 </div>
 
                 <form id="orientation-form" action="handlers/orientation-handler.php" method="POST" data-validate>
+                    <?= csrf_field() ?>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nom">Nom <span class="required">*</span></label>
@@ -288,10 +289,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (isValid) {
-            // In a real app, this would submit to the server
-            // For demo, show success message
-            form.style.display = 'none';
-            resultSection.classList.add('visible');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>Génération en cours...</span>';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    form.style.display = 'none';
+                    resultSection.classList.add('visible');
+                    document.getElementById('download-report').href = data.download_url;
+                } else {
+                    alert('Erreur: ' + data.message);
+                    submitBtn.innerHTML = originalBtnHtml;
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Une erreur est survenue lors de la génération du rapport.');
+                submitBtn.innerHTML = originalBtnHtml;
+                submitBtn.disabled = false;
+            });
         }
     });
 });

@@ -1,1 +1,21 @@
+# Environment
 .env
+
+# Composer
+/vendor/
+composer.lock
+
+# Uploads (user-generated content)
+/uploads/rapports/
+/uploads/dossiers/
+/uploads/email_logs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
