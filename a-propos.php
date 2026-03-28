@@ -69,7 +69,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero apropos-hero">
+<section class="page-hero apropos-hero" style="background-image: url('assets/images/hero/apropos.jpg');">
     <div class="container">
         <h1>À Propos</h1>
         <p>Découvrez l'histoire et la mission de l'UCAO et de notre plateforme d'orientation</p>

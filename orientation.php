@@ -68,7 +68,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero orientation-hero">
+<section class="page-hero orientation-hero" style="background-image: url('assets/images/hero/orientation.jpg');">
     <div class="container">
         <h1>Orientation</h1>
         <p>Découvrez la filière qui correspond à votre profil et vos aspirations</p>

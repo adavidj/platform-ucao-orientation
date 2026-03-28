@@ -1408,9 +1408,7 @@ ul, ol {
    PAGE HERO BANNER - Premium Animated Version
    ================================================================= */
 .page-hero {
-    background-image:
-        linear-gradient(135deg, rgba(26, 35, 126, 0.9) 0%, rgba(183, 28, 28, 0.8) 100%),
-        var(--hero-image, linear-gradient(135deg, var(--couleur-primaire) 0%, #0a0445 40%, var(--couleur-secondaire-dark) 100%));
+    background-color: var(--couleur-primaire);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1423,6 +1421,14 @@ ul, ol {
     min-height: 420px;
     display: flex;
     align-items: center;
+}
+
+.page-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(24, 3, 145, 0.75) 0%, rgba(139, 0, 0, 0.7) 100%);
+    z-index: 1;
 }
 
 /* Animated gradient overlay */
@@ -1441,20 +1447,6 @@ ul, ol {
 @keyframes heroHaloShift {
     0% { opacity: 0.72; transform: scale(1) translateY(0); }
     100% { opacity: 1; transform: scale(1.08) translateY(-8px); }
-}
-
-/* Animated particles/shapes */
-.page-hero::after {
-    content: '';
-    position: absolute;
-    inset: -35% -5% auto;
-    height: 260px;
-    background:
-        radial-gradient(42% 70% at 14% 50%, rgba(255, 215, 0, 0.22), transparent 72%),
-        radial-gradient(50% 90% at 88% 50%, rgba(255, 255, 255, 0.2), transparent 75%);
-    filter: blur(8px);
-    animation: heroLightSweep 9s var(--ease-in-out-quart) infinite;
-    pointer-events: none;
 }
 
 @keyframes heroLightSweep {

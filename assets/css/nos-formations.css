@@ -1,5 +1,5 @@
-.formations-hero {
-    --hero-image: url('assets/images/slides/slide3.jpg');
+.page-hero.formations-hero {
+    --hero-image: url('../images/hero/formations.jpg');
 }
 
 .tabs-container {

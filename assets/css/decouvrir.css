@@ -1,5 +1,5 @@
 .page-hero.decouvrir {
-    --hero-image: url('assets/images/slides/slide2.jpg');
+    --hero-image: url('../images/hero/decouvrir.jpg');
 }
 
 .values-section {

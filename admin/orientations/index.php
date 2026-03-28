@@ -83,7 +83,7 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
                     <th>Série</th>
                     <th>Métier souhaité</th>
                     <th>Date</th>
-                    <th>Email</th>
+                    <th>Statut</th>
                     <th>Actions</th>
                 </tr>
             </thead>

@@ -84,7 +84,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero decouvrir">
+<section class="page-hero decouvrir" style="background-image: url('assets/images/hero/decouvrir.jpg');">
     <div class="container">
         <h1>Découvrir l'UCAO</h1>
         <p>Une université d'excellence au service de l'Afrique, fondée sur les valeurs de Foi, Science et Action</p>

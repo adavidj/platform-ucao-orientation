@@ -1,5 +1,5 @@
-.preinscription-hero {
-    --hero-image: url('assets/images/slides/slide5.jpg');
+.page-hero.preinscription-hero {
+    --hero-image: url('../images/hero/preinscription.jpg');
 }
 
 .preinscription-container {

@@ -103,8 +103,33 @@ try {
     // 2. Générer le PDF (Délègue à la classe existante qui crée le DOMPDF et update la DB)
     $pdfPath = Rapport::generateOrientationPDF($orientationId);
     
-    // 3. Envoi potentiel de l'email (si activé/configuré)
-    // Par défaut, le cron admin enverra les réponses détaillées ou on pourrait le faire ici directement
+    // 3. Envoi de l'email avec la pièce jointe PDF
+    try {
+        $mailer = new Mailer();
+        $emailSujet = "Votre Rapport d'Orientation UCAO";
+        
+        $emailCorps = "
+            <div style='font-family: Arial, sans-serif; color: #333;'>
+                <h2>Bonjour " . htmlspecialchars($prenom) . ",</h2>
+                <p>Merci d'avoir utilisé notre plateforme décisionnelle d'orientation !</p>
+                <p>Suite à votre souhait pour le domaine de <b>" . htmlspecialchars($metier_souhaite) . "</b>, 
+                vous trouverez en pièce jointe votre rapport détaillé d'orientation généré automatiquement.</p>
+                <br>
+                <p>L'équipe d'Orientation de l'UCAO BENIN</p>
+                <hr>
+                <small>Ceci est un mail automatique. Ne pas y répondre.</small>
+            </div>
+        ";
+
+        // $pdfPath est la copie relative, on a besoin du chemin physique absolu pour l'attachement PHP
+        $cheminAbsoluPdf = RAPPORTS_DIR . '/' . $pdfPath;
+        
+        $mailer->send($email, $emailSujet, $emailCorps, [$cheminAbsoluPdf]);
+        
+    } catch (Exception $e) {
+        // Enregistrement de l'erreur email silencieusement, l'utilisateur a toujours le lien de téléchargement direct
+        error_log("Alerte: Impossible d'envoyer le mail - " . $e->getMessage());
+    }
     
     // Fin, on retourne les liens à l'interface
     echo json_encode([
