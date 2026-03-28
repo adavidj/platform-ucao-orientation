@@ -26,13 +26,13 @@ if (!verify_csrf($csrf_token)) {
 }
 
 // Nettoyage des entrées
-$nom = trim(filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING));
-$prenom = trim(filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_STRING));
+$nom = trim(htmlspecialchars($_POST['nom'] ?? '', ENT_QUOTES, 'UTF-8'));
+$prenom = trim(htmlspecialchars($_POST['prenom'] ?? '', ENT_QUOTES, 'UTF-8'));
 $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
-$telephone = trim(filter_input(INPUT_POST, 'telephone', FILTER_SANITIZE_STRING));
-$serie_bac = trim(filter_input(INPUT_POST, 'serie_bac', FILTER_SANITIZE_STRING));
-$numero_table = trim(filter_input(INPUT_POST, 'numero_table', FILTER_SANITIZE_STRING));
-$metier_souhaite = trim(filter_input(INPUT_POST, 'metier_souhaite', FILTER_SANITIZE_STRING));
+$telephone = trim(htmlspecialchars($_POST['telephone'] ?? '', ENT_QUOTES, 'UTF-8'));
+$serie_bac = trim(htmlspecialchars($_POST['serie_bac'] ?? '', ENT_QUOTES, 'UTF-8'));
+$numero_table = trim(htmlspecialchars($_POST['numero_table'] ?? '', ENT_QUOTES, 'UTF-8'));
+$metier_souhaite = trim(htmlspecialchars($_POST['metier_souhaite'] ?? '', ENT_QUOTES, 'UTF-8'));
 
 // Validation basique
 if (empty($nom) || empty($prenom) || empty($email) || empty($telephone) || empty($serie_bac) || empty($metier_souhaite)) {
