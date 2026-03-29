@@ -4,6 +4,7 @@
  */
 
 // Include configuration
+require_once 'config/config.php';
 require_once 'config/app.php';
 
 // Page settings
@@ -44,45 +45,23 @@ $bac_series = [
     'G3' => 'G3 - Techniques Commerciales'
 ];
 
-// Available formations (would be from database)
-$formations = [
-    'EGEI' => [
-        'Licence Électronique',
-        'Licence Génie Télécoms et TIC',
-        'Licence Informatique Industrielle',
-        'Licence Électrotechnique',
-        'Master Automatique',
-        'Master Télécommunications',
-        'Master Informatique'
-    ],
-    'ESMEA' => [
-        'Licence Banques-Finances-Assurances',
-        'Licence Audit-Comptabilité',
-        'Licence Ressources Humaines',
-        'Licence Marketing',
-        'Licence Transport-Logistique',
-        'Master Audit et Contrôle de Gestion',
-        'Master GRH',
-        'Master Marketing',
-        'Master Commerce International',
-        'Master Transport et Logistique'
-    ],
-    'FSAE' => [
-        'Licence Agronomie',
-        'Licence Gestion de l\'Environnement',
-        'Licence Ressources Animales',
-        'Licence Production Végétale',
-        'Master Environnement',
-        'Master Gestion des Ressources Naturelles',
-        'Master Aménagement Espace Urbain'
-    ],
-    'FDE' => [
-        'Licence Sciences Juridiques',
-        'Licence Sciences Économiques',
-        'Master Droit Privé Fondamental',
-        'Master Droit Public Fondamental'
-    ]
-];
+// Available formations (from database)
+$pdo = Database::getInstance();
+$stmt = $pdo->query("SELECT id, ecole_faculte, nom_filiere FROM filieres WHERE actif = 1 ORDER BY ecole_faculte, nom_filiere");
+$filieresList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Organiser par école
+$formations = [];
+foreach ($filieresList as $filiere) {
+    $ecole = $filiere['ecole_faculte'];
+    if (!isset($formations[$ecole])) {
+        $formations[$ecole] = [];
+    }
+    $formations[$ecole][] = [
+        'id' => $filiere['id'],
+        'nom' => $filiere['nom_filiere']
+    ];
+}
 
 // Entry levels
 $entry_levels = [
@@ -315,8 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
             filiereSelect.disabled = false;
             formations[ecole].forEach(filiere => {
                 const option = document.createElement('option');
-                option.value = filiere;
-                option.textContent = filiere;
+                option.value = filiere.id;
+                option.textContent = filiere.nom;
                 filiereSelect.appendChild(option);
             });
         } else {
@@ -324,79 +303,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // File upload zones
-    const fileZones = document.querySelectorAll('.file-upload-zone');
-    fileZones.forEach(zone => {
-        const input = zone.querySelector('input[type="file"]');
-        const textEl = zone.querySelector('.file-upload-text');
-
-        zone.addEventListener('click', (e) => {
-            if (e.target !== input) {
-                input.click();
-            }
-        });
-
-        input.addEventListener('change', function() {
-            if (this.files.length > 0) {
-                textEl.textContent = this.files[0].name;
-                zone.classList.add('has-file');
-            } else {
-                textEl.textContent = zone.querySelector('.file-upload-hint').previousElementSibling.textContent;
-                zone.classList.remove('has-file');
-            }
-        });
-
-        // Drag and drop
-        zone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            zone.classList.add('dragover');
-        });
-
-        zone.addEventListener('dragleave', () => {
-            zone.classList.remove('dragover');
-        });
-
-        zone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            zone.classList.remove('dragover');
-            if (e.dataTransfer.files.length > 0) {
-                input.files = e.dataTransfer.files;
-                textEl.textContent = e.dataTransfer.files[0].name;
-                zone.classList.add('has-file');
-            }
-        });
-    });
-
-    // Form submission
+    // Form submission via AJAX
     const form = document.getElementById('preinscription-form');
     const successSection = document.getElementById('success-section');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
+
+        // Clear previous errors
+        form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+        form.querySelectorAll('.error-message').forEach(el => el.remove());
 
         // Validate form
         let isValid = true;
         const requiredFields = form.querySelectorAll('[required]');
 
         requiredFields.forEach(field => {
-            field.classList.remove('error');
-            const existingError = field.parentElement.querySelector('.error-message');
-            if (existingError) existingError.remove();
-
-            if (!field.value.trim() && field.type !== 'file') {
+            if (!field.value.trim()) {
                 isValid = false;
                 field.classList.add('error');
                 const msg = document.createElement('span');
                 msg.className = 'error-message';
                 msg.textContent = 'Ce champ est obligatoire';
                 field.parentElement.appendChild(msg);
-            }
-
-            // File validation
-            if (field.type === 'file' && field.files.length === 0) {
-                isValid = false;
-                const zone = field.closest('.file-upload-zone');
-                zone.style.borderColor = '#e74c3c';
             }
         });
 
@@ -411,12 +341,52 @@ document.addEventListener('DOMContentLoaded', function() {
             emailField.parentElement.appendChild(msg);
         }
 
-        if (isValid) {
-            form.style.display = 'none';
-            document.querySelector('.info-box').style.display = 'none';
-            document.querySelector('.form-header').style.display = 'none';
-            successSection.classList.add('visible');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (!isValid) return;
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Envoi en cours...</span>';
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('handlers/preinscription-handler.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Show success message
+                form.style.display = 'none';
+                document.querySelector('.info-box').style.display = 'none';
+                document.querySelector('.form-header').style.display = 'none';
+                successSection.classList.add('visible');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // Show errors
+                if (result.errors) {
+                    for (const [field, message] of Object.entries(result.errors)) {
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            input.classList.add('error');
+                            const msg = document.createElement('span');
+                            msg.className = 'error-message';
+                            msg.textContent = message;
+                            input.parentElement.appendChild(msg);
+                        }
+                    }
+                } else {
+                    alert(result.message || 'Une erreur est survenue');
+                }
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Soumettre ma pré-inscription</span>';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Erreur de connexion. Veuillez réessayer.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Soumettre ma pré-inscription</span>';
         }
     });
 });
