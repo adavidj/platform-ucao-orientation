@@ -5,7 +5,7 @@ if (!isset($site_name)) {
 }
 
 if (!isset($site_logo_path)) {
-    $site_logo_path = 'assets/images/logo-ucao.png';
+    $site_logo_path = 'assets/images/logoucao.png';
 }
 
 // Default page title

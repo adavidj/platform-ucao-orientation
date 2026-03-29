@@ -47,7 +47,7 @@ $hero_slides = [
         'button1_url' => 'decouvrir-ucao.php',
         'button2_text' => 'Nos Formations',
         'button2_url' => 'nos-formations.php',
-        'bg_image' => 'assets/images/slides/slide1.jpg'
+        'bg_image' => 'assets/images/slides/ucao.jpg'
     ],
     [
         'title' => 'UCAO-UUC',
@@ -74,7 +74,7 @@ $hero_slides = [
         'button1_url' => '#',
         'button2_text' => '',
         'button2_url' => '',
-        'bg_image' => 'assets/images/slides/slide4.jpg'
+        'bg_image' => 'assets/images/slides/ucao-tech.png'
     ],
     [
         'title' => 'Prêt à nous rejoindre ?',
