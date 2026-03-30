@@ -1,5 +1,6 @@
 .page-hero.contact-hero {
     --hero-image: url('../images/hero/contact.jpg');
+    margin-top: 0;
 }
 
 .contact-section {

@@ -168,16 +168,6 @@ $social_links = [
 <body>
 
     <!-- =================================================================
-       SPLASH SCREEN / LOADING ANIMATION
-       ================================================================= -->
-    <div class="splash-screen" id="splash-screen">
-        <div class="splash-content">
-            <img src="<?= htmlspecialchars($site_logo_path) ?>" alt="<?= htmlspecialchars($site_name) ?>" class="splash-logo">
-            <div class="splash-loader"></div>
-        </div>
-    </div>
-
-    <!-- =================================================================
        HEADER / NAVBAR
        ================================================================= -->
     <header class="main-header" id="main-header">
