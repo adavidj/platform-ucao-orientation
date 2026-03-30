@@ -1,6 +1,67 @@
 /* Homepage specific styles - Premium Design v2.0 */
 
 /* =================================================================
+   SPLASH SCREEN / LOADING ANIMATION
+   ================================================================= */
+.splash-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--couleur-primaire) 0%, var(--couleur-secondaire-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.splash-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.splash-content {
+    text-align: center;
+}
+
+.splash-logo {
+    width: 120px;
+    height: auto;
+    animation: spinLogo 2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes spinLogo {
+    0% {
+        transform: rotateY(0deg) scale(1);
+    }
+    50% {
+        transform: rotateY(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotateY(360deg) scale(1);
+    }
+}
+
+.splash-loader {
+    margin-top: 30px;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =================================================================
    HERO SLIDER WITH PREMIUM ANIMATIONS
    ================================================================= */
 .hero-slider {

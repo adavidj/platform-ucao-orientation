@@ -29,35 +29,19 @@ $bac_series = [
     'G3' => 'G3 - Techniques Commerciales'
 ];
 
-// Sample job suggestions (in real app, this would come from database)
-$job_suggestions = [
-    'Développeur Web',
-    'Développeur Mobile',
-    'Data Scientist',
-    'Ingénieur Réseau',
-    'Ingénieur Logiciel',
-    'Chef de Projet IT',
-    'Analyste Financier',
-    'Comptable',
-    'Auditeur',
-    'Directeur des Ressources Humaines',
-    'Responsable Marketing',
-    'Chef de Produit',
-    'Avocat',
-    'Juriste d\'Entreprise',
-    'Économiste',
-    'Banquier',
-    'Gestionnaire de Patrimoine',
-    'Conseiller en Assurance',
-    'Ingénieur Agronome',
-    'Gestionnaire Environnemental',
-    'Urbaniste',
-    'Automaticien',
-    'Électronicien',
-    'Entrepreneur',
-    'Consultant',
-    'Manager'
-];
+// Récupérer les métiers depuis la base de données
+$job_suggestions = [];
+try {
+    $pdo = Database::getInstance();
+    $query = "SELECT nom_metier FROM metiers WHERE actif = 1 ORDER BY nom_metier ASC";
+    $result = $pdo->query($query);
+    if ($result) {
+        $job_suggestions = $result->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (Exception $e) {
+    // En cas d'erreur, utiliser une liste vide (les suggestions seront désactivées si pas de métiers)
+    $job_suggestions = [];
+}
 
 // Admin parameter - période nouveaux bacheliers (normally from database)
 $is_bac_period = true; // Would be retrieved from admin settings
@@ -68,7 +52,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero orientation-hero" style="background-image: url('assets/images/hero/orientation.jpeg');">
+<section class="page-hero orientation-hero" style="background-image: url('assets/images/hero/orientation.jpg');">
     <div class="container">
         <h1>Orientation</h1>
         <p>Découvrez la filière qui correspond à votre profil et vos aspirations</p>

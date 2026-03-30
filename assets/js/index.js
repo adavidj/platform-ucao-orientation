@@ -42,7 +42,7 @@
             // Nettoyer la classe exiting après transition
             setTimeout(() => {
                 heroSlides.forEach(slide => slide.classList.remove('exiting'));
-            }, 900);
+            }, 1000);
 
             resetProgress();
         }
@@ -381,9 +381,27 @@
     };
 
     // =================================================================
+    // SPLASH SCREEN
+    // =================================================================
+    const initSplashScreen = () => {
+        const splashScreen = document.getElementById('splash-screen');
+        if (!splashScreen) return;
+
+        // Hide splash screen after 3 seconds
+        setTimeout(() => {
+            splashScreen.classList.add('hidden');
+            // Remove from DOM after transition
+            setTimeout(() => {
+                splashScreen.remove();
+            }, 600);
+        }, 3000);
+    };
+
+    // =================================================================
     // INITIALIZE ALL
     // =================================================================
     const init = () => {
+        initSplashScreen();
         initHeroSlider();
         initScrollIndicator();
         initHeroParallax();

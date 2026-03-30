@@ -1,5 +1,6 @@
 .page-hero.preinscription-hero {
     --hero-image: url('../images/hero/preinscription.jpg');
+    margin-top: 0;
 }
 
 .preinscription-container {

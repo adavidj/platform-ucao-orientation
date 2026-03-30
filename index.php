@@ -56,7 +56,7 @@ $hero_slides = [
         'button1_url' => 'decouvrir-ucao.php',
         'button2_text' => '',
         'button2_url' => '',
-        'bg_image' => 'assets/images/slides/slide2.jpg'
+        'bg_image' => 'assets/images/slides/UCAOSS.jpg'
     ],
     [
         'title' => 'Œuvres universitaires',
@@ -168,6 +168,16 @@ $social_links = [
 <body>
 
     <!-- =================================================================
+       SPLASH SCREEN / LOADING ANIMATION
+       ================================================================= -->
+    <div class="splash-screen" id="splash-screen">
+        <div class="splash-content">
+            <img src="<?= htmlspecialchars($site_logo_path) ?>" alt="<?= htmlspecialchars($site_name) ?>" class="splash-logo">
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+
+    <!-- =================================================================
        HEADER / NAVBAR
        ================================================================= -->
     <header class="main-header" id="main-header">
@@ -239,7 +249,7 @@ $social_links = [
             <!-- Slides Container -->
             <div class="hero-slides-container">
                 <?php foreach ($hero_slides as $index => $slide): ?>
-                <div class="hero-slide <?= $index === 0 ? 'active' : '' ?>" data-slide="<?= $index + 1 ?>" style="background-image: linear-gradient(135deg, rgba(24, 3, 145, 0.55) 0%, rgba(92, 0, 0, 0.48) 100%), url('<?= htmlspecialchars($slide['bg_image']) ?>');">
+                <div class="hero-slide <?= $index === 0 ? 'active' : '' ?>" data-slide="<?= $index + 1 ?>" style="background-image: linear-gradient(135deg, rgba(24, 3, 145, 0.78) 0%, rgba(92, 0, 0, 0.72) 100%), url('<?= htmlspecialchars($slide['bg_image']) ?>');">
                     <div class="container">
                         <div class="hero-slide-content">
                             <h1><?= htmlspecialchars($slide['title']) ?></h1>

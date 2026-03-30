@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // classes/Mailer.php
 
 require_once dirname(__DIR__) . "/vendor/autoload.php";

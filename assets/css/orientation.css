@@ -1,5 +1,6 @@
 .page-hero.orientation-hero {
     --hero-image: url('../images/hero/orientation.jpg');
+    margin-top: 0;
 }
 
 .orientation-container {
