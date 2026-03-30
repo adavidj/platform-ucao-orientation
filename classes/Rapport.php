@@ -23,7 +23,7 @@ class Rapport {
         $filieres_details = [];
         if ($metier) {
             $stmtF = $pdo->prepare("
-                SELECT f.nom_filiere, f.ecole_faculte, f.description, f.niveau_requis, f.duree_formation, f.competences, f.debouches
+                SELECT f.nom_filiere, f.ecole_faculte, f.description, f.niveau, f.duree, f.debouches
                 FROM filieres f
                 JOIN metiers_filieres mf ON f.id = mf.filiere_id
                 WHERE mf.metier_id = ?
@@ -84,15 +84,21 @@ class Rapport {
      */
     private static function getOrientationTemplate($orientation, $filieres_details = []) {
         $date = date('d/m/Y', strtotime($orientation['created_at']));
-        
+
+        // Encoder le logo en base64 pour DOMPDF
+        $logoPath = APP_ROOT . '/admin/assets/images/logo-ucao.png';
+        $logoData = '';
+        if (file_exists($logoPath)) {
+            $logoData = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        }
+
         $htmlFilieres = '';
         if (!empty($filieres_details)) {
             foreach ($filieres_details as $f) {
                 // Formatting specific fields if empty
-                $niveau = !empty($f['niveau_requis']) ? $f['niveau_requis'] : 'Baccalauréat';
-                $duree = !empty($f['duree_formation']) ? $f['duree_formation'] : '3 ans (Licence)';
+                $niveau = !empty($f['niveau']) ? $f['niveau'] : 'Baccalauréat';
+                $duree = !empty($f['duree']) ? $f['duree'] : '3 ans (Licence)';
                 $desc = !empty($f['description']) ? nl2br(e($f['description'])) : '<em>Description non disponible</em>';
-                $comp = !empty($f['competences']) ? nl2br(e($f['competences'])) : '<em>Non renseigné</em>';
                 $deb = !empty($f['debouches']) ? nl2br(e($f['debouches'])) : '<em>Non renseigné</em>';
 
                 $htmlFilieres .= '
@@ -103,14 +109,11 @@ class Rapport {
                     
                     <table class="filiere-table">
                         <tr>
-                            <td class="filiere-td-label">🎓 Niveau Requis :</td><td class="filiere-td-val">' . e($niveau) . '</td>
-                            <td class="filiere-td-label">⏱️ Durée :</td><td class="filiere-td-val">' . e($duree) . '</td>
+                            <td class="filiere-td-label">Diplome prepare :</td><td class="filiere-td-val">' . e($niveau) . '</td>
+                            <td class="filiere-td-label">Duree :</td><td class="filiere-td-val">' . e($duree) . '</td>
                         </tr>
                     </table>
 
-                    <div style="font-size: 11px; margin-bottom:5px; padding-left:10px;">
-                        <strong style="color:#180391;">Compétences acquises :</strong><br>' . $comp . '
-                    </div>
                     <div style="font-size: 11px; padding-left:10px;">
                         <strong style="color:#180391;">Débouchés professionnels :</strong><br>' . $deb . '
                     </div>
@@ -129,9 +132,13 @@ class Rapport {
             <meta charset="UTF-8">
             <style>
                 body { font-family: Helvetica, Arial, sans-serif; color: #1a1a2e; line-height: 1.5; margin: 0; padding: 0; }
-                .header { background: linear-gradient(135deg, #180391, #3017a1); color: white; padding: 25px 40px; border-bottom: 5px solid #FFD700; text-align: center; }
-                .header h1 { margin: 0 0 5px 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-                .header p { margin: 0; opacity: 0.9; font-size: 13px; }
+                .header { background-color: #5c0000; color: white; padding: 20px 40px; border-bottom: 5px solid #FFD700; }
+                .header-inner { display: table; width: 100%; }
+                .header-logo { display: table-cell; vertical-align: middle; width: 80px; }
+                .header-logo img { max-height: 70px; }
+                .header-text { display: table-cell; vertical-align: middle; text-align: right; }
+                .header h1 { margin: 0 0 5px 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
+                .header p { margin: 0; font-size: 12px; }
                 .content { padding: 30px 40px; }
                 .section { margin-bottom: 25px; }
                 
@@ -169,8 +176,15 @@ class Rapport {
         </head>
         <body>
             <div class="header">
-                <h1>Rapport d\'Orientation</h1>
-                <p>Université Catholique de l\'Afrique de l\'Ouest — ' . $date . '</p>
+                <div class="header-inner">
+                    <div class="header-logo">
+                        ' . ($logoData ? '<img src="' . $logoData . '" alt="UCAO">' : '') . '
+                    </div>
+                    <div class="header-text">
+                        <h1>Rapport d\'Orientation</h1>
+                        <p>Universite Catholique de l\'Afrique de l\'Ouest — ' . $date . '</p>
+                    </div>
+                </div>
             </div>
             
             <div class="content">
@@ -210,18 +224,29 @@ class Rapport {
                 </div>
 
                 <div class="section" style="page-break-inside: avoid;">
-                    <div class="section-title">5. Prochaines Étapes</div>
+                    <div class="section-title">5. Prochaines Etapes</div>
                     <div class="arg-box">
                         <ol class="arg-list" style="margin-left:5px;">
-                            <li>Explorez davantage les filières listées ci-dessus sur notre site web.</li>
-                            <li><strong>Procédez à votre préinscription gratuite</strong> sur notre plateforme officielle.</li>
-                            <li>Rassemblez vos relevés de notes, diplômes et documents de candidature.</li>
-                            <li>Discutez avec nos conseillers pédagogiques si vous avez la moindre interrogation.</li>
+                            <li>Explorez davantage les filieres listees ci-dessus sur notre site web.</li>
+                            <li><strong>Procedez a votre preinscription gratuite</strong> sur notre plateforme officielle.</li>
+                            <li>Rassemblez vos releves de notes, diplomes et documents de candidature.</li>
+                            <li>Discutez avec nos conseillers pedagogiques si vous avez la moindre interrogation.</li>
                         </ol>
                     </div>
                 </div>
+
+                <div class="section" style="page-break-inside: avoid;">
+                    <div class="section-title">6. Preinscription en Ligne</div>
+                    <div style="background-color: #180391; padding: 20px; border-radius: 8px; text-align: center;">
+                        <p style="color: #FFD700; font-size: 14px; margin: 0 0 10px 0; font-weight: bold;">Demarrez votre parcours a l\'UCAO des maintenant !</p>
+                        <p style="color: white; font-size: 12px; margin: 0 0 15px 0;">Accedez a notre plateforme d\'orientation et preinscription :</p>
+                        <div style="background-color: #FFD700; padding: 12px 25px; border-radius: 5px; display: inline-block;">
+                            <a href="' . APP_URL . '/preinscription.php" style="color: #180391; font-weight: bold; font-size: 13px; text-decoration: none;">' . APP_URL . '/preinscription.php</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
+
             <div class="footer">
                 <strong>UCAO-UUC</strong> — Lot 246 St Jean, Cotonou<br>
                 Téléphone : +229 01 21 60 40 70 | Email : contact@ucaobenin.org<br>

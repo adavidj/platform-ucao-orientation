@@ -1,5 +1,5 @@
-.orientation-hero {
-    --hero-image: url('assets/images/slides/slide1.jpg');
+.page-hero.orientation-hero {
+    --hero-image: url('../images/hero/orientation.jpg');
 }
 
 .orientation-container {

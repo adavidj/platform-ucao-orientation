@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Pré-inscription - UCAO</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f7; line-height: 1.6;">
+    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+                <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #180391 0%, #8B0000 100%); padding: 30px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600;">UCAO - UUC Cotonou</h1>
+                            <p style="margin: 10px 0 0; color: #f0f0f0; font-size: 14px;">Pre-inscription Academique {{ANNEE}}</p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            <h2 style="margin: 0 0 20px; color: #180391; font-size: 20px;">Bonjour {{PRENOM}} {{NOM}},</h2>
+
+                            <p style="color: #333; margin: 0 0 20px;">
+                                Nous avons le plaisir de vous confirmer que votre demande de pre-inscription a ete enregistree avec succes.
+                            </p>
+
+                            <!-- Reference Box -->
+                            <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 25px 0;">
+                                <tr>
+                                    <td style="background-color: #f8f9fc; border-left: 4px solid #180391; padding: 20px; border-radius: 0 8px 8px 0;">
+                                        <p style="margin: 0 0 5px; color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Numero de reference</p>
+                                        <p style="margin: 0; color: #180391; font-size: 24px; font-weight: 700;">{{REFERENCE}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="color: #333; margin: 0 0 15px;">
+                                <strong>Recapitulatif de votre demande :</strong>
+                            </p>
+
+                            <!-- Details Table -->
+                            <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 25px;">
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eee; color: #666; width: 40%;">Ecole/Faculte</td>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eee; color: #333; font-weight: 500;">{{ECOLE}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eee; color: #666;">Filiere</td>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eee; color: #333; font-weight: 500;">{{FILIERE}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eee; color: #666;">Niveau d'entree</td>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #eee; color: #333; font-weight: 500;">{{NIVEAU}}</td>
+                                </tr>
+                            </table>
+
+                            <p style="color: #333; margin: 0 0 25px;">
+                                Notre equipe d'orientation prendra contact avec vous dans les plus brefs delais pour la suite des demarches d'inscription.
+                            </p>
+
+                            <!-- CTA Button -->
+                            <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{APP_URL}}" style="display: inline-block; background-color: #180391; color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 6px; font-weight: 600; font-size: 14px;">Visiter notre site</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f8f9fc; padding: 25px 30px; text-align: center; border-top: 1px solid #eee;">
+                            <p style="margin: 0 0 10px; color: #666; font-size: 14px;">
+                                <strong>UCAO - UUC Cotonou</strong>
+                            </p>
+                            <p style="margin: 0 0 10px; color: #888; font-size: 13px;">
+                                Lot 246 St Jean, Cotonou, Benin<br>
+                                Tel: +229 01 21 60 40 70 | +229 01 56 35 14 41
+                            </p>
+                            <p style="margin: 0; color: #aaa; font-size: 12px;">
+                                &copy; {{ANNEE}} UCAO-UUC. Tous droits reserves.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

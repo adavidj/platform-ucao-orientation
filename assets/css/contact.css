@@ -1,5 +1,5 @@
-.contact-hero {
-    --hero-image: url('assets/images/slides/slide4.jpg');
+.page-hero.contact-hero {
+    --hero-image: url('../images/hero/contact.jpg');
 }
 
 .contact-section {

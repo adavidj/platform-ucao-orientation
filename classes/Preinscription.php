@@ -126,6 +126,46 @@ class Preinscription {
     }
 
     /**
+     * Créer une nouvelle préinscription
+     */
+    public static function create($data) {
+        $pdo = Database::getInstance();
+
+        $stmt = $pdo->prepare("
+            INSERT INTO preinscriptions
+            (nom, prenom, date_naissance, nationalite, serie_bac, annee_bac,
+             etablissement_origine, filiere_choisie, niveau_entree, email, telephone)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        $stmt->execute([
+            $data['nom'],
+            $data['prenom'],
+            $data['date_naissance'],
+            $data['nationalite'],
+            $data['serie_bac'],
+            $data['annee_bac'],
+            $data['etablissement'],
+            $data['filiere'],
+            $data['niveau_entree'],
+            $data['email'],
+            $data['telephone']
+        ]);
+
+        return $pdo->lastInsertId();
+    }
+
+    /**
+     * Vérifier si un email existe déjà
+     */
+    public static function emailExists($email) {
+        $pdo = Database::getInstance();
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM preinscriptions WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    /**
      * Exporter en CSV
      */
     public static function exportCSV($filters = []) {

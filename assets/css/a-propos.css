@@ -1,5 +1,5 @@
-.apropos-hero {
-    --hero-image: url('assets/images/slides/slide4.jpg');
+.page-hero.apropos-hero {
+    --hero-image: url('../images/hero/apropos.jpg');
 }
 
 /* Mission Section */

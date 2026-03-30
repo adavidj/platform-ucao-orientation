@@ -297,7 +297,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero formations-hero">
+<section class="page-hero formations-hero" style="background-image: url('assets/images/hero/formations.jpg');">
     <div class="container">
         <h1>Nos Formations</h1>
         <p>Des programmes d'excellence pour construire votre avenir professionnel</p>

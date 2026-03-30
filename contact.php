@@ -39,7 +39,7 @@ require_once 'config/app.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero contact-hero">
+<section class="page-hero contact-hero" style="background-image: url('assets/images/hero/contact.jpg');">
     <div class="container">
         <h1>Contact</h1>
         <p>Nous sommes là pour répondre à toutes vos questions</p>
