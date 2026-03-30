@@ -2,7 +2,9 @@
 // =================================================================
 // CONFIGURATION & DATA
 // =================================================================
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Configuration de l'environnement
 define('ENVIRONMENT', 'production'); // development ou production
@@ -14,12 +16,12 @@ define('SITE_URL', ENVIRONMENT === 'production' ? 'https://votre-domaine.com' : 
 // Configuration SMTP selon l'hébergeur
 if (ENVIRONMENT === 'production') {
     // À MODIFIER SELON VOTRE HÉBERGEUR
-    define('SMTP_HOST', 'mail37.lwspanel.com');    // Ex: smtp.ovh.net
-    define('SMTP_PORT', 465);                           // Test avec le port 465 (SSL)
-    define('SMTP_SECURE', 'ssl');                       // 'tls' ou 'ssl'
+    define('SMTP_HOST', 'mail.ucaobenin.org');    // Nouveau serveur SMTP
+    define('SMTP_PORT', 465);                     // Passage au port 465 (SSL)
+    define('SMTP_SECURE', 'ssl');                 // Chiffrement SSL
     define('SMTP_AUTH', true);
-    define('SMTP_USER', 'ucaotech@ucaobenin.org');   // Votre email
-    define('SMTP_PASS', 'Uc@oTech2026');          // Votre mot de passe
+    define('SMTP_USER', 'ucaotech@ucaobenin.org');
+    define('SMTP_PASS', 'Uc@oTech2026');
     define('SMTP_FROM', 'ucaotech@ucaobenin.org');
     define('SMTP_FROM_NAME', 'UCAO-Orientation');
 } else {
@@ -35,8 +37,8 @@ if (ENVIRONMENT === 'production') {
 }
 
 // Email de réception pour le formulaire de contact
-define('CONTACT_EMAIL', 'contact@ucaobenin.org');      // L'email qui recevra les messages
-define('ADMIN_EMAIL', 'admin@ucaobenin.org');
+define('CONTACT_EMAIL', 'ucaotech@gmail.com');      // L'email Gmail qui recevra les messages
+define('ADMIN_EMAIL', 'ucaotech@gmail.com');
 
 // Gestion des erreurs
 if (ENVIRONMENT === 'development') {

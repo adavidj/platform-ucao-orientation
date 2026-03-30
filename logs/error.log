@@ -1,0 +1,992 @@
+[30-Mar-2026 14:33:53 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:33:53 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:33:53 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:33:53 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:33:53 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:33:53 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:33:54 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<davidbocossa23@gmail.com>
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:33:53 +0100
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: =?UTF-8?Q?Confirmation_:_Nous_avons_re=C3=A7u_votre_message?=
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <UJphZklbDQ0CGMXpn3oVaRlCRmRpwfBuE8xsHm9fqc4@localhost>
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background-color: #180391; color: white; padding: 20px; text-align: center;'><h1 style='margin: 0;'>UCAO-ORIENTATION</h1><p>Confirmation de message reçu</p></div><div style='background-color: #f8f9fc; padding: 30px;'><h2 style='color: #1a1a2e;'>Bonjour David BOCOSSA,</h2><p>Nous avons bien reçu votre message :</p><div style='background-color: white; border-left: 4px solid #180391; padding: 15px;'><strong>Sujet :</strong> orientation<br><strong>Message :</strong><br>Orientation</div><p>Cordialement,<br>L'équipe UCAO.</p></div></div>
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as CB6E4E5DFC2
+
+[30-Mar-2026 14:33:55 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:33:56 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:33:57 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<contact@ucaobenin.org>
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:33:56 +0100
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: contact@ucaobenin.org
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Reply-To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: URGENT - Nouveau message : orientation
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <CSP1cEItrGMKvekTi04T0gMwKynOckDynJrqXkmJTNw@localhost>
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif;'><h2 style='color: #1a1a2e;'>Nouveau message de BOCOSSA</h2><p><strong>De :</strong> BOCOSSA David (davidbocossa23@gmail.com)<br><strong>Sujet :</strong> orientation</p><div style='background-color: #f0f0f0; padding: 15px;'>Orientation</div></div>
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 8C26CE5E600
+
+[30-Mar-2026 14:33:58 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:33:59 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:40:02 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:40:02 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:40:02 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:40:02 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:40:02 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:40:03 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<davidbocossa23@gmail.com>
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:40:02 +0100
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: =?UTF-8?Q?Confirmation_:_Nous_avons_re=C3=A7u_votre_message?=
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <7SfaInEjIrMAWArLnGR4qUAKPXTc8QqLwHHSWiPTA@localhost>
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background-color: #180391; color: white; padding: 20px; text-align: center;'><h1 style='margin: 0;'>UCAO-ORIENTATION</h1><p>Confirmation de message reçu</p></div><div style='background-color: #f8f9fc; padding: 30px;'><h2 style='color: #1a1a2e;'>Bonjour David BOCOSSA,</h2><p>Nous avons bien reçu votre message :</p><div style='background-color: white; border-left: 4px solid #180391; padding: 15px;'><strong>Sujet :</strong> inscription<br><strong>Message :</strong><br>Inscription</div><p>Cordialement,<br>L'équipe UCAO.</p></div></div>
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:40:04 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 1F959E93546
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:40:05 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:40:06 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<contact@ucaobenin.org>
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:40:05 +0100
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: contact@ucaobenin.org
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Reply-To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: URGENT - Nouveau message : inscription
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <sttbs1liIIlk0zMM7ul6EeelnvI6eZdxTaA1hf2QVoM@localhost>
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif;'><h2 style='color: #1a1a2e;'>Nouveau message de BOCOSSA</h2><p><strong>De :</strong> BOCOSSA David (davidbocossa23@gmail.com)<br><strong>Sujet :</strong> inscription</p><div style='background-color: #f0f0f0; padding: 15px;'>Inscription</div></div>
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as D10B4E93A98
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:40:07 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:42:16 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:42:16 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:42:16 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:42:16 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:42:16 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:42:16 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:42:17 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<davidbocossa23@gmail.com>
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:42:15 +0100
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: =?UTF-8?Q?Confirmation_:_Nous_avons_re=C3=A7u_votre_message?=
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <eJSWWy8SlcEkiYJNTTr6J9XgHP1v8cEqzFrOCE9dc@localhost>
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background-color: #180391; color: white; padding: 20px; text-align: center;'><h1 style='margin: 0;'>UCAO-ORIENTATION</h1><p>Confirmation de message reçu</p></div><div style='background-color: #f8f9fc; padding: 30px;'><h2 style='color: #1a1a2e;'>Bonjour David BOCOSSA,</h2><p>Nous avons bien reçu votre message :</p><div style='background-color: white; border-left: 4px solid #180391; padding: 15px;'><strong>Sujet :</strong> info<br><strong>Message :</strong><br>UCAO</div><p>Cordialement,<br>L'équipe UCAO.</p></div></div>
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:42:18 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:42:19 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 9A7ACE96864
+
+[30-Mar-2026 14:42:19 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:42:19 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:42:19 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:42:19 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:42:20 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<contact@ucaobenin.org>
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:42:19 +0100
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: contact@ucaobenin.org
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Reply-To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: URGENT - Nouveau message : info
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <1hWhAU7w3mSdNcQsJV1aZHiLG2pM3QYtlC7dnrW7NEo@localhost>
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif;'><h2 style='color: #1a1a2e;'>Nouveau message de BOCOSSA</h2><p><strong>De :</strong> BOCOSSA David (davidbocossa23@gmail.com)<br><strong>Sujet :</strong> info</p><div style='background-color: #f0f0f0; padding: 15px;'>UCAO</div></div>
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:42:21 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:42:22 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 4C088E96F61
+
+[30-Mar-2026 14:42:22 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:42:22 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:46:45 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<davidbocossa23@gmail.com>
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:46:46 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:46:44 +0100
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: =?UTF-8?Q?Confirmation_:_Nous_avons_re=C3=A7u_votre_message?=
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <HqamwKLAQRZshzvWZGXVcuHLENNwOBoTrQ7lYPCLtM@localhost>
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background-color: #180391; color: white; padding: 20px; text-align: center;'><h1 style='margin: 0;'>UCAO-ORIENTATION</h1><p>Confirmation de message reçu</p></div><div style='background-color: #f8f9fc; padding: 30px;'><h2 style='color: #1a1a2e;'>Bonjour David BOCOSSA,</h2><p>Nous avons bien reçu votre message :</p><div style='background-color: white; border-left: 4px solid #180391; padding: 15px;'><strong>Sujet :</strong> info<br><strong>Message :</strong><br>ucao uuc</div><p>Cordialement,<br>L'équipe UCAO.</p></div></div>
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 838ABE9CF68
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:46:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: STARTTLS
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:46:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<contact@ucaobenin.org>
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:46:47 +0100
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: contact@ucaobenin.org
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Reply-To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: URGENT - Nouveau message : info
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <MskftsRhrpL9Pf8vGtJUFa6Y9K3r0Ty2empuY9h64@localhost>
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif;'><h2 style='color: #1a1a2e;'>Nouveau message de BOCOSSA</h2><p><strong>De :</strong> BOCOSSA David (davidbocossa23@gmail.com)<br><strong>Sujet :</strong> info</p><div style='background-color: #f0f0f0; padding: 15px;'>ucao uuc</div></div>
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:46:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:46:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 5B269E9D70C
+
+[30-Mar-2026 14:46:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:46:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:51:38 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<davidbocossa23@gmail.com>
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:51:37 +0100
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: =?UTF-8?Q?Confirmation_:_Nous_avons_re=C3=A7u_votre_message?=
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <BGNZV5xl3uzhTS8yCQ00MUdeJUHGKF0UspQjUzC2yo@localhost>
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background-color: #180391; color: white; padding: 20px; text-align: center;'><h1 style='margin: 0;'>UCAO-ORIENTATION</h1><p>Confirmation de message reçu</p></div><div style='background-color: #f8f9fc; padding: 30px;'><h2 style='color: #1a1a2e;'>Bonjour David BOCOSSA,</h2><p>Nous avons bien reçu votre message :</p><div style='background-color: white; border-left: 4px solid #180391; padding: 15px;'><strong>Sujet :</strong> orientation<br><strong>Message :</strong><br>UCAO UUC</div><p>Cordialement,<br>L'équipe UCAO.</p></div></div>
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:51:39 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:51:40 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 0DDB0EA1D66
+
+[30-Mar-2026 14:51:40 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:51:40 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:51:40 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:51:40 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<contact@ucaobenin.org>
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:51:41 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:51:40 +0100
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: contact@ucaobenin.org
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Reply-To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: URGENT - Nouveau message : orientation
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <OKeLbeXJKtTZfiTt1M6AZlDQiep1eUt5Qz3fbWjW1kA@localhost>
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif;'><h2 style='color: #1a1a2e;'>Nouveau message de BOCOSSA</h2><p><strong>De :</strong> BOCOSSA David (davidbocossa23@gmail.com)<br><strong>Sujet :</strong> orientation</p><div style='background-color: #f0f0f0; padding: 15px;'>UCAO UUC</div></div>
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 85A41EA2478
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:51:42 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:54:47 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<davidbocossa23@gmail.com>
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:54:46 +0100
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: =?UTF-8?Q?Confirmation_:_Nous_avons_re=C3=A7u_votre_message?=
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <h5fzFuGuTbyz8hLWpXEz5nkNydIzOWA76Fo4nVx9s8@localhost>
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Transfer-Encoding: 8bit
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'><div style='background-color: #180391; color: white; padding: 20px; text-align: center;'><h1 style='margin: 0;'>UCAO-ORIENTATION</h1><p>Confirmation de message reçu</p></div><div style='background-color: #f8f9fc; padding: 30px;'><h2 style='color: #1a1a2e;'>Bonjour David BOCOSSA,</h2><p>Nous avons bien reçu votre message :</p><div style='background-color: white; border-left: 4px solid #180391; padding: 15px;'><strong>Sujet :</strong> info<br><strong>Message :</strong><br>UCAO-UUC</div><p>Cordialement,<br>L'équipe UCAO.</p></div></div>
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as D7BE6EB599A
+
+[30-Mar-2026 14:54:48 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:54:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
+[30-Mar-2026 14:54:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 220 mail37.lwspanel.com ESMTP Postfix (Debian/GNU)
+
+[30-Mar-2026 14:54:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: EHLO localhost
+
+[30-Mar-2026 14:54:49 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250-mail37.lwspanel.com
+250-PIPELINING
+250-SIZE 157286400
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250-DSN
+250 CHUNKING
+
+[30-Mar-2026 14:54:49 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: AUTH LOGIN
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: [credentials hidden]
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 235 2.7.0 Authentication successful
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MAIL FROM:<ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.0 Ok
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: RCPT TO:<ucaotech@gmail.com>
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.1.5 Ok
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: DATA
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 354 End data with <CR><LF>.<CR><LF>
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Date: Mon, 30 Mar 2026 14:54:49 +0100
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: To: ucaotech@gmail.com
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: From: UCAO-Orientation <ucaotech@ucaobenin.org>
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Reply-To: davidbocossa23@gmail.com
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Subject: URGENT - Nouveau message : info
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Message-ID: <3TslcBeNpYebsfxKUGW7dRqyBbrukYX4d3hbIMHk8I@localhost>
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: X-Mailer: PHPMailer 7.0.2 (https://github.com/PHPMailer/PHPMailer)
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: MIME-Version: 1.0
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: Content-Type: text/html; charset=UTF-8
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: <div style='font-family: Arial, sans-serif;'><h2 style='color: #1a1a2e;'>Nouveau message de BOCOSSA</h2><p><strong>De :</strong> BOCOSSA David (davidbocossa23@gmail.com)<br><strong>Sujet :</strong> info</p><div style='background-color: #f0f0f0; padding: 15px;'>UCAO-UUC</div></div>
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: 
+
+[30-Mar-2026 14:54:50 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: .
+
+[30-Mar-2026 14:54:51 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 250 2.0.0 Ok: queued as 58384EB5A8E
+
+[30-Mar-2026 14:54:51 Africa/Porto-Novo] SMTP Debug: CLIENT -> SERVER: QUIT
+
+[30-Mar-2026 14:54:51 Africa/Porto-Novo] SMTP Debug: SERVER -> CLIENT: 221 2.0.0 Bye
+
