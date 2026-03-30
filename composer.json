@@ -1,6 +1,11 @@
 {
+    "name": "ucao/orientation",
+    "description": "Plateforme d'orientation UCAO",
     "require": {
-        "phpmailer/phpmailer": "^7.0",
+        "phpmailer/phpmailer": "^6.8",
         "dompdf/dompdf": "^3.1"
+    },
+    "config": {
+        "optimize-autoloader": true
     }
 }

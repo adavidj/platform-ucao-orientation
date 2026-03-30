@@ -1,111 +1,103 @@
-<?php
-// =================================================================
-// CLASSE Mailer — Envoi d'emails via PHPMailer
-// =================================================================
+﻿<?php
+// classes/Mailer.php
+
+require_once dirname(__DIR__) . "/vendor/autoload.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception as PHPMailerException;
+use PHPMailer\PHPMailer\Exception;
 
-class Mailer {
-    private $config;
-    private $simulate;
+class Mailer
+{
+    private $mail;
+    private $error;
 
-    public function __construct() {
-        require_once dirname(__DIR__) . '/config/email.php';
-        $this->config = getMailerConfig();
-        $this->simulate = $this->config['simulate'];
+    public function __construct()
+    {
+        $this->mail = new PHPMailer(true);
+        $this->setup();
     }
 
-    /**
-     * Envoyer un email unique
-     */
-    public function send($to, $subject, $htmlBody, $attachments = []) {
-        // Mode simulation (dev sans SMTP)
-        if ($this->simulate) {
-            return $this->logEmail($to, $subject, $htmlBody);
-        }
-
+    private function setup()
+    {
         try {
-            $mail = $this->createMailer();
-            $mail->addAddress($to);
-            $mail->Subject = $subject;
-            $mail->Body = $htmlBody;
-            $mail->AltBody = strip_tags($htmlBody);
-
-            foreach ($attachments as $attachment) {
-                if (file_exists($attachment)) {
-                    $mail->addAttachment($attachment);
-                }
-            }
-
-            $mail->send();
-            return ['success' => true, 'message' => 'Email envoyé avec succès.'];
-        } catch (PHPMailerException $e) {
-            error_log("Erreur envoi email: " . $e->getMessage());
-            return ['success' => false, 'message' => 'Erreur d\'envoi: ' . $e->getMessage()];
-        }
-    }
-
-    /**
-     * Envoyer des emails en lot
-     */
-    public function sendBulk($recipients, $subject, $htmlBody) {
-        $sent = 0;
-        $errors = 0;
-
-        foreach ($recipients as $email) {
-            $result = $this->send($email, $subject, $htmlBody);
-            if ($result['success']) {
-                $sent++;
+            // Utilisation des variables du .env via la fonction env()
+            $this->mail->isSMTP();
+            $this->mail->Host = env("SMTP_HOST", "mail37.lwspanel.com");
+            $this->mail->SMTPAuth = true;
+            $this->mail->Username = env("SMTP_USER", "ucaotech@ucaobenin.org");
+            $this->mail->Password = env("SMTP_PASS", "Uc@oTech2026");
+            
+            // On récupère le port et l''encryption du .env
+            $port = (int)env("SMTP_PORT", 587);
+            $encryption = strtolower(env("SMTP_ENCRYPTION", "tls"));
+            
+            $this->mail->Port = $port;
+            
+            if ($encryption === "ssl" || $port === 465) {
+                $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             } else {
-                $errors++;
+                $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             }
-            // Pause entre les envois pour éviter le throttling
-            if (!$this->simulate) {
-                usleep(200000); // 200ms
-            }
+
+            $this->mail->Timeout = 20;
+            
+            // Options SSL pour LWS (souvent nécessaires)
+            $allowSelfSigned = env("SMTP_ALLOW_SELF_SIGNED", "false") === "true";
+            $this->mail->SMTPOptions = [
+                "ssl" => [
+                    "verify_peer" => !$allowSelfSigned,
+                    "verify_peer_name" => !$allowSelfSigned,
+                    "allow_self_signed" => $allowSelfSigned
+                ]
+            ];
+
+            $this->mail->CharSet = "UTF-8";
+            $this->mail->setFrom(
+                env("SMTP_FROM_EMAIL", env("SMTP_USER")), 
+                env("SMTP_FROM_NAME", "UCAO-Orientation")
+            );
+            $this->mail->isHTML(true);
+
+            // Debug controlé par le .env
+            $this->mail->SMTPDebug = (int)env("SMTP_DEBUG", 0);
+            
+        } catch (Exception $e) {
+            $this->error = $e->getMessage();
         }
-
-        return [
-            'success' => $errors === 0,
-            'message' => "$sent email(s) envoyé(s)" . ($errors > 0 ? ", $errors erreur(s)" : ""),
-            'sent' => $sent,
-            'errors' => $errors,
-        ];
     }
 
-    /**
-     * Créer une instance PHPMailer configurée
-     */
-    private function createMailer() {
-        $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = $this->config['host'];
-        $mail->SMTPAuth = true;
-        $mail->Username = $this->config['username'];
-        $mail->Password = $this->config['password'];
-        $mail->SMTPSecure = $this->config['encryption'] === 'tls' ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port = $this->config['port'];
-        $mail->setFrom($this->config['from_email'], $this->config['from_name']);
-        $mail->isHTML(true);
-        $mail->CharSet = 'UTF-8';
-        $mail->SMTPDebug = $this->config['debug'];
-        return $mail;
-    }
+    public function sendContactEmail($data)
+    {
+        try {
+            // Email Admin
+            $this->mail->clearAddresses();
+            $this->mail->clearReplyTos();
+            $this->mail->addAddress(env("SMTP_FROM_EMAIL", "ucaotech@ucaobenin.org"));
+            $this->mail->addReplyTo($data["email"], $data["nom"] . " " . $data["prenom"]);
+            $this->mail->Subject = "Contact: " . $data["sujet"];
+            
+            $body = "<h3>Nouveau message de contact</h3>";
+            $body .= "<b>De:</b> " . htmlspecialchars($data["nom"] . " " . $data["prenom"]) . " (" . $data["email"] . ")<br>";
+            $body .= "<b>Sujet:</b> " . htmlspecialchars($data["sujet"]) . "<br><br>";
+            $body .= "<b>Message:</b><br>" . nl2br(htmlspecialchars($data["message"]));
+            
+            $this->mail->Body = $body;
+            $this->mail->send();
 
-    /**
-     * Mode simulation : log les emails au lieu de les envoyer
-     */
-    private function logEmail($to, $subject, $body) {
-        $logDir = APP_ROOT . '/uploads/email_logs';
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0755, true);
+            // Email Accusé de réception
+            $this->mail->clearAddresses();
+            $this->mail->addAddress($data["email"]);
+            $this->mail->Subject = "Confirmation de réception - UCAO";
+            $this->mail->Body = "Bonjour " . htmlspecialchars($data["prenom"]) . ",<br><br>Nous avons bien reçu votre message et reviendrons vers vous rapidement.<br><br>Cordialement,<br>L''équipe UCAO.";
+            
+            $this->mail->send();
+            return true;
+        } catch (Exception $e) {
+            $this->error = $this->mail->ErrorInfo;
+            return false;
         }
-        $logFile = $logDir . '/email_' . date('Y-m-d_His') . '_' . uniqid() . '.html';
-        $logContent = "<!-- TO: $to -->\n<!-- SUBJECT: $subject -->\n<!-- DATE: " . date('Y-m-d H:i:s') . " -->\n\n$body";
-        file_put_contents($logFile, $logContent);
-        error_log("[MAIL SIMULATION] To: $to | Subject: $subject | Logged to: $logFile");
-        return ['success' => true, 'message' => '[SIMULATION] Email loggé avec succès.'];
     }
+
+    public function getError() { return $this->error; }
 }

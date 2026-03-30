@@ -1,7 +1,60 @@
-<?php
+﻿<?php
 // =================================================================
 // CONFIGURATION & DATA
 // =================================================================
+session_start();
+
+// Configuration de l'environnement
+define('ENVIRONMENT', 'production'); // development ou production
+
+// Configuration du site
+define('SITE_NAME', 'UCAO-ORIENTATION');
+define('SITE_URL', ENVIRONMENT === 'production' ? 'https://votre-domaine.com' : 'http://localhost/platform-ucao-orientation');
+
+// Configuration SMTP selon l'hébergeur
+if (ENVIRONMENT === 'production') {
+    // À MODIFIER SELON VOTRE HÉBERGEUR
+    define('SMTP_HOST', 'mail37.lwspanel.com');    // Ex: smtp.ovh.net
+    define('SMTP_PORT', 465);                           // Test avec le port 465 (SSL)
+    define('SMTP_SECURE', 'ssl');                       // 'tls' ou 'ssl'
+    define('SMTP_AUTH', true);
+    define('SMTP_USER', 'ucaotech@ucaobenin.org');   // Votre email
+    define('SMTP_PASS', 'Uc@oTech2026');          // Votre mot de passe
+    define('SMTP_FROM', 'ucaotech@ucaobenin.org');
+    define('SMTP_FROM_NAME', 'UCAO-Orientation');
+} else {
+    // Configuration développement (test local)
+    define('SMTP_HOST', 'smtp.gmail.com');
+    define('SMTP_PORT', 587);
+    define('SMTP_SECURE', 'tls');
+    define('SMTP_AUTH', true);
+    define('SMTP_USER', 'votre-email@gmail.com');       // Email de test
+    define('SMTP_PASS', 'votre-mot-de-passe-app');      // Mot de passe d'application
+    define('SMTP_FROM', 'noreply@test.com');
+    define('SMTP_FROM_NAME', 'UCAO-Test');
+}
+
+// Email de réception pour le formulaire de contact
+define('CONTACT_EMAIL', 'contact@ucaobenin.org');      // L'email qui recevra les messages
+define('ADMIN_EMAIL', 'admin@ucaobenin.org');
+
+// Gestion des erreurs
+if (ENVIRONMENT === 'development') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+} else {
+    error_reporting(E_ALL); // On active temporairement pour voir l'erreur exacte
+    ini_set('display_errors', 1);
+    ini_set('log_errors', 1);
+    ini_set('error_log', dirname(__DIR__) . '/logs/error.log');
+}
+
+// Fuseau horaire
+date_default_timezone_set('Africa/Porto-Novo');
+
+// Autres constantes
+define('UPLOAD_DIR', dirname(__DIR__) . '/uploads/');
+define('LOG_DIR', dirname(__DIR__) . '/logs/');
 
 // Global Site Variables
 $site_name = "UCAO - Orientation";
