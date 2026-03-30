@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
     echo json_encode([
         "success" => false,
-        "message" => "Méthode non autorisée."
+        "message" => "Mï¿½thode non autorisï¿½e."
     ]);
     exit;
 }
@@ -40,7 +40,7 @@ if ($formData["nom"] === "") {
 }
 
 if ($formData["prenom"] === "") {
-    $errors[] = "Le prénom est obligatoire.";
+    $errors[] = "Le prï¿½nom est obligatoire.";
 }
 
 if ($formData["email"] === "" || !filter_var($formData["email"], FILTER_VALIDATE_EMAIL)) {
@@ -56,7 +56,7 @@ if ($formData["message"] === "") {
 }
 
 if (!isset($_POST["consent"])) {
-    $errors[] = "Vous devez accepter la politique de confidentialité.";
+    $errors[] = "Vous devez accepter la politique de confidentialitï¿½.";
 }
 
 if (!empty($errors)) {
@@ -97,12 +97,12 @@ try {
 
     $mailer = new Mailer();
     if (!$mailer->sendContactEmail($formData)) {
-        throw new RuntimeException($mailer->getError() ?: "Échec d'envoi email.");
+        throw new RuntimeException($mailer->getError() ?: "ï¿½chec d'envoi email.");
     }
 
     echo json_encode([
         "success" => true,
-        "message" => "Message envoyé avec succès."
+        "message" => "Message envoyï¿½ avec succï¿½s."
     ]);
 } catch (Throwable $e) {
     echo json_encode([
