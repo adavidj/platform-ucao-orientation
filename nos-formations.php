@@ -20,28 +20,28 @@ $formations = [
             [
                 'name' => 'Électronique',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D, E ou F',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Technicien électronique, Ingénieur de maintenance, Concepteur de circuits',
                 'skills' => 'Conception de circuits, Systèmes embarqués, Électronique de puissance'
             ],
             [
                 'name' => 'Génie Télécoms et TIC',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D, E ou F',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Technicien télécom, Administrateur réseau, Spécialiste fibre optique',
                 'skills' => 'Réseaux mobiles, Infrastructure télécom, Technologies IP'
             ],
             [
                 'name' => 'Informatique Industrielle et Maintenance',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D, E ou F',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Automaticien, Technicien de maintenance industrielle, Programmeur automates',
                 'skills' => 'Automatisme, Programmation PLC, Supervision industrielle'
             ],
             [
                 'name' => 'Électrotechnique',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D, E ou F',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Électricien industriel, Technicien de maintenance, Chef de projet électrique',
                 'skills' => 'Machines électriques, Installations électriques, Énergies renouvelables'
             ]
@@ -74,7 +74,7 @@ $formations = [
                 'name' => 'Banques Finances et Assurances',
                 'options' => 'Assurances, Banque et Finance d\'Entreprise',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Conseiller bancaire, Agent d\'assurance, Analyste de crédit',
                 'skills' => 'Gestion des risques, Analyse financière, Produits bancaires'
             ],
@@ -82,14 +82,14 @@ $formations = [
                 'name' => 'Finances Comptabilité Audit',
                 'options' => 'Audit et Contrôle de Gestion',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Comptable, Auditeur junior, Contrôleur de gestion',
                 'skills' => 'Comptabilité générale, Fiscalité, Audit financier'
             ],
             [
                 'name' => 'Management des Ressources Humaines',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Assistant RH, Chargé de recrutement, Gestionnaire de paie',
                 'skills' => 'Droit du travail, Gestion des talents, Relations sociales'
             ],
@@ -97,7 +97,7 @@ $formations = [
                 'name' => 'Marketing Communication et Commerce',
                 'options' => 'Action Commerciale, Communication et Action Publicitaire, Commerce',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Assistant marketing, Chef de produit junior, Community manager',
                 'skills' => 'Marketing digital, Études de marché, Communication'
             ],
@@ -105,14 +105,14 @@ $formations = [
                 'name' => 'Système Informatique et Logiciel',
                 'options' => 'Informatique de Gestion',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Développeur, Analyste programmeur, Administrateur systèmes',
                 'skills' => 'Programmation, Bases de données, Développement web'
             ],
             [
                 'name' => 'Transport et Logistique',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Agent logistique, Gestionnaire de stock, Coordinateur transport',
                 'skills' => 'Supply chain, Gestion des stocks, Commerce international'
             ]
@@ -165,35 +165,35 @@ $formations = [
             [
                 'name' => 'Gestion de l\'Environnement et Aménagement du Territoire',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Technicien environnement, Agent d\'aménagement, Conseiller territorial',
                 'skills' => 'Études d\'impact, Aménagement du territoire, Cartographie'
             ],
             [
                 'name' => 'Production et Gestion des Ressources Animales',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Technicien d\'élevage, Conseiller en nutrition animale, Agent vétérinaire',
                 'skills' => 'Zootechnie, Santé animale, Alimentation animale'
             ],
             [
                 'name' => 'Sciences et Techniques de Production Végétale',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Technicien de production, Agent phytosanitaire, Conseiller cultures',
                 'skills' => 'Phytotechnie, Protection des cultures, Semences'
             ],
             [
                 'name' => 'Stockage Conservation et Conditionnement des Produits Agricoles',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Responsable qualité, Technicien agroalimentaire, Gestionnaire de stocks',
                 'skills' => 'Conservation des aliments, Normes qualité, Transformation'
             ],
             [
                 'name' => 'Gestion des Entreprises Rurales et Agricoles',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat C, D',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Gestionnaire d\'exploitation, Conseiller agricole, Agent de développement rural',
                 'skills' => 'Gestion des exploitations, Économie rurale, Entrepreneuriat agricole'
             ]
@@ -258,14 +258,14 @@ $formations = [
             [
                 'name' => 'Sciences Juridiques / Droit',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Juriste d\'entreprise, Clerc de notaire, Assistant juridique',
                 'skills' => 'Droit civil, Droit des affaires, Procédures judiciaires'
             ],
             [
                 'name' => 'Sciences Économiques / Économie',
                 'duration' => '3 ans',
-                'entry' => 'Baccalauréat toutes séries',
+                'entry' => 'Baccalauréat',
                 'careers' => 'Économiste, Analyste, Chargé d\'études',
                 'skills' => 'Analyse économique, Statistiques, Économétrie'
             ]
@@ -297,7 +297,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero formations-hero" style="background-image: url('assets/images/hero/formations.jpg');">
+<section class="page-hero formations-hero" style="background-image: url('assets/images/hero/ucao.jpg');">
     <div class="container">
         <h1>Nos Formations</h1>
         <p>Des programmes d'excellence pour construire votre avenir professionnel</p>
@@ -356,7 +356,7 @@ include 'includes/header.php';
                                         <p><?= htmlspecialchars($formation['careers']) ?></p>
                                     </div>
                                     <div class="detail-item">
-                                        <strong>Compétences acquises</strong>
+                                        <strong>Compétences acquises à la fin de   la formation</strong>
                                         <p><?= htmlspecialchars($formation['skills']) ?></p>
                                     </div>
                                 </div>
@@ -397,7 +397,7 @@ include 'includes/header.php';
                                         <p><?= htmlspecialchars($formation['careers']) ?></p>
                                     </div>
                                     <div class="detail-item">
-                                        <strong>Compétences acquises</strong>
+                                        <strong>Compétences acquises à la fin de   la formation</strong>
                                         <p><?= htmlspecialchars($formation['skills']) ?></p>
                                     </div>
                                 </div>

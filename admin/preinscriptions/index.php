@@ -69,6 +69,10 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
     <div class="admin-card-header">
         <h2 class="admin-card-title"><?= $total ?> préinscription(s)<?= !empty(array_filter($filters)) ? ' trouvée(s)' : '' ?></h2>
         <div class="admin-card-actions">
+            <button class="btn-admin btn-admin-outline btn-admin-sm" id="bulk-send-btn" style="display:none" onclick="openBulkModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Envoyer un mail
+            </button>
             <a href="export-csv.php?<?= http_build_query($filters) ?>" class="btn-admin btn-admin-outline btn-admin-sm">Export CSV</a>
             <a href="export-pdf.php?<?= http_build_query($filters) ?>" class="btn-admin btn-admin-outline btn-admin-sm">Export PDF</a>
         </div>
@@ -76,10 +80,11 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
     <div class="admin-table-wrap">
         <?php if (!empty($preinscriptions)): ?>
         <table class="admin-table">
-            <thead><tr><th>Nom</th><th>Email</th><th>Série</th><th>Filière</th><th>Niveau</th><th>Date</th><th>Actions</th></tr></thead>
+            <thead><tr><th style="width:40px"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th><th>Nom</th><th>Email</th><th>Série</th><th>Filière</th><th>Niveau</th><th>Date</th><th>Actions</th></tr></thead>
             <tbody>
                 <?php foreach ($preinscriptions as $p): ?>
                 <tr>
+                    <td><input type="checkbox" class="row-select" value="<?= $p['id'] ?>" onchange="updateBulkBtn()"></td>
                     <td><strong><?= e($p['nom'] . ' ' . $p['prenom']) ?></strong></td>
                     <td><?= e($p['email']) ?></td>
                     <td><span class="badge badge-gold"><?= e($p['serie_bac']) ?></span></td>
@@ -112,4 +117,61 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
     <?php endif; ?>
 </div>
 
-<?php require_once dirname(__DIR__) . '/includes/footer-admin.php'; ?>
+<!-- Modal Envoi Groupé -->
+<div class="admin-modal" id="bulkModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Envoi groupé</h3>
+        <button class="modal-close" onclick="closeModal('bulkModal')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+    <form method="POST" action="envoyer-bulk.php">
+        <?= csrf_field() ?>
+        <div class="modal-body">
+            <div id="selected-count" style="padding:12px;background:#e8f5e9;border-radius:6px;margin-bottom:16px;color:#2e7d32;font-weight:500"></div>
+            <div class="form-group">
+                <label class="form-label">Sujet</label>
+                <input type="text" class="form-control" name="sujet" placeholder="Ex: Votre pré-inscription UCAO" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" name="message" rows="8" placeholder="Composez votre message..." required></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-admin btn-admin-outline" onclick="closeModal('bulkModal')">Annuler</button>
+            <button type="submit" class="btn-admin btn-admin-primary">Envoyer</button>
+        </div>
+    </form>
+</div>
+
+<?php
+$inlineJS = "
+function toggleSelectAll(cb) {
+    document.querySelectorAll('.row-select').forEach(c => c.checked = cb.checked);
+    updateBulkBtn();
+}
+
+function updateBulkBtn() {
+    const count = document.querySelectorAll('.row-select:checked').length;
+    document.getElementById('bulk-send-btn').style.display = count > 0 ? 'inline-flex' : 'none';
+}
+
+function openBulkModal() {
+    const selected = document.querySelectorAll('.row-select:checked');
+    if (selected.length === 0) { alert('Sélectionnez au moins une préinscription'); return; }
+
+    const form = document.getElementById('bulkModal').querySelector('form');
+    form.querySelectorAll('input[name=\"ids[]\"]').forEach(i => i.remove());
+    selected.forEach(cb => {
+        const input = document.createElement('input');
+        input.type = 'hidden'; input.name = 'ids[]'; input.value = cb.value;
+        form.appendChild(input);
+    });
+
+    document.getElementById('selected-count').textContent = selected.length + ' personne(s) sélectionnée(s)';
+    openModal('bulkModal');
+}
+";
+
+require_once dirname(__DIR__) . '/includes/footer-admin.php'; ?>

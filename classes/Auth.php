@@ -216,4 +216,29 @@ class Auth {
 
         return ['success' => true, 'message' => 'Admin modifié avec succès.'];
     }
+
+    /**
+     * Supprimer un admin
+     */
+    public static function deleteAdmin($id) {
+        $pdo = Database::getInstance();
+
+        // Empêcher la suppression si c'est le seul super admin
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM admins WHERE role = 'super_admin'");
+        $stmt->execute();
+        if ($stmt->fetchColumn() <= 1) {
+            // Vérifier si c'est un super admin
+            $stmt = $pdo->prepare("SELECT role FROM admins WHERE id = ?");
+            $stmt->execute([$id]);
+            $admin = $stmt->fetch();
+            if ($admin && $admin['role'] === 'super_admin') {
+                return ['success' => false, 'message' => 'Impossible de supprimer le seul super administrateur.'];
+            }
+        }
+
+        $stmt = $pdo->prepare("DELETE FROM admins WHERE id = ?");
+        $stmt->execute([$id]);
+
+        return ['success' => true, 'message' => 'Admin supprimé avec succès.'];
+    }
 }

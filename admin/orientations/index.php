@@ -67,9 +67,17 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
     <div class="admin-card-header">
         <h2 class="admin-card-title"><?= $total ?> orientation(s)<?= !empty(array_filter($filters)) ? ' trouvée(s)' : '' ?></h2>
         <div class="admin-card-actions">
+            <button class="btn-admin btn-admin-outline btn-admin-sm" id="bulk-send-btn" style="display:none;" onclick="openBulkModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Envoyer un mail
+            </button>
             <a href="export.php?<?= http_build_query($filters) ?>" class="btn-admin btn-admin-outline btn-admin-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Export CSV
+            </a>
+            <a href="export-pdf.php?<?= http_build_query($filters) ?>" class="btn-admin btn-admin-outline btn-admin-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                Export PDF
             </a>
         </div>
     </div>
@@ -78,6 +86,7 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
         <table class="admin-table">
             <thead>
                 <tr>
+                    <th style="width:40px"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
                     <th>Nom / Prénom</th>
                     <th>Email</th>
                     <th>Série</th>
@@ -90,6 +99,7 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
             <tbody>
                 <?php foreach ($orientations as $o): ?>
                 <tr>
+                    <td><input type="checkbox" class="row-select" value="<?= $o['id'] ?>" onchange="updateBulkBtn()"></td>
                     <td><strong><?= e($o['nom'] . ' ' . $o['prenom']) ?></strong></td>
                     <td><?= e($o['email']) ?></td>
                     <td><span class="badge badge-gold"><?= e($o['serie_bac']) ?></span></td>
@@ -179,6 +189,41 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
     </form>
 </div>
 
+<!-- Modal Envoi Groupé -->
+<div class="admin-modal" id="bulkModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Envoi groupé</h3>
+        <button class="modal-close" onclick="closeModal('bulkModal')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+    <form method="POST" action="envoyer-bulk.php">
+        <?= csrf_field() ?>
+        <div class="modal-body">
+            <div id="selected-count" style="padding:12px;background:#e8f5e9;border-radius:6px;margin-bottom:16px;color:#2e7d32;font-weight:500"></div>
+            <div class="form-group">
+                <label class="form-label">Sujet</label>
+                <input type="text" class="form-control" name="sujet" placeholder="Ex: Votre orientation UCAO" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" name="message" rows="8" placeholder="Composez votre message..." required></textarea>
+            </div>
+            <div class="form-group" style="display:flex;align-items:center;gap:10px;padding:12px;background:#f0f7ff;border-radius:6px">
+                <input type="checkbox" name="joindre_pdf" id="joindre_pdf" value="1" checked style="width:18px;height:18px">
+                <label for="joindre_pdf" style="margin:0;cursor:pointer">
+                    <strong>Joindre le rapport PDF personnalisé</strong>
+                    <small style="display:block;color:#666">Le rapport d'orientation de chaque personne sera joint à son email</small>
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-admin btn-admin-outline" onclick="closeModal('bulkModal')">Annuler</button>
+            <button type="submit" class="btn-admin btn-admin-primary">Envoyer</button>
+        </div>
+    </form>
+</div>
+
 <?php
 $inlineJS = "
 function openReplyModal(id, email, metier) {
@@ -188,7 +233,34 @@ function openReplyModal(id, email, metier) {
     document.getElementById('replyMessage').value = 'Bonjour,\\n\\nSuite à votre demande d\\'orientation pour le métier de « ' + metier + ' », nous avons le plaisir de vous informer que l\\'UCAO propose des formations parfaitement adaptées à votre projet professionnel.\\n\\nNous vous invitons à consulter votre rapport d\\'orientation et à procéder à votre pré-inscription en ligne.\\n\\nL\\'équipe UCAO reste à votre disposition pour tout complément d\\'information.\\n\\nCordialement,\\nL\\'équipe UCAO-Orientation';
     openModal('replyModal');
 }
+
+function toggleSelectAll(cb) {
+    document.querySelectorAll('.row-select').forEach(c => c.checked = cb.checked);
+    updateBulkBtn();
+}
+
+function updateBulkBtn() {
+    const count = document.querySelectorAll('.row-select:checked').length;
+    document.getElementById('bulk-send-btn').style.display = count > 0 ? 'inline-flex' : 'none';
+}
+
+function openBulkModal() {
+    const selected = document.querySelectorAll('.row-select:checked');
+    if (selected.length === 0) { alert('Sélectionnez au moins une orientation'); return; }
+
+    const form = document.getElementById('bulkModal').querySelector('form');
+    form.querySelectorAll('input[name=\"ids[]\"]').forEach(i => i.remove());
+    selected.forEach(cb => {
+        const input = document.createElement('input');
+        input.type = 'hidden'; input.name = 'ids[]'; input.value = cb.value;
+        form.appendChild(input);
+    });
+
+    document.getElementById('selected-count').textContent = selected.length + ' personne(s) sélectionnée(s)';
+    openModal('bulkModal');
+}
 ";
 
 require_once dirname(__DIR__) . '/includes/footer-admin.php';
 ?>
+

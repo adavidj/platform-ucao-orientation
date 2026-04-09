@@ -73,11 +73,14 @@ class Mailer
 
     /**
      * Envoie un email générique
+     * Retourne un array avec 'success' et 'message'
      */
     public function send($to, $subject, $body, $attachments = [], $replyTo = null)
     {
         try {
-            if (empty($to)) return false;
+            if (empty($to)) {
+                return ['success' => false, 'message' => 'Adresse email invalide'];
+            }
 
             $this->mail->clearAddresses();
             $this->mail->clearAttachments();
@@ -99,11 +102,19 @@ class Mailer
                 }
             }
 
-            return $this->mail->send();
+            $sent = $this->mail->send();
+
+            if ($sent) {
+                return ['success' => true, 'message' => 'Email envoyé avec succès'];
+            } else {
+                $this->error = $this->mail->ErrorInfo;
+                error_log("Mailer Error: " . $this->error);
+                return ['success' => false, 'message' => $this->error];
+            }
         } catch (Exception $e) {
             $this->error = $this->mail->ErrorInfo;
             error_log("Mailer Error: " . $this->error);
-            return false;
+            return ['success' => false, 'message' => $this->error];
         }
     }
 
@@ -115,32 +126,39 @@ class Mailer
         try {
             // 1. Notification aux Admins
             $adminEmail = defined('CONTACT_EMAIL') ? CONTACT_EMAIL : 'contact@ucaobenin.org';
-            
+
             $this->mail->clearAddresses();
             $this->mail->clearReplyTos();
             $this->mail->addAddress($adminEmail);
             $this->mail->addReplyTo($data["email"], $data["nom"] . " " . $data["prenom"]);
             $this->mail->Subject = "Nouveau Message: " . $data["sujet"];
-            
+
             $adminBody = "<h3>Message de contact reçu</h3>";
             $adminBody .= "<b>Nom:</b> " . htmlspecialchars($data["nom"] . " " . $data["prenom"]) . "<br>";
             $adminBody .= "<b>Email:</b> " . htmlspecialchars($data["email"]) . "<br>";
             $adminBody .= "<b>Sujet:</b> " . htmlspecialchars($data["sujet"]) . "<br><br>";
             $adminBody .= "<b>Message:</b><br>" . nl2br(htmlspecialchars($data["message"]));
-            
+
             $this->mail->Body = $adminBody;
-            $this->mail->send();
+            $adminSent = $this->mail->send();
 
             // 2. Accusé de réception au visiteur
             $this->mail->clearAddresses();
             $this->mail->addAddress($data["email"]);
             $this->mail->Subject = "Reçu : " . $data["sujet"];
             $this->mail->Body = "Bonjour " . htmlspecialchars($data["prenom"]) . ",<br><br>Nous avons bien reçu votre message et nous vous répondrons dès que possible.<br><br>Cordialement,<br>L'équipe UCAO.";
-            
-            return $this->mail->send();
+
+            $userSent = $this->mail->send();
+
+            if ($adminSent && $userSent) {
+                return ['success' => true, 'message' => 'Message envoyé avec succès'];
+            } else {
+                $this->error = $this->mail->ErrorInfo;
+                return ['success' => false, 'message' => $this->error];
+            }
         } catch (Exception $e) {
             $this->error = $this->mail->ErrorInfo;
-            return false;
+            return ['success' => false, 'message' => $this->error];
         }
     }
 

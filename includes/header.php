@@ -5,13 +5,13 @@ if (!isset($site_name)) {
 }
 
 if (!isset($site_logo_path)) {
-    $site_logo_path = 'assets/images/logoucao.png';
+    $site_logo_path = 'assets/images/logo-ucao.png';
 }
 
 // Default page title
 $page_title = isset($page_title) ? $page_title . ' - ' . $site_name : $site_name;
 
-// Get current page for active state
+// Get current page for active statea
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>

@@ -41,7 +41,16 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
                 <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-control" value="<?= e($admin['email']) ?>" required></div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label class="form-label">Nouveau mot de passe</label><input type="password" name="password" class="form-control" minlength="8" placeholder="Laisser vide pour ne pas changer"><small style="color:var(--admin-text-muted)">Laisser vide pour conserver l'actuel</small></div>
+                <div class="form-group">
+                    <label class="form-label">Nouveau mot de passe</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="password" id="password-input" name="password" class="form-control" minlength="8" placeholder="Laisser vide pour ne pas changer">
+                        <button type="button" class="btn-admin btn-admin-ghost" id="toggle-password" title="Afficher/Masquer" style="padding: 0 12px; border: 1px solid var(--admin-border-color); border-radius: 6px;">
+                            <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                    <small style="color:var(--admin-text-muted)">Laisser vide pour conserver l'actuel</small>
+                </div>
                 <div class="form-group"><label class="form-label">Rôle</label>
                     <select name="role" class="form-control">
                         <option value="admin" <?= $admin['role'] === 'admin' ? 'selected' : '' ?>>Administrateur standard</option>
@@ -61,3 +70,18 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
     </div>
 </div>
 <?php require_once dirname(__DIR__) . '/includes/footer-admin.php'; ?>
+<script>
+document.getElementById('toggle-password').addEventListener('click', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('password-input');
+    const icon = document.getElementById('eye-icon');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+    } else {
+        input.type = 'password';
+        icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+    }
+});
+</script>

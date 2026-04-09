@@ -96,19 +96,25 @@ $nav_items = [
 // Footer Links
 $footer_links = [
     'Menu' => [
-        ['name' => 'Accueil', 'url' => 'index.php'],
         ['name' => 'Découvrir l\'UCAO', 'url' => 'decouvrir-ucao.php'],
         ['name' => 'Formations', 'url' => 'nos-formations.php'],
         ['name' => 'Orientation', 'url' => 'orientation.php'],
-        ['name' => 'Pré-inscription', 'url' => 'preinscription.php'],
-        ['name' => 'À Propos', 'url' => 'a-propos.php']
+        ['name' => 'Pré-inscription', 'url' => 'preinscription.php']
     ],
-    'Contact' => [
-        ['name' => '+229 01 21 60 40 70', 'url' => 'tel:+22901216040 70'],
-        ['name' => '+229 01 56 35 14 41', 'url' => 'tel:+2290156351441'],
-        ['name' => 'contact@ucaobenin.org', 'url' => 'mailto:contact@ucaobenin.org'],
-        ['name' => 'Lot 246 St Jean, Cotonou', 'url' => 'contact.php']
+    'Liens rapide' => [
+        ['name' => 'Site UCAO-UUC', 'url' => 'https://ucaobenin.org/'],
+        ['name' => 'Site UCAO-TECH', 'url' => 'https://ucaotech.ucaobenin.org/'],
+        ['name' => 'Site ACATSU', 'url' => 'https://oeuvreuniversitaire.ucaobenin.org/'],
+        ['name' => 'UCAO Média', 'url' => 'https://ucaomedia.ucaobenin.org']
     ]
+];
+
+// Contact Information for Footer
+$contact_info = [
+    'adresse' => '01 BP 2035, Cotonou, Bénin',
+    'telephone' => '+229 56 35 14 41',
+    'email' => 'info@ucaobenin.org',
+    'horaires' => 'Lun - Ven : 8h - 17h'
 ];
 
 // Social Media Links

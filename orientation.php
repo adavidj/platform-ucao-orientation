@@ -7,6 +7,9 @@
 // Include configuration
 require_once 'config/config.php';
 require_once 'config/app.php';
+// Connexion PDO
+require_once 'config/database.php';
+$pdo = getDBConnection();
 
 // Page settings
 $page_title = "Orientation";
@@ -29,18 +32,17 @@ $bac_series = [
     'G3' => 'G3 - Techniques Commerciales'
 ];
 
-// Récupérer les métiers depuis la base de données
+// Suggestions métiers : tous les nom_metier de la table metiers
 $job_suggestions = [];
-try {
-    $pdo = Database::getInstance();
-    $query = "SELECT nom_metier FROM metiers WHERE actif = 1 ORDER BY nom_metier ASC";
-    $result = $pdo->query($query);
-    if ($result) {
-        $job_suggestions = $result->fetchAll(PDO::FETCH_COLUMN);
+$sql = "SELECT nom_metier FROM metiers ORDER BY nom_metier ASC";
+$result = $pdo->query($sql);
+if ($result) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $nom = trim($row['nom_metier']);
+        if ($nom && !in_array($nom, $job_suggestions, true)) {
+            $job_suggestions[] = $nom;
+        }
     }
-} catch (Exception $e) {
-    // En cas d'erreur, utiliser une liste vide (les suggestions seront désactivées si pas de métiers)
-    $job_suggestions = [];
 }
 
 // Admin parameter - période nouveaux bacheliers (normally from database)
@@ -52,7 +54,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero orientation-hero" style="background-image: url('assets/images/hero/orientation.jpg');">
+<section class="page-hero orientation-hero" style="background-image: url('assets/images/hero/orientation.jpeg');">
     <div class="container">
         <h1>Orientation</h1>
         <p>Découvrez la filière qui correspond à votre profil et vos aspirations</p>
@@ -128,7 +130,7 @@ include 'includes/header.php';
 
                     <div class="form-submit">
                         <button type="submit" class="btn btn-primary">
-                            <span>Obtenir mon rapport d'orientation</span>
+                            <span>Obtenir mon orientation</span>
                         </button>
                     </div>
 
@@ -146,13 +148,13 @@ include 'includes/header.php';
                             <polyline points="22 4 12 14.01 9 11.01"></polyline>
                         </svg>
                     </div>
-                    <h2 class="result-title">Rapport généré avec succès !</h2>
+                    <h2 class="result-title">Rapport d'orientation!</h2>
                     <p class="result-message">
                         Votre rapport d'orientation personnalisé a été généré et envoyé à votre adresse e-mail.
                         Vous pouvez également le télécharger directement.
                     </p>
                     <div class="result-actions">
-                        <a href="#" class="btn btn-primary" id="download-report">Télécharger le rapport PDF</a>
+                        <a href="#" class="btn btn-primary" id="download-report">Télécharger votre rapport</a>
                         <a href="preinscription.php" class="btn btn-outline">Continuer vers la pré-inscription</a>
                     </div>
                 </div>

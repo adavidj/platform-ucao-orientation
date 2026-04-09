@@ -104,28 +104,55 @@ try {
     $pdfPath = Rapport::generateOrientationPDF($orientationId);
     
     // 3. Envoi de l'email avec la pièce jointe PDF
+    $emailSent = false;
     try {
         $mailer = new Mailer();
         $emailSujet = "Votre Rapport d'Orientation UCAO";
-        
-        $emailCorps = "
-            <div style='font-family: Arial, sans-serif; color: #333;'>
-                <h2>Bonjour " . htmlspecialchars($prenom) . ",</h2>
-                <p>Merci d'avoir utilisé notre plateforme décisionnelle d'orientation !</p>
-                <p>Suite à votre souhait pour le domaine de <b>" . htmlspecialchars($metier_souhaite) . "</b>, 
-                vous trouverez en pièce jointe votre rapport détaillé d'orientation généré automatiquement.</p>
-                <br>
-                <p>L'équipe d'Orientation de l'UCAO BENIN</p>
-                <hr>
-                <small>Ceci est un mail automatique. Ne pas y répondre.</small>
-            </div>
-        ";
 
-        // $pdfPath est la copie relative, on a besoin du chemin physique absolu pour l'attachement PHP
-        $cheminAbsoluPdf = RAPPORTS_DIR . '/' . $pdfPath;
-        
-        $mailer->send($email, $emailSujet, $emailCorps, [$cheminAbsoluPdf]);
-        
+        $emailCorps = '
+        <table cellpadding="0" cellspacing="0" width="100%" style="background-color: #f5f5f5;">
+            <tr>
+                <td align="center" style="padding: 20px;">
+                    <table cellpadding="0" cellspacing="0" style="width: 100%; max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <tr>
+                            <td style="background: linear-gradient(135deg, #180391 0%, #8B0000 100%); padding: 32px 24px; text-align: center;">
+                                <h1 style="color: #FFFFFF; margin: 0; font-size: 24px; font-weight: 700; font-family: Arial, sans-serif;">UCAO Orientation</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 32px 24px; color: #333333; font-family: Arial, sans-serif; line-height: 1.6; font-size: 15px;">
+                                <h2 style="margin: 0 0 16px 0; color: #180391; font-size: 18px;">Bonjour ' . htmlspecialchars($prenom) . ',</h2>
+                                <p style="margin: 0 0 16px 0;">Merci d\'avoir utilisé notre <strong>plateforme décisionnelle d\'orientation</strong> !</p>
+                                <p style="margin: 0 0 16px 0;">Suite à votre souhait pour le domaine de <strong style="color: #8B0000;">' . htmlspecialchars($metier_souhaite) . '</strong>, vous trouverez en pièce jointe votre rapport détaillé d\'orientation généré automatiquement.</p>
+                                <div style="margin: 24px 0; padding: 16px; background: #f0f7ff; border-radius: 8px; border-left: 4px solid #180391;">
+                                    <p style="margin: 0; color: #1a56db;"><strong>📎 Pièce jointe :</strong> Votre rapport d\'orientation personnalisé</p>
+                                </div>
+                                <p style="margin: 24px 0 0 0;">Cordialement,<br><strong>L\'équipe d\'Orientation de l\'UCAO BENIN</strong></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #f9f9f9; padding: 24px; border-top: 1px solid #eee; text-align: center; color: #999999; font-family: Arial, sans-serif; font-size: 12px;">
+                                <p style="margin: 0 0 8px 0;"><strong>UCAO-UUC — Cotonou, Bénin</strong></p>
+                                <p style="margin: 0;">Ceci est un mail automatique. Merci de ne pas y répondre.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>';
+
+        // $pdfPath est déjà le chemin absolu complet retourné par Rapport::generateOrientationPDF()
+        $cheminAbsoluPdf = $pdfPath;
+
+        $result = $mailer->send($email, $emailSujet, $emailCorps, [$cheminAbsoluPdf]);
+
+        if ($result['success']) {
+            $emailSent = true;
+            // Marquer l'email comme envoyé
+            $stmtUpdate = $pdo->prepare("UPDATE orientations SET email_envoye = 1 WHERE id = ?");
+            $stmtUpdate->execute([$orientationId]);
+        }
+
     } catch (Exception $e) {
         // Enregistrement de l'erreur email silencieusement, l'utilisateur a toujours le lien de téléchargement direct
         error_log("Alerte: Impossible d'envoyer le mail - " . $e->getMessage());

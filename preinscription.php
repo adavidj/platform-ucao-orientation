@@ -82,7 +82,7 @@ include 'includes/header.php';
 
 
 <!-- Page Hero -->
-<section class="page-hero preinscription-hero" style="background-image: url('assets/images/hero/preinscription.jpg');">
+<section class="page-hero preinscription-hero" style="background-image: url('assets/images/hero/orientation1.jpeg');">
     <div class="container">
         <h1>Pré-inscription</h1>
         <p>Commencez votre parcours à l'UCAO en soumettant votre dossier de pré-inscription</p>

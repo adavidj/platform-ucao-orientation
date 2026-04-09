@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/config/app.php';
 // =================================================================
 // CONFIGURATION & DATA (Simulation)
 // =================================================================
@@ -47,7 +48,7 @@ $hero_slides = [
         'button1_url' => 'decouvrir-ucao.php',
         'button2_text' => 'Nos Formations',
         'button2_url' => 'nos-formations.php',
-        'bg_image' => 'assets/images/slides/ucao.jpg'
+        'bg_image' => 'assets/images/hero/ucao.jpg'
     ],
     [
         'title' => 'UCAO-UUC',
@@ -56,7 +57,7 @@ $hero_slides = [
         'button1_url' => 'decouvrir-ucao.php',
         'button2_text' => '',
         'button2_url' => '',
-        'bg_image' => 'assets/images/slides/UCAOSS.jpg'
+        'bg_image' => 'assets/images/slides/ucaouuc.png'
     ],
     [
         'title' => 'Œuvres universitaires',
@@ -65,7 +66,7 @@ $hero_slides = [
         'button1_url' => '#',
         'button2_text' => '',
         'button2_url' => '',
-        'bg_image' => 'assets/images/slides/slide3.jpg'
+        'bg_image' => 'assets/images/slides/oeuvre-universitaire.png'
     ],
     [
         'title' => 'UCAO-TECH',
@@ -74,7 +75,7 @@ $hero_slides = [
         'button1_url' => '#',
         'button2_text' => '',
         'button2_url' => '',
-        'bg_image' => 'assets/images/slides/ucao-tech.png'
+        'bg_image' => 'assets/images/slides/slides4.jpeg'
     ],
     [
         'title' => 'Prêt à nous rejoindre ?',
@@ -83,7 +84,7 @@ $hero_slides = [
         'button1_url' => 'orientation.php',
         'button2_text' => 'Pré-inscription',
         'button2_url' => 'preinscription.php',
-        'bg_image' => 'assets/images/slides/slide5.jpg'
+        'bg_image' => 'assets/images/slides/slides6.jpeg'
     ]
 ];
 
@@ -99,7 +100,7 @@ $key_figures = [
 $why_ucao = [
     ['title' => 'Excellence Académique', 'description' => 'Des programmes rigoureux et reconnus à l\'international pour former les leaders de demain.', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'],
     ['title' => 'Vie Étudiante Riche', 'description' => 'Un campus dynamique avec des activités culturelles, sportives et associatives pour un épanouissement complet.', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'],
-    ['title' => 'Réseau International', 'description' => 'Profitez de partenariats avec des universités prestigieuses à travers le monde pour des opportunités uniques.', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>']
+    ['title' => 'Réseau Sous-Régional', 'description' => 'Profitez de partenariats avec des universités prestigieuses à travers les régions pour des opportunités uniques.', 'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>']
 ];
 
 // Orientation Process Steps
@@ -112,28 +113,31 @@ $process_steps = [
 
 // Testimonials
 $testimonials = [
-    ['quote' => 'L\'UCAO a transformé ma vision de l\'avenir. L\'accompagnement est exceptionnel et les professeurs sont passionnés.', 'author' => 'Fatima Diallo', 'program' => 'Master en Droit des Affaires'],
-    ['quote' => 'Grâce à la formation solide que j\'ai reçue, j\'ai pu intégrer une grande entreprise avant même la fin de mon cursus.', 'author' => 'Jean-Baptiste Kouamé', 'program' => 'Ingénieur en Génie Logiciel'],
-    ['quote' => 'La vie sur le campus est incroyable. J\'ai pu développer mes compétences académiques et personnelles.', 'author' => 'Aïssatou Ndiaye', 'program' => 'Licence en Économie et Gestion'],
-    ['quote' => 'L\'environnement multiculturel de l\'UCAO m\'a permis de tisser un réseau professionnel international.', 'author' => 'Mamadou Bah', 'program' => 'Master en Relations Internationales'],
-    ['quote' => 'Les stages proposés par l\'UCAO m\'ont ouvert les portes du monde professionnel dès ma deuxième année.', 'author' => 'Mariama Sylla', 'program' => 'Licence en Communication'],
-    ['quote' => 'L\'excellence académique et les valeurs humaines de l\'UCAO font la différence sur le marché de l\'emploi.', 'author' => 'Boubacar Diallo', 'program' => 'Master en Finance']
+    ['quote' => 'La formation en Génie Telecoms à l\'EGEI m\'a permis de maîtriser les technologies de télécommunications et les réseaux informatiques de dernière génération. Ce cursus pratique m\'a vraiment préparé pour le marché du travail.', 'author' => 'David Jonathan AÏDASSO', 'program' => '2e année de licence Génie Telecoms - TIC - EGEI'],
+    ['quote' => 'Le programme IIM offre une excellente balance entre théorie et pratique. Les projets concrets nous permettent d\'appliquer immédiatement ce qu\'on apprend et de développer une véritable expertise en ingénierie informatique.', 'author' => 'Gabriel MAHUVI', 'program' => '2e année de licence IIM - EGEI'],
+    ['quote' => 'Grâce au laboratoire informatique très bien équipé de l\'UCAO, j\'ai acquis des compétences très pratiques en réseaux et télécommunications.', 'author' => 'Mamadou Bah', 'program' => 'Master Génie Télécoms et TIC — Télécommunications et Réseaux Informatiques - EGEI'],
+    ['quote' => 'La rigueur des cours et l\'accompagnement des professeurs m\'ont permis de développer une véritable expertise en gestion informatique.', 'author' => 'Aïssatou Ndiaye', 'program' => 'Licence Informatique de Gestion - ESMEA'],
+    ['quote' => 'J\'ai pu maîtriser les techniques de contrôle de gestion et d\'audit financier tout en validant ma Licence.', 'author' => 'Mariama Sylla', 'program' => 'Licence Audit et Contrôle de Gestion - ESMEA'],
+    ['quote' => 'Les formations pratiques de l\'UCAO nous permettent d\'expérimenter et de maîtriser les systèmes industriels complexes en conditions réelles.', 'author' => 'Boubacar Diallo', 'program' => 'Master Système Industriel — Électronique, Automatique et Système de Production - EGEI'],
+    ['quote' => 'La formation en Transport et Logistique m\'a donné les compétences pour gérer efficacement les chaînes d\'approvisionnement et les opérations logistiques.', 'author' => 'Fatoumata Diallo', 'program' => 'Licence Transport et Logistique - ESMEA'],
+    ['quote' => 'Grâce aux cours pratiques en gestion environnementale, j\'ai pu contribuer à des projets de développement durable et de préservation écologique.', 'author' => 'Kofi Mensah', 'program' => 'Licence Gestion de l\'Environnement et Aménagement du Territoire - FSAE'],
+    ['quote' => 'Le programme en production agricole m\'a équipé de techniques modernes pour améliorer les rendements et la durabilité des cultures.', 'author' => 'Aboubakar Traoré', 'program' => 'Licence Sciences et Techniques de Production Végétale - FSAE'],
+    ['quote' => 'Les cours en ressources humaines m\'ont permis de développer une vision holistique de la gestion des talents et du développement organisationnel.', 'author' => 'Nadia Traore', 'program' => 'Master Gestion des Ressources Humaines - ESMEA']
 ];
 
 // Footer Links
 $footer_links = [
     'Menu' => [
-        ['name' => 'Accueil', 'url' => '#'],
         ['name' => 'Découvrir l\'UCAO', 'url' => 'decouvrir-ucao.php'],
         ['name' => 'Formations', 'url' => 'nos-formations.php'],
         ['name' => 'Orientation', 'url' => 'orientation.php'],
-        ['name' => 'Pré-inscription', 'url' => 'preinscription.php'],
-        ['name' => 'À Propos', 'url' => 'a-propos.php']
+        ['name' => 'Pré-inscription', 'url' => 'preinscription.php']
     ],
-    'Contact' => [
-        ['name' => '+229 21 30 00 00', 'url' => 'tel:+22921300000'],
-        ['name' => 'info@ucao-uuc.bj', 'url' => 'mailto:info@ucao-uuc.bj'],
-        ['name' => 'Bon Pasteur, Cadjehoun, Cotonou', 'url' => 'contact.php']
+    'Liens rapide' => [
+        ['name' => 'Site UCAO-UUC', 'url' => 'https://ucaobenin.org/'],
+        ['name' => 'Site UCAO-TECH', 'url' => 'https://ucaotech.ucaobenin.org/'],
+        ['name' => 'Site ACATSU', 'url' => 'https://oeuvreuniversitaire.ucaobenin.org/'],
+        ['name' => 'UCAO Média', 'url' => 'https://ucaomedia.ucaobenin.org']
     ]
 ];
 
@@ -381,61 +385,10 @@ $social_links = [
 
     </main>
 
-    <!-- =================================================================
-       FOOTER
-       ================================================================= -->
-    <footer class="main-footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-brand">
-                        <div class="footer-logo">
-                            <?php if (file_exists(__DIR__ . '/' . $site_logo_path)): ?>
-                                <img src="<?= htmlspecialchars($site_logo_path) ?>" alt="<?= htmlspecialchars($site_name) ?>" class="footer-logo-img">
-                            <?php else: ?>
-                                <div class="footer-logo-text"><?= htmlspecialchars(explode(' ', $site_name)[0]) ?><span>.</span></div>
-                            <?php endif; ?>
-                        </div>
-                        <p>L'excellence académique au service de l'avenir de l'Afrique de l'Ouest. Rejoignez une communauté d'apprenants passionnés.</p>
-                        <div class="footer-social-mobile" aria-label="Réseaux sociaux">
-                            <?php foreach ($social_links as $name => $link): ?>
-                                <a href="<?= htmlspecialchars($link['url']) ?>" title="<?= htmlspecialchars($name) ?>" aria-label="<?= htmlspecialchars($name) ?>"><?= $link['icon'] ?></a>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <?php foreach ($footer_links as $title => $links): ?>
-                    <?php if (!in_array($title, ['Navigation', 'Légal', 'Legal', 'Ressources'], true)): ?>
-                    <?php $footer_col_class = $title === 'Menu' ? ' footer-col-menu' : ($title === 'Contact' ? ' footer-col-contact' : ''); ?>
-                    <div class="footer-col<?= $footer_col_class ?>">
-                        <h4><?= htmlspecialchars($title) ?></h4>
-                        <ul>
-                            <?php foreach ($links as $link): ?>
-                            <li><a href="<?= htmlspecialchars($link['url']) ?>"><?= htmlspecialchars($link['name']) ?></a></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                    <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="footer-bottom-content">
-                    <p class="footer-copyright">&copy; <?= date('Y') ?> <?= htmlspecialchars($site_name) ?>. Tous droits réservés.</p>
-                    <div class="social-links hide-mobile">
-                        <?php foreach ($social_links as $name => $link): ?>
-                            <a href="<?= htmlspecialchars($link['url']) ?>" title="<?= htmlspecialchars($name) ?>" aria-label="<?= htmlspecialchars($name) ?>"><?= $link['icon'] ?></a>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JAVASCRIPT -->
-    <script src="assets/js/shared.js"></script>
+    <?php
+    // Inclure le footer réutilisable
+    include __DIR__ . '/includes/footer.php';
+    ?>
     <script src="assets/js/index.js"></script>
 
 </body>

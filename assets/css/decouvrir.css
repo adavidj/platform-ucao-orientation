@@ -127,8 +127,8 @@
 
 .activities-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
 }
 
 .activity-card {
@@ -201,6 +201,7 @@
     border-radius: var(--radius-md);
     border-left: 4px solid var(--couleur-secondaire);
     transition: var(--transition-smooth);
+    position: relative;
 }
 
 .club-item:hover {
@@ -208,6 +209,19 @@
     box-shadow: var(--shadow-lg);
     transform: translateX(12px);
     border-left-color: var(--couleur-primaire);
+}
+
+.club-category {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    background: var(--gradient-gold);
+    color: var(--couleur-primaire);
+    margin-bottom: 0.5rem;
 }
 
 .club-item h4 {
@@ -237,6 +251,53 @@
                 radial-gradient(circle at 80% 70%, rgba(139, 0, 0, 0.08), transparent 45%);
     animation: float 10s ease-in-out infinite;
     pointer-events: none;
+}
+
+.section-description {
+    text-align: center;
+    max-width: 800px;
+    margin: -1rem auto 2.5rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* ACASTU Stats */
+.acastu-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.acastu-stats .stat-item {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border-bottom: 3px solid var(--gold);
+    transition: var(--transition-smooth);
+}
+
+.acastu-stats .stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.acastu-stats .stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--couleur-primaire);
+    font-family: var(--font-primary);
+}
+
+.acastu-stats .stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
 }
 
 .services-grid {
@@ -303,34 +364,6 @@
     line-height: 1.7;
 }
 
-/* Partners */
-.partners-section {
-    padding: 5rem 0;
-}
-
-.partners-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-}
-
-.partner-item {
-    background: var(--white);
-    padding: 1rem 2rem;
-    border-radius: var(--radius-full);
-    border: 2px solid var(--medium-gray);
-    transition: var(--transition-smooth);
-    font-weight: 500;
-}
-
-.partner-item:hover {
-    border-color: var(--couleur-primaire);
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-    background: linear-gradient(135deg, rgba(24, 3, 145, 0.02), rgba(139, 0, 0, 0.02));
-}
-
 /* CTA */
 .discover-cta {
     background: linear-gradient(135deg, rgba(26, 35, 126, 0.9) 0%, rgba(183, 28, 28, 0.8) 100%);
@@ -385,10 +418,21 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .activities-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 992px) {
     .values-grid,
-    .activities-grid,
     .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .acastu-stats {
         grid-template-columns: repeat(2, 1fr);
     }
     .gallery-grid {
@@ -407,10 +451,20 @@
     .services-grid {
         grid-template-columns: 1fr;
     }
+    .acastu-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .acastu-stats .stat-value {
+        font-size: 1.5rem;
+    }
     .gallery-grid {
         grid-template-columns: 1fr;
     }
     .gallery-item:nth-child(1) {
         grid-column: span 1;
+    }
+    .section-description {
+        font-size: 1rem;
     }
 }

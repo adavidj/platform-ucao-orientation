@@ -1,173 +1,1384 @@
--- =================================================================
--- UCAO-ORIENTATION — Schéma de Base de Données
--- Version 1.1 — Mars 2026
--- =================================================================
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le : mar. 31 mars 2026 à 18:56
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+01:00";
+SET time_zone = "+00:00";
 
--- Création de la base si elle n'existe pas
-CREATE DATABASE IF NOT EXISTS `ucao_orientation`
-  DEFAULT CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
 
-USE `ucao_orientation`;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
--- =================================================================
--- TABLE : admins
--- Comptes administrateurs du back-office
--- =================================================================
-CREATE TABLE IF NOT EXISTS `admins` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(150) NOT NULL,
-  `password_hash` VARCHAR(255) NOT NULL,
-  `role` ENUM('super_admin','admin') NOT NULL DEFAULT 'admin',
-  `actif` TINYINT(1) NOT NULL DEFAULT 1,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_login` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_admins_email` (`email`)
+--
+-- Base de données : `ucao_orientation`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `role` enum('super_admin','admin') NOT NULL DEFAULT 'admin',
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : filieres
--- Toutes les filières proposées par l'UCAO
--- =================================================================
-CREATE TABLE IF NOT EXISTS `filieres` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `ecole_faculte` VARCHAR(100) NOT NULL,
-  `nom_filiere` VARCHAR(200) NOT NULL,
-  `niveau` VARCHAR(50) NOT NULL DEFAULT 'Licence',
-  `duree` VARCHAR(20) NOT NULL DEFAULT '3 ans',
-  `description` TEXT NULL,
-  `debouches` TEXT NULL,
-  `slug` VARCHAR(200) NOT NULL,
-  `actif` TINYINT(1) NOT NULL DEFAULT 1,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_filieres_slug` (`slug`),
-  KEY `idx_filieres_ecole` (`ecole_faculte`)
+--
+-- Déchargement des données de la table `admins`
+--
+
+INSERT INTO `admins` (`id`, `nom`, `email`, `password_hash`, `role`, `actif`, `created_at`, `last_login`) VALUES
+(1, 'Super Administrateur', 'admin@ucao.bj', '$2y$10$y1ZH286m2gphBaEpgawYGeF9dcDX1bNTx0dNdKlP00jhxmv8RP0aa', 'super_admin', 1, '2026-03-31 16:52:37', NULL),
+(2, 'David Jonathan', 'davidaidasso252@gmail.com', '$2y$10$cQ4i4tWWpO.L6pq65e7oru2QaR5GTv/QXVpi1eHixaI0vvROiaB7G', 'super_admin', 1, '2026-03-31 16:52:37', NULL),
+(3, 'ZANNOU Rhetice', 'rheticezannou@gmail.com', '$2y$10$wQw6Qw6Qw6Qw6Qw6Qw6QwOQw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Q', 'admin', 1, '2026-03-31 16:52:37', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `filieres`
+--
+
+CREATE TABLE `filieres` (
+  `id` int(11) NOT NULL,
+  `ecole_faculte` varchar(100) NOT NULL,
+  `nom_filiere` varchar(200) NOT NULL,
+  `niveau` varchar(50) NOT NULL DEFAULT 'Licence',
+  `duree` varchar(20) NOT NULL DEFAULT '3 ans',
+  `description` text DEFAULT NULL,
+  `competences` text DEFAULT NULL,
+  `debouches` text DEFAULT NULL,
+  `slug` varchar(200) NOT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : metiers
--- Métiers proposés dans l'autocomplete du formulaire d'orientation
--- =================================================================
-CREATE TABLE IF NOT EXISTS `metiers` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom_metier` VARCHAR(200) NOT NULL,
-  `slug` VARCHAR(200) NOT NULL,
-  `actif` TINYINT(1) NOT NULL DEFAULT 1,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_metiers_slug` (`slug`)
+--
+-- Déchargement des données de la table `filieres`
+--
+
+INSERT INTO `filieres` (`id`, `ecole_faculte`, `nom_filiere`, `niveau`, `duree`, `description`, `competences`, `debouches`, `slug`, `actif`, `created_at`) VALUES
+(1, 'EGEI', 'Électronique', 'Licence', '3 ans', 'La filière Électronique forme des techniciens capables de concevoir, réaliser, tester et réparer des équipements électroniques utilisés dans plusieurs domaines tels que l\'industrie, les télécommunications et l\'énergie.', 'Bases de l\'électricité et de l\'électronique, Étude des composants électroniques, Circuits analogiques et numériques, Conception de circuits électroniques, Lecture de schémas électroniques, Techniques de soudure électronique, Maintenance des équipements électroniques, Microcontrôleurs (Arduino, PIC), Systèmes embarqués (bases), Instrumentation électronique', 'Technicien en électronique, Technicien en maintenance électronique, Technicien en réparation d\'équipements électroniques, Technicien en systèmes embarqués, Technicien en maintenance industrielle, Technicien SAV, Technicien en instrumentation électronique', 'egei-licence-electronique', 1, '2026-03-31 16:52:37'),
+(2, 'EGEI', 'Génie Télécoms et TIC', 'Licence', '3 ans', 'La filière Génie Télécommunications et TIC forme des techniciens spécialisés dans l\'installation, la configuration et la maintenance des systèmes de télécommunications et des réseaux informatiques. Elle couvre les technologies utilisées dans les réseaux mobiles, la fibre optique, les transmissions numériques ainsi que les infrastructures informatiques modernes.', 'Bases des télécommunications, Propagation des ondes et antennes, Transmission analogique et numérique, Réseaux mobiles (2G, 3G, 4G), Planification des réseaux mobiles, Fibre optique (FTTH), Faisceaux hertziens (FH), Réseaux informatiques (LAN, WAN), Configuration des routeurs et switches, Administration réseau, Sécurité des réseaux, Programmation web, Programmation mobile, Bases de données, Maintenance informatique', 'Technicien réseaux informatiques, Administrateur réseaux , Technicien télécommunications, Technicien fibre optique (FTTH), Technicien faisceaux hertziens (FH), Technicien réseaux mobiles, Technicien support informatique, Développeur web, Développeur Full-Stack , Développeur mobile , Technicien NOC, Technicien déploiement réseau', 'egei-licence-genie-telecoms-tic', 1, '2026-03-31 16:52:37'),
+(3, 'EGEI', 'Informatique Industrielle et Maintenance', 'Licence', '3 ans', 'La filière Informatique Industrielle et Maintenance forme des techniciens capables d\'assurer le bon fonctionnement des machines industrielles et des systèmes automatisés.', 'Maintenance industrielle, Diagnostic des pannes, Automates programmables industriels (API/PLC), Informatique industrielle, Programmation des automates, Capteurs et actionneurs, Électricité industrielle, Réseaux industriels, Supervision industrielle, Maintenance préventive et corrective, GMAO', 'Technicien de maintenance industrielle, Technicien en automatisme industriel, Technicien en informatique industrielle, Technicien en automatisation, Technicien en électromécanique, Technicien GMAO, Technicien en installation industrielle', 'egei-licence-informatique-industrielle-maintenance', 1, '2026-03-31 16:52:37'),
+(4, 'EGEI', 'Système Industriel — Électrotechnique', 'Licence', '3 ans', 'La filière Système Industriel spécialité Électrotechnique forme des techniciens spécialisés dans les installations électriques industrielles et les systèmes énergétiques.', 'Installations électriques domestiques et industrielles, Machines électriques, Distribution électrique, Lecture de schémas électriques, Dimensionnement des installations, Maintenance des équipements électriques, Protection électrique, Automatisme électrique, Énergies renouvelables (solaire), Sécurité électrique', 'Technicien électrotechnicien, Technicien en installation électrique, Technicien en maintenance électrique, Technicien en énergie solaire, Technicien en distribution électrique, Installateur électrique, Technicien en réseaux électriques, Technicien en électrification rurale', 'egei-licence-systeme-industriel-electrotechnique', 1, '2026-03-31 16:52:37'),
+(5, 'EGEI', 'Génie Télécoms et TIC — Télécommunications et Réseaux Informatiques', 'Master', '2 ans', 'Le Master Génie Télécoms et TIC spécialité Télécommunications et Réseaux Informatiques forme des ingénieurs capables de concevoir, déployer et superviser des infrastructures de télécommunications et des réseaux informatiques modernes. Cette filière prépare les étudiants à gérer des projets techniques liés aux réseaux mobiles, à la fibre optique et aux infrastructures informatiques d\'entreprise.', 'Conception et dimensionnement des réseaux télécoms, Planification avancée des réseaux mobiles, Optimisation des réseaux radio, Transmission numérique avancée, Réseaux fibre optique (FTTH, backbone), Faisceaux hertziens longue distance, Architecture des réseaux informatiques, Administration avancée des réseaux, Sécurité des systèmes informatiques, Virtualisation et cloud computing, Gestion des serveurs, Gestion de projets techniques, Supervision des réseaux', 'Ingénieur télécommunications, Ingénieur réseaux informatiques, Ingénieur réseaux mobiles, Ingénieur fibre optique, Ingénieur radio, Ingénieur NOC, Ingénieur systèmes informatiques, Administrateur systèmes et réseaux senior, Chef de projet télécom, Consultant en réseaux informatiques, Responsable infrastructure réseau, Responsable technique télécom', 'egei-master-genie-telecoms-tic-reseaux', 1, '2026-03-31 16:52:37'),
+(6, 'EGEI', 'Système Industriel — Électronique, Automatique et Système de Production', 'Master', '2 ans', 'Le Master Système Industriel spécialité Électronique, Automatique et Système de Production forme des ingénieurs capables de concevoir, automatiser et superviser des systèmes industriels modernes. Cette filière prépare les étudiants à intervenir sur les machines automatisées, les lignes de production et les systèmes industriels complexes.', 'Automatique industrielle, Commande des systèmes industriels, Programmation avancée des automates industriels, Robotique industrielle (bases), Électronique de puissance, Instrumentation industrielle, Capteurs et actionneurs industriels, Organisation des systèmes de production, Maintenance industrielle avancée, Gestion de production, Gestion de la qualité industrielle, Gestion de projets industriels', 'Ingénieur automaticien, Ingénieur en maintenance industrielle, Ingénieur en électronique industrielle, Ingénieur en automatisation industrielle, Ingénieur production industrielle, Ingénieur méthodes, Ingénieur maintenance, Chef de projet industriel, Responsable maintenance industrielle, Responsable production, Consultant en automatisation, Ingénieur qualité industrielle', 'egei-master-systeme-industriel-electronique-automatique', 1, '2026-03-31 16:52:37'),
+(7, 'ESMEA', 'Assurances', 'Licence', '3 ans', 'La spécialité Assurances forme des professionnels capables de gérer les contrats d\'assurance, d\'analyser les risques et d\'accompagner les clients dans la protection de leurs biens et activités.', 'Principes fondamentaux de l\'assurance, Types d\'assurances (auto, santé, vie, habitation, entreprise), Gestion des contrats, Analyse et gestion des risques, Gestion des sinistres, Calcul des primes, Droit des assurances, Relation client, Techniques commerciales, Gestion administrative', 'Agent d\'assurance, Conseiller en assurance, Gestionnaire de contrats, Gestionnaire sinistres, Chargé de clientèle, Assistant courtier, Téléconseiller, Responsable agence (après expérience)', 'esmea-licence-assurances', 1, '2026-03-31 16:52:37'),
+(8, 'ESMEA', 'Banque et Finance d\'Entreprise', 'Licence', '3 ans', 'Cette filière forme des professionnels capables de gérer les opérations financières dans les banques, microfinances et entreprises.', 'Gestion des comptes et trésorerie, Analyse financière, Crédit bancaire, Finance d\'entreprise, Gestion des investissements, Fiscalité, Droit bancaire, Gestion budgétaire', 'Agent de banque, Chargé de clientèle bancaire, Conseiller financier, Gestionnaire de comptes, Agent crédit, Analyste financier (après expérience), Responsable d\'agence (après expérience)', 'esmea-licence-banque-finance-entreprise', 1, '2026-03-31 16:52:37'),
+(9, 'ESMEA', 'Audit et Contrôle de Gestion', 'Licence', '3 ans', 'Forme des professionnels capables d\'assurer la comptabilité, l\'audit et le contrôle financier d\'une entreprise.', 'Comptabilité générale et analytique, Audit interne, Contrôle de gestion, Budgétisation, Analyse financière, Fiscalité, Gestion des coûts, Logiciels comptables', 'Comptable, Assistant comptable, Auditeur , Contrôleur de gestion , Gestionnaire comptable, Chef comptable (après expérience), Responsable financier (après expérience)', 'esmea-licence-audit-controle-gestion', 1, '2026-03-31 16:52:37'),
+(10, 'ESMEA', 'Management des Ressources Humaines', 'Licence', '3 ans', 'Forme des professionnels capables de gérer le personnel, le recrutement, la formation et les carrières.', 'Gestion administrative et contrats, Recrutement et paie, Gestion des congés et carrières, Formation du personnel, Communication interne, Gestion des conflits, Droit du travail', 'Assistant RH, Chargé RH , Gestionnaire du personnel, Assistant paie, Responsable RH (après expérience), Chargé recrutement, Assistant formation', 'esmea-licence-management-ressources-humaines', 1, '2026-03-31 16:52:37'),
+(11, 'ESMEA', 'Action Commerciale et Force de Vente', 'Licence', '3 ans', 'Forme des professionnels capables de vendre des produits et services, développer un portefeuille clients et augmenter le chiffre d\'affaires.', 'Techniques de vente et négociation, Prospection commerciale, Gestion clientèle, Marketing opérationnel, Stratégie commerciale, Service client', 'Commercial, Agent commercial, Chargé de clientèle, Représentant commercial, Conseiller commercial, Responsable commercial , Chef des ventes (après expérience)', 'esmea-licence-action-commerciale-force-vente', 1, '2026-03-31 16:52:37'),
+(12, 'ESMEA', 'Communication et Action Publicitaire', 'Licence', '3 ans', 'Forme des professionnels capables de promouvoir les produits et services via publicité et communication.', 'Techniques de communication, Marketing et publicité, Communication digitale et visuelle, Relations publiques, Rédaction publicitaire, Gestion des campagnes', 'Chargé de communication, Assistant communication, Community manager, Agent publicitaire, Chargé marketing, Responsable communication (après expérience)', 'esmea-licence-communication-action-publicitaire', 1, '2026-03-31 16:52:37'),
+(13, 'ESMEA', 'Commerce', 'Licence', '3 ans', 'Forme des professionnels capables de gérer les opérations commerciales, la distribution et les relations clients/fournisseurs.', 'Techniques de vente et négociation, Organisation commerciale, Gestion de stock, Analyse des marchés, Marketing et promotion, Distribution et merchandising', 'Commercial, Chargé de clientèle, Représentant commercial, Vendeur professionnel, Gestionnaire de stock, Responsable magasin , Chef des ventes (après expérience)', 'esmea-licence-commerce', 1, '2026-03-31 16:52:37'),
+(14, 'ESMEA', 'Informatique de Gestion', 'Licence', '3 ans', 'Forme des professionnels capables de gérer et développer des systèmes d\'information pour les entreprises.', 'Développement logiciel et web, Bases de données et ERP, Maintenance des systèmes informatiques, Gestion commerciale et financière, Analyse des besoins utilisateurs, Sécurité informatique', 'Technicien informatique de gestion, Développeur Web , Analyste fonctionnel , Administrateur logiciel , Responsable informatique (après expérience), Consultant informatique, Développeur fullstack, Développeur Mobile,', 'informatique-de-gestion', 1, '2026-03-31 16:52:37'),
+(15, 'ESMEA', 'Transport et Logistique', 'Licence', '3 ans', 'Forme des professionnels capables d\'organiser et gérer la circulation des biens et marchandises.', 'Gestion des stocks et entrepôts, Transport et distribution, Supply chain et planification, Transit et transport international, Gestion administrative, Sécurité et conformité', 'Technicien logistique, Chargé transport, Gestionnaire de stock, Agent de transit, Responsable entrepôt , Assistant supply chain, Responsable logistique (après expérience), Consultant logistique', 'esmea-licence-transport-logistique', 1, '2026-03-31 16:52:37'),
+(16, 'ESMEA', 'Assurances', 'Master', '2 ans', 'Le Master en Assurances prépare des professionnels capables de concevoir, piloter et gérer des produits et services d\'assurance pour des clients particuliers et entreprises. Les étudiants apprennent à analyser les risques complexes, à élaborer des stratégies d\'assurance et à gérer les sinistres majeurs.', 'Gestion stratégique des assurances, Analyse avancée des risques, Produits et services d\'assurance complexes, Pilotage des sinistres et indemnisation, Droit et réglementation des assurances, Gestion financière des compagnies d\'assurance, Relation client et marketing assurance', 'Actuaire , Responsable produit assurance, Chargé de portefeuille assurance, Gestionnaire sinistres complexe, Responsable agence assurance, Consultant en assurance, Responsable service indemnisation, Conseiller en gestion des risques', 'esmea-master-assurances', 1, '2026-03-31 16:52:37'),
+(17, 'ESMEA', 'Audit et Contrôle de Gestion', 'Master', '2 ans', 'Le Master en Audit et Contrôle de Gestion forme des experts capables de piloter la gestion financière et de réaliser des audits stratégiques au sein d\'entreprises et institutions.', 'Audit interne et externe avancé, Contrôle de gestion stratégique, Gestion budgétaire et prévisionnelle, Analyse financière complexe, Gestion des risques financiers, Reporting et tableaux de bord, Fiscalité et réglementation', 'Auditeur senior, Contrôleur de gestion, Responsable audit interne, Analyste financier senior, Consultant financier, Chef comptable, Responsable contrôle de gestion, Responsable financier d\'entreprise', 'esmea-master-audit-controle-gestion', 1, '2026-03-31 16:52:37'),
+(18, 'ESMEA', 'Gestion des Ressources Humaines', 'Master', '2 ans', 'Le Master en Gestion des Ressources Humaines forme des experts capables de piloter la stratégie RH, gérer les talents, la formation, la performance et les relations sociales dans les organisations.', 'Stratégie et pilotage RH, Gestion des carrières et talents, Gestion des rémunérations et paie, Audit social, Relations sociales et droit du travail, Développement organisationnel, Gestion de la formation, Communication interne et management du changement', 'Responsable ressources humaines, Directeur RH , Responsable formation, Responsable recrutement, Responsable paie et rémunérations, Chargé de développement RH, Consultant RH, Responsable administration du personnel', 'esmea-master-gestion-ressources-humaines', 1, '2026-03-31 16:52:37'),
+(19, 'ESMEA', 'Marketing Communication', 'Master', '2 ans', 'Le Master Marketing Communication forme des professionnels capables de concevoir et piloter des stratégies de marketing et communication au niveau national et international.', 'Stratégie marketing et communication, Marketing digital et international, Gestion de campagnes publicitaires, Gestion de la communication d\'entreprise, Analyse des marchés, Gestion de marque, Relations publiques et événementiel', 'Responsable marketing, Chef de produit, Responsable communication, Brand manager, Consultant marketing, Responsable marketing digital, Responsable publicité, Chargé communication stratégique', 'esmea-master-marketing-communication', 1, '2026-03-31 16:52:37'),
+(20, 'ESMEA', 'Commerce International', 'Master', '2 ans', 'Le Master Commerce International forme des professionnels capables de gérer et développer les opérations commerciales à l\'international.', 'Stratégie commerciale internationale, Commerce et négociation internationale, Logistique et transport international, Analyse des marchés étrangers, Gestion des exportations et importations, Finance et fiscalité internationale', 'Responsable export, Chargé commerce international, Analyste marché international, Responsable import-export, Gestionnaire supply chain internationale, Consultant en commerce international, Responsable relations internationales', 'esmea-master-commerce-international', 1, '2026-03-31 16:52:37'),
+(21, 'ESMEA', 'Transport et Logistique', 'Master', '2 ans', 'Le Master Transport et Logistique forme des experts capables de piloter l\'ensemble de la chaîne logistique et du transport, de la planification à la distribution.', 'Stratégie et pilotage de la supply chain, Gestion des transports et distribution, Logistique industrielle et commerciale, Transport international et transit, Gestion des stocks et entrepôts, Planification et optimisation des flux, Gestion des coûts et performance logistique', 'Responsable logistique senior, Responsable supply chain, Responsable transport et distribution, Consultant logistique, Responsable exploitation transport, Manager de flotte, Directeur logistique', 'esmea-master-transport-logistique', 1, '2026-03-31 16:52:37'),
+(22, 'FSAE', 'Gestion de l\'Environnement et Aménagement du Territoire', 'Licence', '3 ans', 'Cette filière forme des professionnels capables de gérer et planifier l\'aménagement des territoires en tenant compte de la protection de l\'environnement, de l\'urbanisation et du développement durable. Elle prépare les étudiants à analyser les écosystèmes, planifier l\'utilisation des sols et développer des projets d\'aménagement durable.', 'Gestion durable des ressources naturelles, Évaluation environnementale et audit écologique, Cartographie et SIG (Systèmes d\'Information Géographique), Planification de l\'aménagement du territoire, Protection de la biodiversité, Lutte contre l\'érosion et dégradation des sols, Gestion des déchets et pollution, Techniques d\'urbanisme rural et périurbain', 'Technicien en aménagement du territoire, Gestionnaire environnemental, Chargé de projets environnementaux, Consultant en urbanisme et environnement, Technicien SIG, Responsable suivi écologique, Agent de l\'environnement dans ONG ou institutions publiques, Chargé de développement durable, Responsable de l\'assainissement et gestion des déchets', 'fsae-licence-gestion-environnement-amenagement-territoire', 1, '2026-03-31 16:52:38'),
+(23, 'FSAE', 'Production et Gestion des Ressources Animales', 'Licence', '3 ans', 'Cette filière forme des professionnels capables de gérer les élevages, améliorer la productivité animale et garantir la santé et le bien-être des animaux. Elle couvre également l\'organisation des exploitations agricoles et l\'utilisation durable des ressources animales.', 'Techniques d\'élevage (bovins, ovins, caprins, volailles), Nutrition animale et formulation des rations, Santé animale et prophylaxie, Gestion des exploitations agricoles, Reproduction et sélection animale, Gestion des pâturages et fourrages, Techniques de transformation des produits animaux (lait, viande, œufs), Hygiène et qualité des produits animaux', 'Technicien d\'élevage, Gestionnaire d\'exploitation agricole, Technicien production laitière ou avicole, Inspecteur qualité produits animaux, Consultant en élevage, Conseiller agricole, Responsable santé animale, Responsable de projet en ONG agricole', 'fsae-licence-production-gestion-ressources-animales', 1, '2026-03-31 16:52:38'),
+(24, 'FSAE', 'Sciences et Techniques de Production Végétale', 'Licence', '3 ans', 'Cette filière forme des professionnels capables de gérer la production végétale, améliorer la qualité et la quantité des cultures, et développer des techniques adaptées à l\'agriculture locale et durable.', 'Production et entretien des cultures vivrières et commerciales, Techniques de fertilisation et irrigation, Protection des plantes (lutte contre les parasites et maladies), Sélection variétale et amélioration des semences, Gestion de la production agricole, Agroécologie et agriculture durable, Techniques de récolte et post-récolte', 'Technicien agricole, Gestionnaire d\'exploitation agricole, Conseiller en production végétale, Inspecteur phytosanitaire, Consultant en agriculture durable, Responsable qualité et suivi des cultures, Responsable de pépinière, Formateur agricole', 'fsae-licence-sciences-techniques-production-vegetale', 1, '2026-03-31 16:52:38'),
+(25, 'FSAE', 'Stockage, Conservation et Conditionnement des Produits Agricoles', 'Licence', '3 ans', 'Cette filière forme des professionnels capables d\'assurer la conservation, le stockage et la transformation des produits agricoles afin de réduire les pertes post-récolte et garantir la qualité pour le marché.', 'Techniques de stockage et silos, Méthodes de conservation des produits agricoles, Conditionnement et emballage, Sécurité alimentaire, Gestion de la chaîne logistique agricole, Qualité et normes sanitaires, Transformation de produits agricoles', 'Technicien post-récolte, Responsable stockage et entrepôt, Gestionnaire de conditionnement, Technicien qualité agroalimentaire, Consultant en conservation des produits agricoles, Responsable logistique agricole, Responsable transformation agricole, Agent de contrôle sanitaire', 'fsae-licence-stockage-conservation-conditionnement-produits-agricoles', 1, '2026-03-31 16:52:38'),
+(26, 'FSAE', 'Gestion des Entreprises Rurales et Agricoles', 'Licence', '3 ans', 'Cette filière forme des professionnels capables de gérer les entreprises agricoles et rurales, en intégrant les dimensions économiques, sociales et environnementales. Elle prépare les étudiants à améliorer la rentabilité et la durabilité des exploitations.', 'Gestion administrative et financière des exploitations, Planification et suivi de production, Marketing des produits agricoles, Gestion des ressources humaines dans les entreprises rurales, Gestion des risques agricoles, Développement de projets agricoles', 'Gestionnaire d\'exploitation agricole, Conseiller agricole, Agent de développement rural, Responsable administratif exploitation agricole, Consultant en management agricole, Chef d\'entreprise agricole, Responsable suivi et planification agricole', 'fsae-licence-gestion-entreprises-rurales-agricoles', 1, '2026-03-31 16:52:38'),
+(27, 'FSAE', 'Gestion de l\'Environnement et Aménagement du Territoire', 'Master', '2 ans', 'Le Master forme des professionnels capables de piloter des projets d\'aménagement du territoire, de planification urbaine et rurale et de gestion durable de l\'environnement. Ils peuvent concevoir et superviser des projets à l\'échelle régionale et nationale.', 'Planification et aménagement durable du territoire, Gestion avancée des ressources naturelles, Analyse environnementale et évaluation d\'impact, Gestion des risques naturels et anthropiques, SIG et cartographie avancée, Gestion des projets environnementaux', 'Chef de projet aménagement du territoire, Urbaniste spécialisé en environnement, Consultant en gestion environnementale, Responsable suivi environnemental, Expert SIG, Chargé de développement durable, Responsable assainissement et environnement', 'fsae-master-gestion-environnement-amenagement-territoire', 1, '2026-03-31 16:52:38'),
+(28, 'FSAE', 'Production et Gestion des Ressources Animales', 'Master', '2 ans', 'Le Master forme des spécialistes capables de gérer des exploitations animales de grande envergure et de mettre en place des stratégies pour améliorer la productivité et la durabilité des élevages.', 'Gestion avancée des élevages, Nutrition et santé animale, Reproduction et amélioration génétique, Gestion économique des exploitations animales, Techniques de transformation des produits animaux, Planification et optimisation de la production animale', 'Directeur d\'exploitation animale, Responsable production animale, Consultant élevage et nutrition animale, Expert en santé animale, Gestionnaire de projet agricole, Responsable transformation et qualité produits animaux', 'fsae-master-production-gestion-ressources-animales', 1, '2026-03-31 16:52:38'),
+(29, 'FSAE', 'Sciences et Techniques de Production Végétale', 'Master', '2 ans', 'Le Master forme des experts en production végétale capables de gérer des exploitations agricoles, améliorer la qualité et quantité des cultures et introduire des techniques innovantes pour l\'agriculture durable.', 'Gestion des cultures et production végétale avancée, Sélection variétale et amélioration des semences, Protection des plantes et lutte intégrée, Agroécologie et agriculture durable, Techniques de récolte et post-récolte, Gestion économique et organisationnelle des exploitations', 'Directeur exploitation agricole, Consultant en production végétale, Responsable qualité et suivi des cultures, Expert en agriculture durable, Responsable pépinière ou semences, Chargé de projets agricoles', 'fsae-master-sciences-techniques-production-vegetale', 1, '2026-03-31 16:52:38'),
+(30, 'FSAE', 'Stockage, Conservation et Conditionnement des Produits Agricoles', 'Master', '2 ans', 'Le Master forme des spécialistes capables de piloter les opérations de post-récolte, réduire les pertes et assurer la qualité des produits agricoles destinés au marché national et international.', 'Gestion stratégique des stocks et entrepôts, Conservation avancée des produits agricoles, Techniques de conditionnement et emballage, Normes qualité et sécurité alimentaire, Organisation et planification de la chaîne logistique, Transformation et valorisation des produits agricoles', 'Responsable logistique et stockage agricole, Consultant post-récolte et conservation, Responsable qualité agroalimentaire, Directeur entrepôt ou unité de transformation, Gestionnaire chaîne d\'approvisionnement agricole, Chef de projet agro-industriel', 'fsae-master-stockage-conservation-conditionnement-produits-agricoles', 1, '2026-03-31 16:52:38'),
+(31, 'FSAE', 'Administration et Politique de l\'Environnement', 'Master', '2 ans', 'Le Master forme des experts capables de concevoir, piloter et évaluer les politiques environnementales au niveau national ou local, en intégrant les enjeux économiques, sociaux et écologiques.', 'Politiques publiques et réglementations environnementales, Analyse des impacts environnementaux, Gestion durable des ressources naturelles, Planification stratégique en environnement, Audit et certification environnementale, Gestion de projets environnementaux', 'Responsable de projets environnementaux, Consultant en politiques environnementales, Chargé de mission environnement, Auditeur environnemental, Responsable développement durable, Expert en planification et aménagement environnemental', 'fsae-master-administration-politique-environnement', 1, '2026-03-31 16:52:38'),
+(32, 'FSAE', 'Gestion des Ressources Naturelles', 'Master', '2 ans', 'Le Master prépare des professionnels capables de gérer durablement les ressources naturelles, de concevoir des projets de conservation et d\'optimiser l\'exploitation des ressources renouvelables.', 'Gestion durable des ressources forestières, aquatiques et minérales, Conservation de la biodiversité, Développement durable et économie des ressources, Planification et suivi des projets de ressources naturelles, Techniques d\'inventaire et suivi écologique', 'Gestionnaire de projets ressources naturelles, Consultant en conservation, Responsable de parcs et réserves naturelles, Expert biodiversité et écologie, Chargé suivi environnemental, Responsable développement durable', 'fsae-master-gestion-ressources-naturelles', 1, '2026-03-31 16:52:38'),
+(33, 'FSAE', 'Gestion de l\'Espace Urbain', 'Master', '2 ans', 'Le Master forme des professionnels capables de gérer et planifier l\'aménagement urbain, la mobilité, l\'assainissement et le développement durable des villes et agglomérations.', 'Urbanisme et planification territoriale, Gestion des déchets et assainissement, Gestion des espaces verts et zones urbaines, Mobilité urbaine et transport durable, Aménagement durable et infrastructures urbaines, Développement de projets urbains', 'Urbaniste spécialisé en environnement, Chef de projet aménagement urbain, Consultant mobilité et urbanisme durable, Responsable infrastructure urbaine, Chargé de projets villes durables, Responsable assainissement et gestion des espaces urbains', 'fsae-master-gestion-espace-urbain', 1, '2026-03-31 16:52:38'),
+(34, 'FDE', 'Sciences Juridiques – Droit', 'Licence', '3 ans', 'La filière Sciences Juridiques forme les étudiants aux bases du droit, pour comprendre et appliquer les lois, analyser les textes juridiques et gérer des situations légales simples. Elle prépare aux métiers de l\'administration publique, des services juridiques et des cabinets privés.', 'Étude des droits civil, pénal, administratif et constitutionnel, Introduction au droit commercial et droit du travail, Rédaction et analyse juridique de documents, Procédures judiciaires et contentieux simples, Techniques de négociation et médiation juridique', 'Assistant juridique, Secrétaire juridique, Clerc de notaire, Juriste  en entreprise, Greffier assistant, Chargé de contentieux, Conseiller juridique dans l\'administration publique, Collaborateur de cabinet d\'avocat', 'fde-licence-sciences-juridiques-droit', 1, '2026-03-31 16:52:38'),
+(35, 'FDE', 'Sciences Économiques – Économie', 'Licence', '3 ans', 'Cette filière forme les étudiants à l\'analyse économique, la compréhension des marchés et la planification économique. Les diplômés peuvent contribuer à la gestion financière et économique des entreprises et institutions publiques.', 'Microéconomie et macroéconomie, Statistiques et économétrie appliquée, Analyse des marchés et politiques économiques, Gestion et organisation des entreprises, Planification et développement économique local et national', 'Analyste économique, Chargé d\'études économiques, Assistant statistique ou recherche économique, Gestionnaire administratif dans structures économiques, Consultant  en développement économique, Chargé de suivi de projet économique, Conseiller en planification et analyse économique', 'fde-licence-sciences-economiques', 1, '2026-03-31 16:52:38'),
+(36, 'FDE', 'Droit Privé Fondamental', 'Master', '2 ans', 'Le Master en Droit Privé Fondamental forme des spécialistes du droit civil, commercial et judiciaire. Il prépare aux métiers juridiques avancés dans les entreprises, cabinets, institutions publiques et ONG.', 'Étude approfondie du droit civil et droit des obligations, Droit commercial et droit des sociétés, Fiscalité et droit des affaires, Gestion de contrats et contentieux complexes, Techniques d\'analyse juridique et résolution de litiges', 'Juriste d\'entreprise, Avocat spécialisé en droit privé, Conseiller juridique en entreprise, Consultant en droit commercial, Responsable contrats et conformité, Notaire assistant', 'fde-master-droit-prive-fondamental', 1, '2026-03-31 16:52:38'),
+(37, 'FDE', 'Droit Privé – Droit des Technologies de l\'Information et de la Communication', 'Master', '2 ans', 'Cette spécialité forme des juristes capables de gérer les enjeux juridiques liés aux technologies numériques, à la cybersécurité et à la protection des données personnelles dans un environnement digital en constante évolution.', 'Gestion juridique des TIC, Cyberdroit et protection des données, Droit du numérique et des plateformes, Réglementation des systèmes d\'information, Contrats numériques et propriété intellectuelle, Droit des affaires appliqué aux TIC', 'Juriste TIC, Consultant cybersécurité juridique, Conseiller juridique entreprise numérique, Responsable conformité RGPD, Juriste en propriété intellectuelle', 'fde-master-droit-prive-tic', 1, '2026-03-31 16:52:38'),
+(38, 'FDE', 'Droit Privé – Professions Judiciaires', 'Master', '2 ans', 'Cette spécialité prépare les étudiants aux métiers judiciaires et à la magistrature, avec une formation approfondie sur les procédures judiciaires, le contentieux et la pratique des tribunaux.', 'Procédures civiles et pénales avancées, Techniques de plaidoirie et rédaction judiciaire, Droit de la magistrature et déontologie judiciaire, Contentieux et arbitrage, Pratique des juridictions et greffes', 'Magistrat, Greffier, Assistant magistrature, Chargé de procédure judiciaire, Officier de police judiciaire, Médiateur judiciaire', 'fde-master-droit-prive-professions-judiciaires', 1, '2026-03-31 16:52:38'),
+(39, 'FDE', 'Droit Privé – Fiscalité et Droit des Affaires', 'Master', '2 ans', 'Cette spécialité forme des experts en fiscalité nationale et internationale et en droit des sociétés, capables d\'accompagner les entreprises dans leurs obligations fiscales et leurs transactions commerciales.', 'Fiscalité nationale et internationale, Droit des sociétés et des affaires, Audit fiscal et contrôle fiscal, Droit des contrats commerciaux, Optimisation fiscale, Gestion des litiges fiscaux', 'Fiscaliste, Juriste d\'entreprise spécialisé fiscalité, Consultant fiscal, Responsable conformité fiscale, Auditeur fiscal, Conseiller en droit des affaires', 'fde-master-droit-prive-fiscalite-affaires', 1, '2026-03-31 16:52:38'),
+(40, 'FDE', 'Droit Privé – Juriste d\'Entreprises et d\'Affaires', 'Master', '2 ans', 'Cette spécialité prépare des juristes spécialisés dans la gestion juridique des entreprises, les transactions commerciales et la conformité réglementaire au sein des organisations privées.', 'Gestion juridique des entreprises, Droit des transactions commerciales, Montage et sécurisation des contrats, Conformité réglementaire et compliance, Droit social et relations de travail, Négociation et arbitrage commercial', 'Juriste d\'entreprise senior, Consultant en affaires juridiques, Responsable contrats et conformité, Directeur juridique , Conseiller en droit des affaires, Responsable compliance', 'fde-master-droit-prive-juriste-entreprises-affaires', 1, '2026-03-31 16:52:38'),
+(41, 'FDE', 'Droit Public Fondamental', 'Master', '2 ans', 'Le Master en Droit Public Fondamental prépare les professionnels à la gestion juridique des affaires publiques, à la défense des droits humains et à l\'application du droit de l\'environnement et de l\'urbanisme.', 'Droit public avancé et droit administratif, Droit de l\'Homme et droit humanitaire, Droit de l\'environnement et urbanisme, Gestion de contentieux publics, Audit et évaluation de politiques publiques, Analyse stratégique et juridique', 'Juriste administratif, Conseiller en droit public, Expert en droit humanitaire, Consultant en urbanisme et environnement, Responsable contentieux public, Conseiller juridique dans ONG ou institutions internationales', 'fde-master-droit-public-fondamental', 1, '2026-03-31 16:52:38'),
+(42, 'FDE', 'Sciences Économiques – Économie Avancée', 'Master', '2 ans', 'Le Master Économie Avancée prépare les étudiants à occuper des postes de responsabilité dans le secteur public, privé et les organisations internationales. Il développe l\'analyse économique et la planification stratégique.', 'Analyse macroéconomique et microéconomique avancée, Politique économique et planification nationale, Économie du développement et financement des projets, Statistiques et économétrie avancée, Gestion stratégique et prise de décision économique, Analyse et optimisation de marchés et institutions', 'Analyste économique senior, Consultant en développement économique, Conseiller financier et économique, Chargé de planification stratégique, Responsable études de marché et statistiques, Expert en économie publique ou développement international, Chef de projets économiques et financiers', 'fde-master-sciences-economiques-avancee', 1, '2026-03-31 16:52:38');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `metiers`
+--
+
+CREATE TABLE `metiers` (
+  `id` int(11) NOT NULL,
+  `nom_metier` varchar(200) NOT NULL,
+  `slug` varchar(200) NOT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : metiers_filieres
--- Correspondance Métiers ↔ Filières (N:N avec priorité)
--- =================================================================
-CREATE TABLE IF NOT EXISTS `metiers_filieres` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `metier_id` INT(11) NOT NULL,
-  `filiere_id` INT(11) NOT NULL,
-  `priorite` INT(11) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_metier_filiere` (`metier_id`, `filiere_id`),
-  KEY `idx_mf_metier` (`metier_id`),
-  KEY `idx_mf_filiere` (`filiere_id`),
-  CONSTRAINT `fk_mf_metier` FOREIGN KEY (`metier_id`) REFERENCES `metiers` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_mf_filiere` FOREIGN KEY (`filiere_id`) REFERENCES `filieres` (`id`) ON DELETE CASCADE
+--
+-- Déchargement des données de la table `metiers`
+--
+
+INSERT INTO `metiers` (`id`, `nom_metier`, `slug`, `actif`, `created_at`) VALUES
+(1, 'Technicien en électronique', 'technicien-electronique', 1, '2026-03-31 16:52:37'),
+(2, 'Technicien en maintenance électronique', 'technicien-maintenance-electronique', 1, '2026-03-31 16:52:37'),
+(3, 'Technicien en réparation d\'équipements électroniques', 'technicien-reparation-equipements-electroniques', 1, '2026-03-31 16:52:37'),
+(4, 'Technicien en systèmes embarqués', 'technicien-systemes-embarques', 1, '2026-03-31 16:52:37'),
+(5, 'Technicien en maintenance industrielle', 'technicien-maintenance-industrielle', 1, '2026-03-31 16:52:37'),
+(6, 'Technicien SAV', 'technicien-sav', 1, '2026-03-31 16:52:37'),
+(7, 'Technicien en instrumentation électronique', 'technicien-instrumentation-electronique', 1, '2026-03-31 16:52:37'),
+(8, 'Technicien réseaux informatiques', 'technicien-reseaux-informatiques', 1, '2026-03-31 16:52:37'),
+(9, 'Administrateur réseaux ', 'administrateur-reseaux-', 1, '2026-03-31 16:52:37'),
+(10, 'Technicien télécommunications', 'technicien-telecommunications', 1, '2026-03-31 16:52:37'),
+(11, 'Technicien fibre optique (FTTH)', 'technicien-fibre-optique-ftth', 1, '2026-03-31 16:52:37'),
+(12, 'Technicien faisceaux hertziens (FH)', 'technicien-faisceaux-hertziens', 1, '2026-03-31 16:52:37'),
+(13, 'Technicien réseaux mobiles', 'technicien-reseaux-mobiles', 1, '2026-03-31 16:52:37'),
+(14, 'Technicien support informatique', 'technicien-support-informatique', 1, '2026-03-31 16:52:37'),
+(15, 'Développeur web', 'developpeur-web', 1, '2026-03-31 16:52:37'),
+(16, 'Développeur Full-Stack', 'developpeur-full-stack', 1, '2026-03-31 16:52:37'),
+(17, 'Développeur mobile', 'developpeur-mobile', 1, '2026-03-31 16:52:37'),
+(18, 'Technicien NOC', 'technicien-noc', 1, '2026-03-31 16:52:37'),
+(19, 'Technicien déploiement réseau', 'technicien-deploiement-reseau', 1, '2026-03-31 16:52:37'),
+(20, 'Technicien de maintenance industrielle', 'technicien-de-maintenance-industrielle', 1, '2026-03-31 16:52:37'),
+(21, 'Technicien en automatisme industriel', 'technicien-automatisme-industriel', 1, '2026-03-31 16:52:37'),
+(22, 'Technicien en informatique industrielle', 'technicien-informatique-industrielle', 1, '2026-03-31 16:52:37'),
+(23, 'Technicien en automatisation', 'technicien-automatisation', 1, '2026-03-31 16:52:37'),
+(24, 'Technicien en électromécanique', 'technicien-electromecanique', 1, '2026-03-31 16:52:37'),
+(25, 'Technicien GMAO', 'technicien-gmao', 1, '2026-03-31 16:52:37'),
+(26, 'Technicien en installation industrielle', 'technicien-installation-industrielle', 1, '2026-03-31 16:52:37'),
+(27, 'Technicien électrotechnicien', 'technicien-electrotechnicien', 1, '2026-03-31 16:52:37'),
+(28, 'Technicien en installation électrique', 'technicien-installation-electrique', 1, '2026-03-31 16:52:37'),
+(29, 'Technicien en maintenance électrique', 'technicien-maintenance-electrique', 1, '2026-03-31 16:52:37'),
+(30, 'Technicien en énergie solaire', 'technicien-energie-solaire', 1, '2026-03-31 16:52:37'),
+(31, 'Technicien en distribution électrique', 'technicien-distribution-electrique', 1, '2026-03-31 16:52:37'),
+(32, 'Installateur électrique', 'installateur-electrique', 1, '2026-03-31 16:52:37'),
+(33, 'Technicien en réseaux électriques', 'technicien-reseaux-electriques', 1, '2026-03-31 16:52:37'),
+(34, 'Technicien en électrification rurale', 'technicien-electrification-rurale', 1, '2026-03-31 16:52:37'),
+(35, 'Ingénieur télécommunications', 'ingenieur-telecommunications', 1, '2026-03-31 16:52:37'),
+(36, 'Ingénieur réseaux informatiques', 'ingenieur-reseaux-informatiques', 1, '2026-03-31 16:52:37'),
+(37, 'Ingénieur réseaux mobiles', 'ingenieur-reseaux-mobiles', 1, '2026-03-31 16:52:37'),
+(38, 'Ingénieur fibre optique', 'ingenieur-fibre-optique', 1, '2026-03-31 16:52:37'),
+(39, 'Ingénieur radio', 'ingenieur-radio', 1, '2026-03-31 16:52:37'),
+(40, 'Ingénieur NOC', 'ingenieur-noc', 1, '2026-03-31 16:52:37'),
+(41, 'Ingénieur systèmes informatiques', 'ingenieur-systemes-informatiques', 1, '2026-03-31 16:52:37'),
+(42, 'Administrateur systèmes et réseaux senior', 'administrateur-systemes-reseaux-senior', 1, '2026-03-31 16:52:37'),
+(43, 'Chef de projet télécom', 'chef-de-projet-telecom', 1, '2026-03-31 16:52:37'),
+(44, 'Consultant en réseaux informatiques', 'consultant-reseaux-informatiques', 1, '2026-03-31 16:52:37'),
+(45, 'Responsable infrastructure réseau', 'responsable-infrastructure-reseau', 1, '2026-03-31 16:52:37'),
+(46, 'Responsable technique télécom', 'responsable-technique-telecom', 1, '2026-03-31 16:52:37'),
+(47, 'Ingénieur automaticien', 'ingenieur-automaticien', 1, '2026-03-31 16:52:37'),
+(48, 'Ingénieur en maintenance industrielle', 'ingenieur-maintenance-industrielle', 1, '2026-03-31 16:52:37'),
+(49, 'Ingénieur en électronique industrielle', 'ingenieur-electronique-industrielle', 1, '2026-03-31 16:52:37'),
+(50, 'Ingénieur en automatisation industrielle', 'ingenieur-automatisation-industrielle', 1, '2026-03-31 16:52:37'),
+(51, 'Ingénieur production industrielle', 'ingenieur-production-industrielle', 1, '2026-03-31 16:52:37'),
+(52, 'Ingénieur méthodes', 'ingenieur-methodes', 1, '2026-03-31 16:52:37'),
+(53, 'Ingénieur maintenance', 'ingenieur-maintenance', 1, '2026-03-31 16:52:37'),
+(54, 'Chef de projet industriel', 'chef-de-projet-industriel', 1, '2026-03-31 16:52:37'),
+(55, 'Responsable maintenance industrielle', 'responsable-maintenance-industrielle', 1, '2026-03-31 16:52:37'),
+(56, 'Responsable production', 'responsable-production', 1, '2026-03-31 16:52:37'),
+(57, 'Consultant en automatisation', 'consultant-automatisation', 1, '2026-03-31 16:52:37'),
+(58, 'Ingénieur qualité industrielle', 'ingenieur-qualite-industrielle', 1, '2026-03-31 16:52:37'),
+(59, 'Agent d\'assurance', 'agent-assurance', 1, '2026-03-31 16:52:37'),
+(60, 'Conseiller en assurance', 'conseiller-assurance', 1, '2026-03-31 16:52:37'),
+(61, 'Gestionnaire de contrats', 'gestionnaire-contrats', 1, '2026-03-31 16:52:37'),
+(62, 'Gestionnaire sinistres', 'gestionnaire-sinistres', 1, '2026-03-31 16:52:37'),
+(63, 'Chargé de clientèle', 'charge-clientele', 1, '2026-03-31 16:52:37'),
+(64, 'Assistant courtier', 'assistant-courtier', 1, '2026-03-31 16:52:37'),
+(65, 'Téléconseiller', 'teleconseiller', 1, '2026-03-31 16:52:37'),
+(66, 'Responsable agence assurance', 'responsable-agence-assurance', 1, '2026-03-31 16:52:37'),
+(67, 'Agent de banque', 'agent-banque', 1, '2026-03-31 16:52:37'),
+(68, 'Chargé de clientèle bancaire', 'charge-clientele-bancaire', 1, '2026-03-31 16:52:37'),
+(69, 'Conseiller financier', 'conseiller-financier', 1, '2026-03-31 16:52:37'),
+(70, 'Gestionnaire de comptes', 'gestionnaire-comptes', 1, '2026-03-31 16:52:37'),
+(71, 'Agent crédit', 'agent-credit', 1, '2026-03-31 16:52:37'),
+(72, 'Analyste financier', 'analyste-financier', 1, '2026-03-31 16:52:37'),
+(73, 'Responsable d\'agence bancaire', 'responsable-agence-bancaire', 1, '2026-03-31 16:52:37'),
+(74, 'Comptable', 'comptable', 1, '2026-03-31 16:52:37'),
+(75, 'Assistant comptable', 'assistant-comptable', 1, '2026-03-31 16:52:37'),
+(76, 'Auditeur ', 'auditeur-', 1, '2026-03-31 16:52:37'),
+(77, 'Contrôleur de gestion ', 'controleur-gestion-', 1, '2026-03-31 16:52:37'),
+(78, 'Gestionnaire comptable', 'gestionnaire-comptable', 1, '2026-03-31 16:52:37'),
+(79, 'Chef comptable', 'chef-comptable', 1, '2026-03-31 16:52:37'),
+(80, 'Responsable financier', 'responsable-financier', 1, '2026-03-31 16:52:37'),
+(81, 'Assistant RH', 'assistant-rh', 1, '2026-03-31 16:52:37'),
+(82, 'Chargé RH ', 'charge-rh-', 1, '2026-03-31 16:52:37'),
+(83, 'Gestionnaire du personnel', 'gestionnaire-personnel', 1, '2026-03-31 16:52:37'),
+(84, 'Assistant paie', 'assistant-paie', 1, '2026-03-31 16:52:37'),
+(85, 'Responsable RH', 'responsable-rh', 1, '2026-03-31 16:52:37'),
+(86, 'Chargé recrutement', 'charge-recrutement', 1, '2026-03-31 16:52:37'),
+(87, 'Assistant formation', 'assistant-formation', 1, '2026-03-31 16:52:37'),
+(88, 'Commercial', 'commercial', 1, '2026-03-31 16:52:37'),
+(89, 'Agent commercial', 'agent-commercial', 1, '2026-03-31 16:52:37'),
+(90, 'Chargé de clientèle commercial', 'charge-clientele-commercial', 1, '2026-03-31 16:52:37'),
+(91, 'Représentant commercial', 'representant-commercial', 1, '2026-03-31 16:52:37'),
+(92, 'Conseiller commercial', 'conseiller-commercial', 1, '2026-03-31 16:52:37'),
+(93, 'Responsable commercial ', 'responsable-commercial-', 1, '2026-03-31 16:52:37'),
+(94, 'Chef des ventes', 'chef-des-ventes', 1, '2026-03-31 16:52:37'),
+(95, 'Chargé de communication', 'charge-communication', 1, '2026-03-31 16:52:37'),
+(96, 'Assistant communication', 'assistant-communication', 1, '2026-03-31 16:52:37'),
+(97, 'Community manager', 'community-manager', 1, '2026-03-31 16:52:37'),
+(98, 'Agent publicitaire', 'agent-publicitaire', 1, '2026-03-31 16:52:37'),
+(99, 'Chargé marketing', 'charge-marketing', 1, '2026-03-31 16:52:37'),
+(100, 'Responsable communication', 'responsable-communication', 1, '2026-03-31 16:52:37'),
+(101, 'Vendeur professionnel', 'vendeur-professionnel', 1, '2026-03-31 16:52:37'),
+(102, 'Gestionnaire de stock', 'gestionnaire-stock', 1, '2026-03-31 16:52:37'),
+(103, 'Responsable magasin ', 'responsable-magasin-', 1, '2026-03-31 16:52:37'),
+(104, 'Merchandiser', 'merchandiser', 1, '2026-03-31 16:52:37'),
+(105, 'Chargé distribution', 'charge-distribution', 1, '2026-03-31 16:52:37'),
+(106, 'Acheteur ', 'acheteur-', 1, '2026-03-31 16:52:37'),
+(107, 'Responsable point de vente', 'responsable-point-vente', 1, '2026-03-31 16:52:37'),
+(108, 'Technicien informatique de gestion', 'technicien-informatique-gestion', 1, '2026-03-31 16:52:37'),
+(109, 'Développeur', 'developpeur', 1, '2026-03-31 16:52:37'),
+(110, 'Analyste fonctionnel ', 'analyste-fonctionnel-', 1, '2026-03-31 16:52:37'),
+(111, 'Administrateur logiciel ', 'administrateur-logiciel-', 1, '2026-03-31 16:52:37'),
+(112, 'Responsable informatique', 'responsable-informatique', 1, '2026-03-31 16:52:37'),
+(113, 'Consultant informatique', 'consultant-informatique', 1, '2026-03-31 16:52:37'),
+(114, 'Technicien logistique', 'technicien-logistique', 1, '2026-03-31 16:52:37'),
+(115, 'Chargé transport', 'charge-transport', 1, '2026-03-31 16:52:37'),
+(116, 'Agent de transit', 'agent-transit', 1, '2026-03-31 16:52:37'),
+(117, 'Responsable entrepôt ', 'responsable-entrepot-', 1, '2026-03-31 16:52:37'),
+(118, 'Assistant supply chain', 'assistant-supply-chain', 1, '2026-03-31 16:52:37'),
+(119, 'Responsable logistique', 'responsable-logistique', 1, '2026-03-31 16:52:37'),
+(120, 'Consultant logistique', 'consultant-logistique', 1, '2026-03-31 16:52:37'),
+(121, 'Coordinateur transport', 'coordinateur-transport', 1, '2026-03-31 16:52:37'),
+(122, 'Actuaire ', 'actuaire-', 1, '2026-03-31 16:52:37'),
+(123, 'Responsable produit assurance', 'responsable-produit-assurance', 1, '2026-03-31 16:52:37'),
+(124, 'Chargé de portefeuille assurance', 'charge-portefeuille-assurance', 1, '2026-03-31 16:52:37'),
+(125, 'Gestionnaire sinistres complexe', 'gestionnaire-sinistres-complexe', 1, '2026-03-31 16:52:37'),
+(126, 'Responsable agence assurance senior', 'responsable-agence-assurance-senior', 1, '2026-03-31 16:52:37'),
+(127, 'Consultant en assurance', 'consultant-assurance', 1, '2026-03-31 16:52:37'),
+(128, 'Responsable service indemnisation', 'responsable-service-indemnisation', 1, '2026-03-31 16:52:37'),
+(129, 'Conseiller en gestion des risques', 'conseiller-gestion-risques', 1, '2026-03-31 16:52:37'),
+(130, 'Auditeur senior', 'auditeur-senior', 1, '2026-03-31 16:52:37'),
+(131, 'Contrôleur de gestion', 'controleur-gestion', 1, '2026-03-31 16:52:37'),
+(132, 'Responsable audit interne', 'responsable-audit-interne', 1, '2026-03-31 16:52:37'),
+(133, 'Analyste financier senior', 'analyste-financier-senior', 1, '2026-03-31 16:52:37'),
+(134, 'Consultant financier', 'consultant-financier', 1, '2026-03-31 16:52:37'),
+(135, 'Chef comptable senior', 'chef-comptable-senior', 1, '2026-03-31 16:52:37'),
+(136, 'Responsable contrôle de gestion', 'responsable-controle-gestion', 1, '2026-03-31 16:52:37'),
+(137, 'Responsable financier d\'entreprise', 'responsable-financier-entreprise', 1, '2026-03-31 16:52:37'),
+(138, 'Responsable ressources humaines', 'responsable-ressources-humaines', 1, '2026-03-31 16:52:37'),
+(139, 'Directeur RH ', 'directeur-rh-', 1, '2026-03-31 16:52:37'),
+(140, 'Responsable formation', 'responsable-formation', 1, '2026-03-31 16:52:37'),
+(141, 'Responsable recrutement', 'responsable-recrutement', 1, '2026-03-31 16:52:37'),
+(142, 'Responsable paie et rémunérations', 'responsable-paie-remunerations', 1, '2026-03-31 16:52:37'),
+(143, 'Chargé de développement RH', 'charge-developpement-rh', 1, '2026-03-31 16:52:37'),
+(144, 'Consultant RH', 'consultant-rh', 1, '2026-03-31 16:52:37'),
+(145, 'Responsable administration du personnel', 'responsable-administration-personnel', 1, '2026-03-31 16:52:37'),
+(146, 'Responsable marketing', 'responsable-marketing', 1, '2026-03-31 16:52:37'),
+(147, 'Chef de produit', 'chef-produit', 1, '2026-03-31 16:52:37'),
+(148, 'Responsable communication senior', 'responsable-communication-senior', 1, '2026-03-31 16:52:37'),
+(149, 'Brand manager', 'brand-manager', 1, '2026-03-31 16:52:37'),
+(150, 'Consultant marketing', 'consultant-marketing', 1, '2026-03-31 16:52:37'),
+(151, 'Responsable marketing digital', 'responsable-marketing-digital', 1, '2026-03-31 16:52:37'),
+(152, 'Responsable publicité', 'responsable-publicite', 1, '2026-03-31 16:52:37'),
+(153, 'Chargé communication stratégique', 'charge-communication-strategique', 1, '2026-03-31 16:52:37'),
+(154, 'Responsable export', 'responsable-export', 1, '2026-03-31 16:52:37'),
+(155, 'Chargé commerce international', 'charge-commerce-international', 1, '2026-03-31 16:52:37'),
+(156, 'Analyste marché international', 'analyste-marche-international', 1, '2026-03-31 16:52:37'),
+(157, 'Responsable import-export', 'responsable-import-export', 1, '2026-03-31 16:52:37'),
+(158, 'Gestionnaire supply chain internationale', 'gestionnaire-supply-chain-internationale', 1, '2026-03-31 16:52:37'),
+(159, 'Consultant en commerce international', 'consultant-commerce-international', 1, '2026-03-31 16:52:37'),
+(160, 'Responsable relations internationales', 'responsable-relations-internationales', 1, '2026-03-31 16:52:37'),
+(161, 'Responsable logistique senior', 'responsable-logistique-senior', 1, '2026-03-31 16:52:37'),
+(162, 'Responsable supply chain', 'responsable-supply-chain', 1, '2026-03-31 16:52:37'),
+(163, 'Responsable transport et distribution', 'responsable-transport-distribution', 1, '2026-03-31 16:52:37'),
+(164, 'Responsable exploitation transport', 'responsable-exploitation-transport', 1, '2026-03-31 16:52:37'),
+(165, 'Manager de flotte', 'manager-flotte', 1, '2026-03-31 16:52:37'),
+(166, 'Directeur logistique', 'directeur-logistique', 1, '2026-03-31 16:52:37'),
+(167, 'Consultant supply chain senior', 'consultant-supply-chain-senior', 1, '2026-03-31 16:52:37'),
+(168, 'Technicien en aménagement du territoire', 'technicien-amenagement-territoire', 1, '2026-03-31 16:52:38'),
+(169, 'Gestionnaire environnemental', 'gestionnaire-environnemental', 1, '2026-03-31 16:52:38'),
+(170, 'Chargé de projets environnementaux', 'charge-projets-environnementaux', 1, '2026-03-31 16:52:38'),
+(171, 'Consultant en urbanisme et environnement', 'consultant-urbanisme-environnement', 1, '2026-03-31 16:52:38'),
+(172, 'Technicien SIG', 'technicien-sig', 1, '2026-03-31 16:52:38'),
+(173, 'Responsable suivi écologique', 'responsable-suivi-ecologique', 1, '2026-03-31 16:52:38'),
+(174, 'Agent de l\'environnement', 'agent-environnement', 1, '2026-03-31 16:52:38'),
+(175, 'Chargé de développement durable', 'charge-developpement-durable', 1, '2026-03-31 16:52:38'),
+(176, 'Responsable assainissement et gestion des déchets', 'responsable-assainissement-dechets', 1, '2026-03-31 16:52:38'),
+(177, 'Technicien d\'élevage', 'technicien-elevage', 1, '2026-03-31 16:52:38'),
+(178, 'Gestionnaire d\'exploitation agricole', 'gestionnaire-exploitation-agricole', 1, '2026-03-31 16:52:38'),
+(179, 'Technicien production laitière ou avicole', 'technicien-production-laitiere-avicole', 1, '2026-03-31 16:52:38'),
+(180, 'Inspecteur qualité produits animaux', 'inspecteur-qualite-produits-animaux', 1, '2026-03-31 16:52:38'),
+(181, 'Consultant en élevage', 'consultant-elevage', 1, '2026-03-31 16:52:38'),
+(182, 'Conseiller agricole', 'conseiller-agricole', 1, '2026-03-31 16:52:38'),
+(183, 'Responsable santé animale', 'responsable-sante-animale', 1, '2026-03-31 16:52:38'),
+(184, 'Responsable de projet en ONG agricole', 'responsable-projet-ong-agricole', 1, '2026-03-31 16:52:38'),
+(185, 'Technicien agricole', 'technicien-agricole', 1, '2026-03-31 16:52:38'),
+(186, 'Conseiller en production végétale', 'conseiller-production-vegetale', 1, '2026-03-31 16:52:38'),
+(187, 'Inspecteur phytosanitaire', 'inspecteur-phytosanitaire', 1, '2026-03-31 16:52:38'),
+(188, 'Consultant en agriculture durable', 'consultant-agriculture-durable', 1, '2026-03-31 16:52:38'),
+(189, 'Responsable qualité et suivi des cultures', 'responsable-qualite-suivi-cultures', 1, '2026-03-31 16:52:38'),
+(190, 'Responsable de pépinière', 'responsable-pepiniere', 1, '2026-03-31 16:52:38'),
+(191, 'Formateur agricole', 'formateur-agricole', 1, '2026-03-31 16:52:38'),
+(192, 'Technicien en agroécologie', 'technicien-agroecologie', 1, '2026-03-31 16:52:38'),
+(193, 'Technicien post-récolte', 'technicien-post-recolte', 1, '2026-03-31 16:52:38'),
+(194, 'Responsable stockage et entrepôt agricole', 'responsable-stockage-entrepot-agricole', 1, '2026-03-31 16:52:38'),
+(195, 'Gestionnaire de conditionnement', 'gestionnaire-conditionnement', 1, '2026-03-31 16:52:38'),
+(196, 'Technicien qualité agroalimentaire', 'technicien-qualite-agroalimentaire', 1, '2026-03-31 16:52:38'),
+(197, 'Consultant en conservation des produits agricoles', 'consultant-conservation-produits-agricoles', 1, '2026-03-31 16:52:38'),
+(198, 'Responsable logistique agricole', 'responsable-logistique-agricole', 1, '2026-03-31 16:52:38'),
+(199, 'Responsable transformation agricole', 'responsable-transformation-agricole', 1, '2026-03-31 16:52:38'),
+(200, 'Agent de contrôle sanitaire', 'agent-controle-sanitaire', 1, '2026-03-31 16:52:38'),
+(201, 'Agent de développement rural', 'agent-developpement-rural', 1, '2026-03-31 16:52:38'),
+(202, 'Responsable administratif exploitation agricole', 'responsable-administratif-exploitation-agricole', 1, '2026-03-31 16:52:38'),
+(203, 'Consultant en management agricole', 'consultant-management-agricole', 1, '2026-03-31 16:52:38'),
+(204, 'Chef d\'entreprise agricole', 'chef-entreprise-agricole', 1, '2026-03-31 16:52:38'),
+(205, 'Responsable suivi et planification agricole', 'responsable-suivi-planification-agricole', 1, '2026-03-31 16:52:38'),
+(206, 'Chargé de projets de développement agricole', 'charge-projets-developpement-agricole', 1, '2026-03-31 16:52:38'),
+(207, 'Animateur rural', 'animateur-rural', 1, '2026-03-31 16:52:38'),
+(208, 'Chef de projet aménagement du territoire', 'chef-projet-amenagement-territoire', 1, '2026-03-31 16:52:38'),
+(209, 'Urbaniste spécialisé en environnement', 'urbaniste-specialise-environnement', 1, '2026-03-31 16:52:38'),
+(210, 'Consultant en gestion environnementale', 'consultant-gestion-environnementale', 1, '2026-03-31 16:52:38'),
+(211, 'Responsable suivi environnemental', 'responsable-suivi-environnemental', 1, '2026-03-31 16:52:38'),
+(212, 'Expert SIG', 'expert-sig', 1, '2026-03-31 16:52:38'),
+(213, 'Expert en développement durable', 'expert-developpement-durable', 1, '2026-03-31 16:52:38'),
+(214, 'Responsable assainissement et environnement senior', 'responsable-assainissement-environnement-senior', 1, '2026-03-31 16:52:38'),
+(215, 'Directeur d\'exploitation animale', 'directeur-exploitation-animale', 1, '2026-03-31 16:52:38'),
+(216, 'Responsable production animale', 'responsable-production-animale', 1, '2026-03-31 16:52:38'),
+(217, 'Consultant élevage et nutrition animale', 'consultant-elevage-nutrition-animale', 1, '2026-03-31 16:52:38'),
+(218, 'Expert en santé animale', 'expert-sante-animale', 1, '2026-03-31 16:52:38'),
+(219, 'Gestionnaire de projet agricole', 'gestionnaire-projet-agricole', 1, '2026-03-31 16:52:38'),
+(220, 'Responsable transformation et qualité produits animaux', 'responsable-transformation-qualite-produits-animaux', 1, '2026-03-31 16:52:38'),
+(221, 'Directeur exploitation agricole', 'directeur-exploitation-agricole', 1, '2026-03-31 16:52:38'),
+(222, 'Consultant en production végétale senior', 'consultant-production-vegetale-senior', 1, '2026-03-31 16:52:38'),
+(223, 'Expert en agriculture durable', 'expert-agriculture-durable', 1, '2026-03-31 16:52:38'),
+(224, 'Responsable pépinière ou semences', 'responsable-pepiniere-semences', 1, '2026-03-31 16:52:38'),
+(225, 'Chargé de projets agricoles', 'charge-projets-agricoles', 1, '2026-03-31 16:52:38'),
+(226, 'Directeur technique exploitation végétale', 'directeur-technique-exploitation-vegetale', 1, '2026-03-31 16:52:38'),
+(227, 'Responsable logistique et stockage agricole senior', 'responsable-logistique-stockage-agricole-senior', 1, '2026-03-31 16:52:38'),
+(228, 'Consultant post-récolte et conservation', 'consultant-post-recolte-conservation', 1, '2026-03-31 16:52:38'),
+(229, 'Responsable qualité agroalimentaire senior', 'responsable-qualite-agroalimentaire-senior', 1, '2026-03-31 16:52:38'),
+(230, 'Directeur entrepôt ou unité de transformation', 'directeur-entrepot-unite-transformation', 1, '2026-03-31 16:52:38'),
+(231, 'Gestionnaire chaîne d\'approvisionnement agricole', 'gestionnaire-chaine-approvisionnement-agricole', 1, '2026-03-31 16:52:38'),
+(232, 'Chef de projet agro-industriel', 'chef-projet-agro-industriel', 1, '2026-03-31 16:52:38'),
+(233, 'Responsable de projets environnementaux', 'responsable-projets-environnementaux', 1, '2026-03-31 16:52:38'),
+(234, 'Consultant en politiques environnementales', 'consultant-politiques-environnementales', 1, '2026-03-31 16:52:38'),
+(235, 'Chargé de mission environnement', 'charge-mission-environnement', 1, '2026-03-31 16:52:38'),
+(236, 'Auditeur environnemental', 'auditeur-environnemental', 1, '2026-03-31 16:52:38'),
+(237, 'Responsable développement durable senior', 'responsable-developpement-durable-senior', 1, '2026-03-31 16:52:38'),
+(238, 'Expert en planification et aménagement environnemental', 'expert-planification-amenagement-environnemental', 1, '2026-03-31 16:52:38'),
+(239, 'Gestionnaire de projets ressources naturelles', 'gestionnaire-projets-ressources-naturelles', 1, '2026-03-31 16:52:38'),
+(240, 'Consultant en conservation', 'consultant-conservation', 1, '2026-03-31 16:52:38'),
+(241, 'Responsable de parcs et réserves naturelles', 'responsable-parcs-reserves-naturelles', 1, '2026-03-31 16:52:38'),
+(242, 'Expert biodiversité et écologie', 'expert-biodiversite-ecologie', 1, '2026-03-31 16:52:38'),
+(243, 'Chargé suivi environnemental', 'charge-suivi-environnemental', 1, '2026-03-31 16:52:38'),
+(244, 'Responsable développement durable ressources', 'responsable-developpement-durable-ressources', 1, '2026-03-31 16:52:38'),
+(245, 'Chef de projet aménagement urbain', 'chef-projet-amenagement-urbain', 1, '2026-03-31 16:52:38'),
+(246, 'Consultant mobilité et urbanisme durable', 'consultant-mobilite-urbanisme-durable', 1, '2026-03-31 16:52:38'),
+(247, 'Responsable infrastructure urbaine', 'responsable-infrastructure-urbaine', 1, '2026-03-31 16:52:38'),
+(248, 'Chargé de projets villes durables', 'charge-projets-villes-durables', 1, '2026-03-31 16:52:38'),
+(249, 'Responsable assainissement espaces urbains', 'responsable-assainissement-espaces-urbains', 1, '2026-03-31 16:52:38'),
+(250, 'Planificateur territorial', 'planificateur-territorial', 1, '2026-03-31 16:52:38'),
+(251, 'Assistant juridique', 'assistant-juridique', 1, '2026-03-31 16:52:38'),
+(252, 'Secrétaire juridique', 'secretaire-juridique', 1, '2026-03-31 16:52:38'),
+(253, 'Clerc de notaire', 'clerc-notaire', 1, '2026-03-31 16:52:38'),
+(254, 'Juriste  en entreprise', 'juriste--entreprise', 1, '2026-03-31 16:52:38'),
+(255, 'Greffier assistant', 'greffier-assistant', 1, '2026-03-31 16:52:38'),
+(256, 'Chargé de contentieux', 'charge-contentieux', 1, '2026-03-31 16:52:38'),
+(257, 'Conseiller juridique administration publique', 'conseiller-juridique-administration-publique', 1, '2026-03-31 16:52:38'),
+(258, 'Collaborateur de cabinet d\'avocat', 'collaborateur-cabinet-avocat', 1, '2026-03-31 16:52:38'),
+(259, 'Analyste économique', 'analyste-economique', 1, '2026-03-31 16:52:38'),
+(260, 'Chargé d\'études économiques', 'charge-etudes-economiques', 1, '2026-03-31 16:52:38'),
+(261, 'Assistant statistique', 'assistant-statistique', 1, '2026-03-31 16:52:38'),
+(262, 'Gestionnaire administratif structures économiques', 'gestionnaire-administratif-structures-economiques', 1, '2026-03-31 16:52:38'),
+(263, 'Consultant  en développement économique', 'consultant--developpement-economique', 1, '2026-03-31 16:52:38'),
+(264, 'Chargé de suivi de projet économique', 'charge-suivi-projet-economique', 1, '2026-03-31 16:52:38'),
+(265, 'Conseiller en planification et analyse économique', 'conseiller-planification-analyse-economique', 1, '2026-03-31 16:52:38'),
+(266, 'Juriste d\'entreprise', 'juriste-entreprise', 1, '2026-03-31 16:52:38'),
+(267, 'Avocat spécialisé en droit privé', 'avocat-droit-prive', 1, '2026-03-31 16:52:38'),
+(268, 'Conseiller juridique en entreprise', 'conseiller-juridique-entreprise', 1, '2026-03-31 16:52:38'),
+(269, 'Consultant en droit commercial', 'consultant-droit-commercial', 1, '2026-03-31 16:52:38'),
+(270, 'Responsable contrats et conformité', 'responsable-contrats-conformite', 1, '2026-03-31 16:52:38'),
+(271, 'Notaire assistant', 'notaire-assistant', 1, '2026-03-31 16:52:38'),
+(272, 'Juriste TIC', 'juriste-tic', 1, '2026-03-31 16:52:38'),
+(273, 'Consultant cybersécurité juridique', 'consultant-cybersecurite-juridique', 1, '2026-03-31 16:52:38'),
+(274, 'Conseiller juridique entreprise numérique', 'conseiller-juridique-entreprise-numerique', 1, '2026-03-31 16:52:38'),
+(275, 'Responsable conformité RGPD', 'responsable-conformite-rgpd', 1, '2026-03-31 16:52:38'),
+(276, 'Juriste en propriété intellectuelle', 'juriste-propriete-intellectuelle', 1, '2026-03-31 16:52:38'),
+(277, 'Magistrat', 'magistrat', 1, '2026-03-31 16:52:38'),
+(278, 'Greffier', 'greffier', 1, '2026-03-31 16:52:38'),
+(279, 'Assistant magistrature', 'assistant-magistrature', 1, '2026-03-31 16:52:38'),
+(280, 'Chargé de procédure judiciaire', 'charge-procedure-judiciaire', 1, '2026-03-31 16:52:38'),
+(281, 'Officier de police judiciaire', 'officier-police-judiciaire', 1, '2026-03-31 16:52:38'),
+(282, 'Médiateur judiciaire', 'mediateur-judiciaire', 1, '2026-03-31 16:52:38'),
+(283, 'Fiscaliste', 'fiscaliste', 1, '2026-03-31 16:52:38'),
+(284, 'Consultant fiscal', 'consultant-fiscal', 1, '2026-03-31 16:52:38'),
+(285, 'Responsable conformité fiscale', 'responsable-conformite-fiscale', 1, '2026-03-31 16:52:38'),
+(286, 'Auditeur fiscal', 'auditeur-fiscal', 1, '2026-03-31 16:52:38'),
+(287, 'Conseiller en droit des affaires', 'conseiller-droit-affaires', 1, '2026-03-31 16:52:38'),
+(288, 'Juriste spécialisé fiscalité', 'juriste-specialise-fiscalite', 1, '2026-03-31 16:52:38'),
+(289, 'Juriste d\'entreprise senior', 'juriste-entreprise-senior', 1, '2026-03-31 16:52:38'),
+(290, 'Consultant en affaires juridiques', 'consultant-affaires-juridiques', 1, '2026-03-31 16:52:38'),
+(291, 'Directeur juridique ', 'directeur-juridique-', 1, '2026-03-31 16:52:38'),
+(292, 'Responsable compliance', 'responsable-compliance', 1, '2026-03-31 16:52:38'),
+(293, 'Juriste en droit des affaires', 'juriste-droit-affaires', 1, '2026-03-31 16:52:38'),
+(294, 'Responsable juridique d\'entreprise', 'responsable-juridique-entreprise', 1, '2026-03-31 16:52:38'),
+(295, 'Juriste administratif', 'juriste-administratif', 1, '2026-03-31 16:52:38'),
+(296, 'Conseiller en droit public', 'conseiller-droit-public', 1, '2026-03-31 16:52:38'),
+(297, 'Expert en droit humanitaire', 'expert-droit-humanitaire', 1, '2026-03-31 16:52:38'),
+(298, 'Responsable contentieux public', 'responsable-contentieux-public', 1, '2026-03-31 16:52:38'),
+(299, 'Conseiller juridique ONG et institutions internationales', 'conseiller-juridique-ong-institutions', 1, '2026-03-31 16:52:38'),
+(300, 'Expert en droit de l\'environnement', 'expert-droit-environnement', 1, '2026-03-31 16:52:38'),
+(301, 'Analyste économique senior', 'analyste-economique-senior', 1, '2026-03-31 16:52:38'),
+(302, 'Consultant en développement économique', 'consultant-developpement-economique', 1, '2026-03-31 16:52:38'),
+(303, 'Conseiller financier et économique', 'conseiller-financier-economique', 1, '2026-03-31 16:52:38'),
+(304, 'Chargé de planification stratégique', 'charge-planification-strategique', 1, '2026-03-31 16:52:38'),
+(305, 'Responsable études de marché et statistiques', 'responsable-etudes-marche-statistiques', 1, '2026-03-31 16:52:38'),
+(306, 'Expert en économie publique', 'expert-economie-publique', 1, '2026-03-31 16:52:38'),
+(307, 'Chef de projets économiques et financiers', 'chef-projets-economiques-financiers', 1, '2026-03-31 16:52:38'),
+(308, 'Technicien en énergie solaire photovoltaïque', 'technicien-energie-solaire-photovoltaique', 1, '2026-03-31 16:58:34'),
+(309, 'Technicien en télémédecine', 'technicien-telemedecine', 1, '2026-03-31 16:58:34'),
+(310, 'Responsable atelier de réparation électronique', 'responsable-atelier-reparation-electronique', 1, '2026-03-31 16:58:34'),
+(311, 'Technicien en domotique', 'technicien-domotique', 1, '2026-03-31 16:58:34'),
+(312, 'Technicien infrastructure mobile 5G/4G', 'technicien-infrastructure-mobile-5g-4g', 1, '2026-03-31 16:58:34'),
+(313, 'Intégrateur de solutions IoT', 'integrateur-solutions-iot', 1, '2026-03-31 16:58:34'),
+(314, 'Technicien Mobile Money et Fintech', 'technicien-mobile-money-fintech', 1, '2026-03-31 16:58:34'),
+(315, 'Administrateur cybersécurité junior', 'administrateur-cybersecurite-junior', 1, '2026-03-31 16:58:34'),
+(316, 'Technicien déploiement satellite VSAT', 'technicien-deploiement-satellite-vsat', 1, '2026-03-31 16:58:34'),
+(317, 'Développeur d\'applications Fintech', 'developpeur-applications-fintech', 1, '2026-03-31 16:58:34'),
+(318, 'Technicien maintenance groupe électrogène', 'technicien-maintenance-groupe-electrogene', 1, '2026-03-31 16:58:34'),
+(319, 'Technicien en automatisation agricole', 'technicien-automatisation-agricole', 1, '2026-03-31 16:58:34'),
+(320, 'Opérateur SCADA', 'operateur-scada', 1, '2026-03-31 16:58:34'),
+(321, 'Technicien en maintenance portuaire', 'technicien-maintenance-portuaire', 1, '2026-03-31 16:58:34'),
+(322, 'Technicien en électrification solaire off-grid', 'technicien-electrification-solaire-off-grid', 1, '2026-03-31 16:58:34'),
+(323, 'Agent de maintenance réseau SONEB/SBEE', 'agent-maintenance-reseau-soneb-sbee', 1, '2026-03-31 16:58:34'),
+(324, 'Technicien en éclairage public LED', 'technicien-eclairage-public-led', 1, '2026-03-31 16:58:34'),
+(325, 'Installateur systèmes hybrides solaire-réseau', 'installateur-systemes-hybrides-solaire-reseau', 1, '2026-03-31 16:58:34'),
+(326, 'Agent de microfinance', 'agent-microfinance', 1, '2026-03-31 16:58:34'),
+(327, 'Chargé de mobile banking', 'charge-mobile-banking', 1, '2026-03-31 16:58:34'),
+(328, 'Gestionnaire de tontine digitale', 'gestionnaire-tontine-digitale', 1, '2026-03-31 16:58:34'),
+(329, 'Conseiller en assurance agricole', 'conseiller-assurance-agricole', 1, '2026-03-31 16:58:34'),
+(330, 'Analyste risques microfinance', 'analyste-risques-microfinance', 1, '2026-03-31 16:58:34'),
+(331, 'Auditeur projets ONG et bailleurs de fonds', 'auditeur-projets-ong-bailleurs', 1, '2026-03-31 16:58:34'),
+(332, 'Contrôleur de gestion ONG', 'controleur-gestion-ong', 1, '2026-03-31 16:58:34'),
+(333, 'Responsable conformité OHADA', 'responsable-conformite-ohada', 1, '2026-03-31 16:58:34'),
+(334, 'Expert en passation de marchés publics', 'expert-passation-marches-publics', 1, '2026-03-31 16:58:34'),
+(335, 'Gestionnaire RH dans ONG humanitaire', 'gestionnaire-rh-ong-humanitaire', 1, '2026-03-31 16:58:34'),
+(336, 'Chargé de politique RSE', 'charge-politique-rse', 1, '2026-03-31 16:58:34'),
+(337, 'Consultant en gestion des talents Afrique', 'consultant-gestion-talents-afrique', 1, '2026-03-31 16:58:34'),
+(338, 'Responsable emploi et insertion professionnelle', 'responsable-emploi-insertion-professionnelle', 1, '2026-03-31 16:58:34'),
+(339, 'Responsable e-commerce Afrique', 'responsable-e-commerce-afrique', 1, '2026-03-31 16:58:34'),
+(340, 'Chargé de marketing digital mobile', 'charge-marketing-digital-mobile', 1, '2026-03-31 16:58:34'),
+(341, 'Gestionnaire de marketplace locale', 'gestionnaire-marketplace-locale', 1, '2026-03-31 16:58:34'),
+(342, 'Agent de commerce transfrontalier CEDEAO', 'agent-commerce-transfrontalier-cedeao', 1, '2026-03-31 16:58:34'),
+(343, 'Chargé de communication institutionnelle', 'charge-communication-institutionnelle', 1, '2026-03-31 16:58:34'),
+(344, 'Gestionnaire de corridor logistique régional', 'gestionnaire-corridor-logistique-regional', 1, '2026-03-31 16:58:34'),
+(345, 'Responsable transit portuaire', 'responsable-transit-portuaire', 1, '2026-03-31 16:58:34'),
+(346, 'Chargé de logistique humanitaire', 'charge-logistique-humanitaire', 1, '2026-03-31 16:58:34'),
+(347, 'Coordinateur transport dernier kilomètre', 'coordinateur-transport-dernier-kilometre', 1, '2026-03-31 16:58:34'),
+(348, 'Expert en dédouanement et conformité', 'expert-dedouanement-conformite', 1, '2026-03-31 16:58:34'),
+(349, 'Intégrateur ERP/Sage en PME africaines', 'integrateur-erp-sage-pme-africaines', 1, '2026-03-31 16:58:34'),
+(350, 'Technicien support systèmes de caisse', 'technicien-support-systemes-caisse', 1, '2026-03-31 16:58:34'),
+(351, 'Développeur solutions de gestion Mobile Money', 'developpeur-solutions-gestion-mobile-money', 1, '2026-03-31 16:58:34'),
+(352, 'Agro-entrepreneur en maraîchage intensif', 'agro-entrepreneur-maraichage-intensif', 1, '2026-03-31 16:58:34'),
+(353, 'Technicien en aquaculture', 'technicien-aquaculture', 1, '2026-03-31 16:58:34'),
+(354, 'Conseiller en agriculture de précision', 'conseiller-agriculture-precision', 1, '2026-03-31 16:58:34'),
+(355, 'Technicien en production de semences certifiées', 'technicien-production-semences-certifiees', 1, '2026-03-31 16:58:34'),
+(356, 'Agent de vulgarisation agricole', 'agent-vulgarisation-agricole', 1, '2026-03-31 16:58:34'),
+(357, 'Responsable ferme avicole industrielle', 'responsable-ferme-avicole-industrielle', 1, '2026-03-31 16:58:34'),
+(358, 'Technicien en unité de transformation locale', 'technicien-unite-transformation-locale', 1, '2026-03-31 16:58:34'),
+(359, 'Responsable de silo céréalier communautaire', 'responsable-silo-cerealier-communautaire', 1, '2026-03-31 16:58:34'),
+(360, 'Chargé de certification qualité export', 'charge-certification-qualite-export', 1, '2026-03-31 16:58:34'),
+(361, 'Gestionnaire de plateforme de collecte agricole', 'gestionnaire-plateforme-collecte-agricole', 1, '2026-03-31 16:58:34'),
+(362, 'Expert en études d\'impact environnemental (EIE)', 'expert-etudes-impact-environnemental-eie', 1, '2026-03-31 16:58:34'),
+(363, 'Chargé de projets REDD+ et carbone', 'charge-projets-redd-carbone', 1, '2026-03-31 16:58:34'),
+(364, 'Gestionnaire de bassin versant', 'gestionnaire-bassin-versant', 1, '2026-03-31 16:58:34'),
+(365, 'Technicien en reboisement et reforestation', 'technicien-reboisement-reforestation', 1, '2026-03-31 16:58:34'),
+(366, 'Consultant en adaptation climatique', 'consultant-adaptation-climatique', 1, '2026-03-31 16:58:34'),
+(367, 'Facilitateur de coopérative agricole', 'facilitateur-cooperative-agricole', 1, '2026-03-31 16:58:34'),
+(368, 'Chargé de financement de projets agricoles', 'charge-financement-projets-agricoles', 1, '2026-03-31 16:58:34'),
+(369, 'Conseiller en agri-business', 'conseiller-agri-business', 1, '2026-03-31 16:58:34'),
+(370, 'Chargé de projets assainissement WASH', 'charge-projets-assainissement-wash', 1, '2026-03-31 16:58:34'),
+(371, 'Expert en smart city Afrique', 'expert-smart-city-afrique', 1, '2026-03-31 16:58:34'),
+(372, 'Coordinateur gestion des inondations urbaines', 'coordinateur-gestion-inondations-urbaines', 1, '2026-03-31 16:58:34'),
+(373, 'Juriste en droit OHADA', 'juriste-droit-ohada', 1, '2026-03-31 16:58:34'),
+(374, 'Conseiller juridique en microfinance', 'conseiller-juridique-microfinance', 1, '2026-03-31 16:58:34'),
+(375, 'Chargé de conformité réglementaire bancaire', 'charge-conformite-reglementaire-bancaire', 1, '2026-03-31 16:58:34'),
+(376, 'Expert en arbitrage commercial CCJA', 'expert-arbitrage-commercial-ccja', 1, '2026-03-31 16:58:34'),
+(377, 'Juriste foncier et droit de la terre', 'juriste-foncier-droit-terre', 1, '2026-03-31 16:58:34'),
+(378, 'Chargé de protection des données personnelles', 'charge-protection-donnees-personnelles', 1, '2026-03-31 16:58:34'),
+(379, 'Expert en droit des réfugiés (HCR/OIM)', 'expert-droit-refugies-hcr-oim', 1, '2026-03-31 16:58:34'),
+(380, 'Coordinateur juridique ONG internationale', 'coordinateur-juridique-ong-internationale', 1, '2026-03-31 16:58:34'),
+(381, 'Chargé de veille réglementaire administration', 'charge-veille-reglementaire-administration', 1, '2026-03-31 16:58:34'),
+(382, 'Conseiller en gouvernance locale', 'conseiller-gouvernance-locale', 1, '2026-03-31 16:58:34'),
+(383, 'Économiste de projet Banque Mondiale / BAD', 'economiste-projet-banque-mondiale-bad', 1, '2026-03-31 16:58:34'),
+(384, 'Chargé de suivi-évaluation de projets (S&E)', 'charge-suivi-evaluation-projets', 1, '2026-03-31 16:58:34'),
+(385, 'Analyste en économie agricole', 'analyste-economie-agricole', 1, '2026-03-31 16:58:34'),
+(386, 'Chargé de mobilisation des ressources ONG', 'charge-mobilisation-ressources-ong', 1, '2026-03-31 16:58:34'),
+(387, 'Consultant en politiques fiscales UEMOA', 'consultant-politiques-fiscales-uemoa', 1, '2026-03-31 16:58:34'),
+(388, 'Responsable planification nationale', 'responsable-planification-nationale', 1, '2026-03-31 16:58:34');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `metiers_filieres`
+--
+
+CREATE TABLE `metiers_filieres` (
+  `id` int(11) NOT NULL,
+  `metier_id` int(11) NOT NULL,
+  `filiere_id` int(11) NOT NULL,
+  `priorite` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : orientations
--- Toutes les orientations effectuées via le formulaire visiteur
--- =================================================================
-CREATE TABLE IF NOT EXISTS `orientations` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(100) NOT NULL,
-  `prenom` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(150) NOT NULL,
-  `telephone` VARCHAR(20) NOT NULL,
-  `serie_bac` VARCHAR(10) NOT NULL,
-  `numero_table` VARCHAR(30) NULL DEFAULT NULL,
-  `metier_souhaite` VARCHAR(200) NOT NULL,
-  `filieres_recommandees` TEXT NULL,
-  `rapport_pdf_path` VARCHAR(255) NULL DEFAULT NULL,
-  `email_envoye` TINYINT(1) NOT NULL DEFAULT 0,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `idx_orientations_email` (`email`),
-  KEY `idx_orientations_date` (`created_at`),
-  KEY `idx_orientations_serie` (`serie_bac`),
-  KEY `idx_orientations_metier` (`metier_souhaite`)
+--
+-- Déchargement des données de la table `metiers_filieres`
+--
+
+INSERT INTO `metiers_filieres` (`id`, `metier_id`, `filiere_id`, `priorite`) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 1),
+(3, 3, 1, 1),
+(4, 4, 1, 1),
+(5, 4, 3, 2),
+(6, 5, 1, 1),
+(7, 5, 3, 2),
+(8, 5, 4, 2),
+(9, 6, 1, 1),
+(10, 7, 1, 1),
+(11, 7, 3, 2),
+(12, 8, 2, 1),
+(13, 9, 2, 1),
+(14, 10, 2, 1),
+(15, 11, 2, 1),
+(16, 12, 2, 1),
+(17, 13, 2, 1),
+(18, 14, 2, 1),
+(22, 18, 2, 1),
+(23, 19, 2, 1),
+(24, 20, 3, 1),
+(25, 20, 4, 2),
+(26, 21, 3, 1),
+(27, 22, 3, 1),
+(28, 23, 3, 1),
+(29, 24, 3, 1),
+(30, 24, 4, 2),
+(31, 25, 3, 1),
+(32, 26, 3, 1),
+(33, 26, 4, 2),
+(34, 27, 4, 1),
+(35, 28, 4, 1),
+(36, 29, 4, 1),
+(37, 30, 4, 1),
+(38, 31, 4, 1),
+(39, 32, 4, 1),
+(40, 33, 4, 1),
+(41, 34, 4, 1),
+(42, 35, 5, 1),
+(43, 36, 5, 1),
+(44, 37, 5, 1),
+(45, 38, 5, 1),
+(46, 39, 5, 1),
+(47, 40, 5, 1),
+(48, 41, 5, 1),
+(49, 42, 5, 1),
+(50, 43, 5, 1),
+(51, 44, 5, 1),
+(52, 45, 5, 1),
+(53, 46, 5, 1),
+(54, 47, 6, 1),
+(55, 48, 6, 1),
+(56, 49, 6, 1),
+(57, 49, 1, 2),
+(58, 50, 6, 1),
+(59, 50, 3, 2),
+(60, 51, 6, 1),
+(61, 52, 6, 1),
+(62, 53, 6, 1),
+(63, 53, 3, 2),
+(64, 54, 6, 1),
+(65, 55, 6, 1),
+(66, 56, 6, 1),
+(67, 57, 6, 1),
+(68, 57, 3, 2),
+(69, 58, 6, 1),
+(70, 59, 7, 1),
+(71, 60, 7, 1),
+(72, 61, 7, 1),
+(73, 62, 7, 1),
+(74, 62, 16, 2),
+(75, 63, 7, 1),
+(76, 63, 8, 2),
+(77, 63, 11, 2),
+(78, 64, 7, 1),
+(79, 65, 7, 1),
+(80, 66, 7, 1),
+(81, 67, 8, 1),
+(82, 68, 8, 1),
+(83, 69, 8, 1),
+(84, 69, 9, 2),
+(85, 70, 8, 1),
+(86, 71, 8, 1),
+(87, 72, 8, 1),
+(88, 72, 9, 2),
+(89, 73, 8, 1),
+(90, 74, 9, 1),
+(91, 75, 9, 1),
+(92, 76, 9, 1),
+(93, 76, 17, 2),
+(94, 77, 9, 1),
+(95, 77, 17, 2),
+(96, 78, 9, 1),
+(97, 79, 9, 1),
+(98, 79, 17, 2),
+(99, 80, 9, 1),
+(100, 80, 8, 2),
+(101, 80, 17, 2),
+(102, 81, 10, 1),
+(103, 82, 10, 1),
+(104, 83, 10, 1),
+(105, 84, 10, 1),
+(106, 85, 10, 1),
+(107, 85, 18, 2),
+(108, 86, 10, 1),
+(109, 86, 18, 2),
+(110, 87, 10, 1),
+(111, 88, 11, 1),
+(112, 88, 13, 2),
+(113, 89, 11, 1),
+(114, 89, 13, 2),
+(115, 90, 11, 1),
+(116, 90, 13, 2),
+(117, 91, 11, 1),
+(118, 91, 13, 2),
+(119, 92, 11, 1),
+(120, 93, 11, 1),
+(121, 93, 20, 2),
+(122, 94, 11, 1),
+(123, 94, 13, 2),
+(124, 94, 20, 2),
+(125, 95, 12, 1),
+(126, 95, 19, 2),
+(127, 96, 12, 1),
+(128, 97, 12, 1),
+(129, 97, 19, 2),
+(130, 98, 12, 1),
+(131, 99, 12, 1),
+(132, 99, 19, 2),
+(133, 100, 12, 1),
+(134, 100, 19, 2),
+(135, 101, 13, 1),
+(136, 102, 13, 1),
+(137, 102, 15, 2),
+(138, 103, 13, 1),
+(139, 104, 13, 1),
+(140, 105, 13, 1),
+(141, 105, 15, 2),
+(142, 106, 13, 1),
+(143, 106, 20, 2),
+(144, 107, 13, 1),
+(145, 108, 14, 1),
+(147, 110, 14, 1),
+(148, 111, 14, 1),
+(149, 112, 14, 1),
+(150, 113, 14, 1),
+(151, 114, 15, 1),
+(152, 115, 15, 1),
+(153, 116, 15, 1),
+(154, 116, 20, 2),
+(155, 117, 15, 1),
+(156, 118, 15, 1),
+(157, 118, 21, 2),
+(158, 119, 15, 1),
+(159, 119, 21, 2),
+(160, 120, 15, 1),
+(161, 120, 21, 2),
+(162, 121, 15, 1),
+(163, 121, 21, 2),
+(164, 122, 16, 1),
+(165, 123, 16, 1),
+(166, 124, 16, 1),
+(167, 125, 16, 1),
+(168, 126, 16, 1),
+(169, 127, 16, 1),
+(170, 128, 16, 1),
+(171, 129, 16, 1),
+(172, 129, 17, 2),
+(173, 130, 17, 1),
+(174, 131, 17, 1),
+(175, 132, 17, 1),
+(176, 133, 17, 1),
+(177, 133, 8, 2),
+(178, 134, 17, 1),
+(179, 134, 8, 2),
+(180, 135, 17, 1),
+(181, 136, 17, 1),
+(182, 137, 17, 1),
+(183, 137, 8, 2),
+(184, 138, 18, 1),
+(185, 139, 18, 1),
+(186, 140, 18, 1),
+(187, 141, 18, 1),
+(188, 142, 18, 1),
+(189, 143, 18, 1),
+(190, 144, 18, 1),
+(191, 145, 18, 1),
+(192, 146, 19, 1),
+(193, 147, 19, 1),
+(194, 148, 19, 1),
+(195, 149, 19, 1),
+(196, 150, 19, 1),
+(197, 151, 19, 1),
+(198, 152, 19, 1),
+(199, 153, 19, 1),
+(200, 154, 20, 1),
+(201, 155, 20, 1),
+(202, 156, 20, 1),
+(203, 157, 20, 1),
+(204, 157, 15, 2),
+(205, 158, 20, 1),
+(206, 158, 21, 2),
+(207, 159, 20, 1),
+(208, 160, 20, 1),
+(209, 161, 21, 1),
+(210, 162, 21, 1),
+(211, 163, 21, 1),
+(212, 164, 21, 1),
+(213, 165, 21, 1),
+(214, 166, 21, 1),
+(215, 167, 21, 1),
+(216, 168, 22, 1),
+(217, 168, 27, 2),
+(218, 169, 22, 1),
+(219, 169, 31, 2),
+(220, 170, 22, 1),
+(221, 170, 31, 2),
+(222, 171, 22, 1),
+(223, 171, 33, 2),
+(224, 172, 22, 1),
+(225, 172, 27, 2),
+(226, 173, 22, 1),
+(227, 173, 32, 2),
+(228, 174, 22, 1),
+(229, 174, 26, 2),
+(230, 175, 22, 1),
+(231, 175, 26, 2),
+(232, 175, 31, 2),
+(233, 176, 22, 1),
+(234, 176, 33, 2),
+(235, 177, 23, 1),
+(236, 178, 23, 1),
+(237, 178, 24, 2),
+(238, 178, 26, 2),
+(239, 179, 23, 1),
+(240, 180, 23, 1),
+(241, 180, 25, 2),
+(242, 181, 23, 1),
+(243, 181, 28, 2),
+(244, 182, 23, 1),
+(245, 182, 24, 2),
+(246, 182, 26, 2),
+(247, 183, 23, 1),
+(248, 183, 28, 2),
+(249, 184, 23, 1),
+(250, 184, 26, 2),
+(251, 185, 24, 1),
+(252, 185, 23, 2),
+(253, 186, 24, 1),
+(254, 186, 26, 2),
+(255, 187, 24, 1),
+(256, 188, 24, 1),
+(257, 188, 22, 2),
+(258, 189, 24, 1),
+(259, 189, 25, 2),
+(260, 190, 24, 1),
+(261, 191, 24, 1),
+(262, 191, 26, 2),
+(263, 192, 24, 1),
+(264, 192, 22, 2),
+(265, 193, 25, 1),
+(266, 194, 25, 1),
+(267, 194, 30, 2),
+(268, 195, 25, 1),
+(269, 196, 25, 1),
+(270, 196, 23, 2),
+(271, 197, 25, 1),
+(272, 197, 30, 2),
+(273, 198, 25, 1),
+(274, 198, 26, 2),
+(275, 199, 25, 1),
+(276, 199, 23, 2),
+(277, 200, 25, 1),
+(278, 201, 26, 1),
+(279, 202, 26, 1),
+(280, 203, 26, 1),
+(281, 203, 28, 2),
+(282, 204, 26, 1),
+(283, 205, 26, 1),
+(284, 205, 23, 2),
+(285, 205, 24, 2),
+(286, 206, 26, 1),
+(287, 206, 22, 2),
+(288, 207, 26, 1),
+(289, 208, 27, 1),
+(290, 208, 33, 2),
+(291, 209, 27, 1),
+(292, 209, 33, 2),
+(293, 210, 27, 1),
+(294, 210, 31, 2),
+(295, 211, 27, 1),
+(296, 211, 32, 2),
+(297, 212, 27, 1),
+(298, 213, 27, 1),
+(299, 213, 31, 2),
+(300, 213, 32, 2),
+(301, 214, 27, 1),
+(302, 214, 33, 2),
+(303, 215, 28, 1),
+(304, 216, 28, 1),
+(305, 217, 28, 1),
+(306, 218, 28, 1),
+(307, 219, 28, 1),
+(308, 219, 29, 2),
+(309, 219, 26, 2),
+(310, 220, 28, 1),
+(311, 220, 30, 2),
+(312, 221, 29, 1),
+(313, 221, 28, 2),
+(314, 222, 29, 1),
+(315, 223, 29, 1),
+(316, 223, 27, 2),
+(317, 224, 29, 1),
+(318, 225, 29, 1),
+(319, 225, 26, 2),
+(320, 226, 29, 1),
+(321, 227, 30, 1),
+(322, 227, 25, 2),
+(323, 228, 30, 1),
+(324, 229, 30, 1),
+(325, 229, 28, 2),
+(326, 230, 30, 1),
+(327, 231, 30, 1),
+(328, 231, 26, 2),
+(329, 232, 30, 1),
+(330, 232, 29, 2),
+(331, 233, 31, 1),
+(332, 233, 27, 2),
+(333, 234, 31, 1),
+(334, 235, 31, 1),
+(335, 235, 27, 2),
+(336, 236, 31, 1),
+(337, 237, 31, 1),
+(338, 237, 32, 2),
+(339, 238, 31, 1),
+(340, 238, 27, 2),
+(341, 238, 33, 2),
+(342, 239, 32, 1),
+(343, 239, 31, 2),
+(344, 240, 32, 1),
+(345, 241, 32, 1),
+(346, 242, 32, 1),
+(347, 242, 27, 2),
+(348, 243, 32, 1),
+(349, 243, 31, 2),
+(350, 244, 32, 1),
+(351, 244, 31, 2),
+(352, 245, 33, 1),
+(353, 245, 27, 2),
+(354, 246, 33, 1),
+(355, 247, 33, 1),
+(356, 248, 33, 1),
+(357, 248, 31, 2),
+(358, 249, 33, 1),
+(359, 249, 27, 2),
+(360, 250, 33, 1),
+(361, 250, 27, 2),
+(362, 250, 31, 2),
+(363, 251, 34, 1),
+(364, 252, 34, 1),
+(365, 253, 34, 1),
+(366, 253, 38, 2),
+(367, 254, 34, 1),
+(368, 254, 36, 2),
+(369, 255, 34, 1),
+(370, 255, 38, 2),
+(371, 256, 34, 1),
+(372, 256, 36, 2),
+(373, 256, 41, 2),
+(374, 257, 34, 1),
+(375, 257, 41, 2),
+(376, 258, 34, 1),
+(377, 258, 36, 2),
+(378, 259, 35, 1),
+(379, 259, 42, 2),
+(380, 260, 35, 1),
+(381, 260, 42, 2),
+(382, 261, 35, 1),
+(383, 262, 35, 1),
+(384, 263, 35, 1),
+(385, 263, 42, 2),
+(386, 264, 35, 1),
+(387, 265, 35, 1),
+(388, 265, 42, 2),
+(389, 266, 36, 1),
+(390, 266, 40, 2),
+(391, 267, 36, 1),
+(392, 267, 38, 2),
+(393, 268, 36, 1),
+(394, 268, 40, 2),
+(395, 269, 36, 1),
+(396, 269, 39, 2),
+(397, 270, 36, 1),
+(398, 270, 40, 2),
+(399, 271, 36, 1),
+(400, 271, 38, 2),
+(401, 272, 37, 1),
+(402, 273, 37, 1),
+(403, 274, 37, 1),
+(404, 274, 40, 2),
+(405, 275, 37, 1),
+(406, 275, 40, 2),
+(407, 276, 37, 1),
+(408, 276, 36, 2),
+(409, 277, 38, 1),
+(410, 278, 38, 1),
+(411, 279, 38, 1),
+(412, 280, 38, 1),
+(413, 280, 34, 2),
+(414, 281, 38, 1),
+(415, 282, 38, 1),
+(416, 282, 36, 2),
+(417, 282, 41, 2),
+(418, 283, 39, 1),
+(419, 284, 39, 1),
+(420, 285, 39, 1),
+(421, 285, 40, 2),
+(422, 286, 39, 1),
+(423, 287, 39, 1),
+(424, 287, 40, 2),
+(425, 288, 39, 1),
+(426, 288, 36, 2),
+(427, 289, 40, 1),
+(428, 289, 36, 2),
+(429, 290, 40, 1),
+(430, 290, 36, 2),
+(431, 291, 40, 1),
+(432, 292, 40, 1),
+(433, 292, 37, 2),
+(434, 293, 40, 1),
+(435, 293, 39, 2),
+(436, 294, 40, 1),
+(437, 294, 36, 2),
+(438, 295, 41, 1),
+(439, 296, 41, 1),
+(440, 297, 41, 1),
+(441, 298, 41, 1),
+(442, 298, 36, 2),
+(443, 299, 41, 1),
+(444, 299, 40, 2),
+(445, 300, 41, 1),
+(446, 301, 42, 1),
+(447, 302, 42, 1),
+(448, 303, 42, 1),
+(449, 304, 42, 1),
+(450, 305, 42, 1),
+(451, 305, 35, 2),
+(452, 306, 42, 1),
+(453, 307, 42, 1),
+(454, 307, 35, 2),
+(455, 308, 1, 1),
+(456, 308, 4, 2),
+(457, 309, 1, 1),
+(458, 309, 2, 2),
+(459, 310, 1, 1),
+(460, 311, 1, 1),
+(461, 311, 4, 2),
+(462, 312, 2, 1),
+(463, 312, 5, 2),
+(464, 313, 2, 1),
+(465, 313, 5, 2),
+(466, 313, 1, 2),
+(467, 314, 2, 1),
+(468, 315, 2, 1),
+(469, 315, 5, 2),
+(470, 316, 2, 1),
+(471, 316, 5, 2),
+(472, 317, 2, 1),
+(473, 317, 5, 2),
+(474, 318, 3, 1),
+(475, 318, 4, 2),
+(476, 319, 3, 1),
+(477, 319, 6, 2),
+(478, 320, 3, 1),
+(479, 320, 6, 2),
+(480, 321, 3, 1),
+(481, 321, 4, 2),
+(482, 322, 4, 1),
+(483, 322, 1, 2),
+(484, 323, 4, 1),
+(485, 324, 4, 1),
+(486, 324, 1, 2),
+(487, 325, 4, 1),
+(488, 325, 1, 2),
+(489, 326, 8, 1),
+(490, 327, 8, 1),
+(491, 327, 14, 2),
+(492, 328, 8, 1),
+(493, 329, 7, 1),
+(494, 329, 16, 2),
+(495, 330, 8, 1),
+(496, 330, 17, 2),
+(497, 331, 17, 1),
+(498, 331, 9, 2),
+(499, 332, 17, 1),
+(500, 332, 9, 2),
+(501, 333, 9, 1),
+(502, 333, 17, 2),
+(503, 334, 17, 1),
+(504, 334, 9, 2),
+(505, 335, 18, 1),
+(506, 335, 10, 2),
+(507, 336, 18, 1),
+(508, 336, 10, 2),
+(509, 337, 18, 1),
+(510, 338, 18, 1),
+(511, 338, 10, 2),
+(512, 339, 19, 1),
+(513, 339, 12, 2),
+(514, 340, 19, 1),
+(515, 340, 12, 2),
+(516, 341, 13, 1),
+(517, 341, 19, 2),
+(518, 342, 20, 1),
+(519, 342, 13, 2),
+(520, 343, 12, 1),
+(521, 343, 19, 2),
+(522, 344, 21, 1),
+(523, 344, 15, 2),
+(524, 345, 21, 1),
+(525, 345, 15, 2),
+(526, 346, 15, 1),
+(527, 346, 21, 2),
+(528, 347, 15, 1),
+(529, 347, 21, 2),
+(530, 348, 21, 1),
+(531, 348, 15, 2),
+(532, 348, 20, 2),
+(533, 349, 14, 1),
+(534, 350, 14, 1),
+(535, 351, 14, 1),
+(536, 351, 2, 2),
+(537, 352, 24, 1),
+(538, 352, 26, 2),
+(539, 353, 23, 1),
+(540, 354, 24, 1),
+(541, 354, 29, 2),
+(542, 355, 24, 1),
+(543, 356, 24, 1),
+(544, 356, 23, 2),
+(545, 356, 26, 2),
+(546, 357, 23, 1),
+(547, 357, 28, 2),
+(548, 358, 25, 1),
+(549, 358, 23, 2),
+(550, 359, 25, 1),
+(551, 360, 25, 1),
+(552, 360, 30, 2),
+(553, 361, 25, 1),
+(554, 361, 26, 2),
+(555, 362, 27, 1),
+(556, 362, 31, 2),
+(557, 363, 32, 1),
+(558, 363, 31, 2),
+(559, 364, 32, 1),
+(560, 364, 27, 2),
+(561, 365, 22, 1),
+(562, 365, 32, 2),
+(563, 366, 31, 1),
+(564, 366, 27, 2),
+(565, 366, 32, 2),
+(566, 367, 26, 1),
+(567, 368, 26, 1),
+(568, 368, 28, 2),
+(569, 369, 26, 1),
+(570, 369, 24, 2),
+(571, 370, 33, 1),
+(572, 370, 31, 2),
+(573, 371, 33, 1),
+(574, 371, 27, 2),
+(575, 372, 33, 1),
+(576, 372, 27, 2),
+(577, 373, 36, 1),
+(578, 373, 40, 2),
+(579, 374, 36, 1),
+(580, 374, 34, 2),
+(581, 375, 40, 1),
+(582, 375, 39, 2),
+(583, 376, 36, 1),
+(584, 376, 40, 2),
+(585, 377, 41, 1),
+(586, 377, 34, 2),
+(587, 378, 37, 1),
+(588, 378, 40, 2),
+(589, 379, 41, 1),
+(590, 380, 41, 1),
+(591, 380, 36, 2),
+(592, 381, 41, 1),
+(593, 381, 34, 2),
+(594, 382, 41, 1),
+(595, 383, 42, 1),
+(596, 384, 42, 1),
+(597, 384, 35, 2),
+(598, 385, 42, 1),
+(599, 385, 35, 2),
+(600, 386, 42, 1),
+(601, 386, 35, 2),
+(602, 387, 42, 1),
+(603, 387, 39, 2),
+(604, 388, 42, 1),
+(605, 109, 2, 1),
+(606, 109, 14, 2),
+(607, 16, 2, 1),
+(608, 16, 14, 2),
+(609, 15, 2, 1),
+(610, 15, 14, 2),
+(611, 17, 2, 1),
+(612, 17, 14, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `sujet` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `destinataires` text NOT NULL COMMENT 'JSON: liste des emails ciblés',
+  `nb_destinataires` int(11) NOT NULL DEFAULT 0,
+  `type_cible` varchar(50) NOT NULL COMMENT 'orientations, preinscriptions, tous',
+  `filtre_serie` varchar(10) DEFAULT NULL,
+  `filtre_filiere` int(11) DEFAULT NULL,
+  `envoye_le` datetime NOT NULL DEFAULT current_timestamp(),
+  `admin_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : preinscriptions
--- Préinscriptions reçues via le formulaire
--- =================================================================
-CREATE TABLE IF NOT EXISTS `preinscriptions` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(100) NOT NULL,
-  `prenom` VARCHAR(100) NOT NULL,
-  `date_naissance` DATE NOT NULL,
-  `nationalite` VARCHAR(80) NOT NULL DEFAULT 'Béninoise',
-  `serie_bac` VARCHAR(10) NOT NULL,
-  `annee_bac` YEAR NOT NULL,
-  `etablissement_origine` VARCHAR(200) NOT NULL,
-  `filiere_choisie` INT(11) NOT NULL,
-  `niveau_entree` VARCHAR(20) NOT NULL DEFAULT 'Licence 1',
-  `email` VARCHAR(150) NOT NULL,
-  `telephone` VARCHAR(20) NOT NULL,
-  `doc_releve` VARCHAR(255) NULL DEFAULT NULL,
-  `doc_bac` VARCHAR(255) NULL DEFAULT NULL,
-  `doc_identite` VARCHAR(255) NULL DEFAULT NULL,
-  `orientation_id` INT(11) NULL DEFAULT NULL,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `idx_preinscriptions_email` (`email`),
-  KEY `idx_preinscriptions_date` (`created_at`),
-  KEY `idx_preinscriptions_filiere` (`filiere_choisie`),
-  KEY `idx_preinscriptions_serie` (`serie_bac`),
-  CONSTRAINT `fk_preinsc_filiere` FOREIGN KEY (`filiere_choisie`) REFERENCES `filieres` (`id`) ON DELETE RESTRICT,
-  CONSTRAINT `fk_preinsc_orientation` FOREIGN KEY (`orientation_id`) REFERENCES `orientations` (`id`) ON DELETE SET NULL
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `orientations`
+--
+
+CREATE TABLE `orientations` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(100) NOT NULL,
+  `prenom` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `telephone` varchar(20) NOT NULL,
+  `serie_bac` varchar(10) NOT NULL,
+  `numero_table` varchar(30) DEFAULT NULL,
+  `metier_souhaite` varchar(200) NOT NULL,
+  `filieres_recommandees` text DEFAULT NULL,
+  `rapport_pdf_path` varchar(255) DEFAULT NULL,
+  `email_envoye` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : notifications
--- Historique des notifications e-mail envoyées par les admins
--- =================================================================
-CREATE TABLE IF NOT EXISTS `notifications` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `sujet` VARCHAR(255) NOT NULL,
-  `message` TEXT NOT NULL,
-  `destinataires` TEXT NOT NULL COMMENT 'JSON: liste des emails ciblés',
-  `nb_destinataires` INT(11) NOT NULL DEFAULT 0,
-  `type_cible` VARCHAR(50) NOT NULL COMMENT 'orientations, preinscriptions, tous',
-  `filtre_serie` VARCHAR(10) NULL DEFAULT NULL,
-  `filtre_filiere` INT(11) NULL DEFAULT NULL,
-  `envoye_le` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `admin_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_notifications_date` (`envoye_le`),
-  KEY `idx_notifications_admin` (`admin_id`),
-  CONSTRAINT `fk_notif_admin` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`) ON DELETE RESTRICT
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `parametres`
+--
+
+CREATE TABLE `parametres` (
+  `cle` varchar(100) NOT NULL,
+  `valeur` text DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =================================================================
--- TABLE : parametres
--- Configuration dynamique de l'application
--- =================================================================
-CREATE TABLE IF NOT EXISTS `parametres` (
-  `cle` VARCHAR(100) NOT NULL,
-  `valeur` TEXT NULL,
-  `description` VARCHAR(255) NULL,
-  PRIMARY KEY (`cle`)
+--
+-- Déchargement des données de la table `parametres`
+--
+
+INSERT INTO `parametres` (`cle`, `valeur`, `description`) VALUES
+('maintenance_mode', '0', 'Mode maintenance (1 = activé, 0 = désactivé)'),
+('periode_nouveaux_bacheliers', '0', 'Active le champ Numéro de table dans le formulaire d\'orientation (1 = activé, 0 = désactivé)'),
+('site_email', 'contact@ucaobenin.org', 'Email principal de contact'),
+('site_nom', 'UCAO Orientation', 'Nom du site affiché dans les emails et rapports');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `preinscriptions`
+--
+
+CREATE TABLE `preinscriptions` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(100) NOT NULL,
+  `prenom` varchar(100) NOT NULL,
+  `date_naissance` date NOT NULL,
+  `nationalite` varchar(80) NOT NULL DEFAULT 'Béninoise',
+  `serie_bac` varchar(10) NOT NULL,
+  `annee_bac` year(4) NOT NULL,
+  `etablissement_origine` varchar(200) NOT NULL,
+  `filiere_choisie` int(11) NOT NULL,
+  `niveau_entree` varchar(20) NOT NULL DEFAULT 'Licence 1',
+  `email` varchar(150) NOT NULL,
+  `telephone` varchar(20) NOT NULL,
+  `doc_releve` varchar(255) DEFAULT NULL,
+  `doc_bac` varchar(255) DEFAULT NULL,
+  `doc_identite` varchar(255) DEFAULT NULL,
+  `orientation_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_admins_email` (`email`);
+
+--
+-- Index pour la table `filieres`
+--
+ALTER TABLE `filieres`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_filieres_slug` (`slug`),
+  ADD KEY `idx_filieres_ecole` (`ecole_faculte`);
+
+--
+-- Index pour la table `metiers`
+--
+ALTER TABLE `metiers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_metiers_slug` (`slug`);
+
+--
+-- Index pour la table `metiers_filieres`
+--
+ALTER TABLE `metiers_filieres`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_metier_filiere` (`metier_id`,`filiere_id`),
+  ADD KEY `idx_mf_metier` (`metier_id`),
+  ADD KEY `idx_mf_filiere` (`filiere_id`);
+
+--
+-- Index pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_notifications_date` (`envoye_le`),
+  ADD KEY `idx_notifications_admin` (`admin_id`);
+
+--
+-- Index pour la table `orientations`
+--
+ALTER TABLE `orientations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_orientations_email` (`email`),
+  ADD KEY `idx_orientations_date` (`created_at`),
+  ADD KEY `idx_orientations_serie` (`serie_bac`),
+  ADD KEY `idx_orientations_metier` (`metier_souhaite`);
+
+--
+-- Index pour la table `parametres`
+--
+ALTER TABLE `parametres`
+  ADD PRIMARY KEY (`cle`);
+
+--
+-- Index pour la table `preinscriptions`
+--
+ALTER TABLE `preinscriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_preinscriptions_email` (`email`),
+  ADD KEY `idx_preinscriptions_date` (`created_at`),
+  ADD KEY `idx_preinscriptions_filiere` (`filiere_choisie`),
+  ADD KEY `idx_preinscriptions_serie` (`serie_bac`),
+  ADD KEY `fk_preinsc_orientation` (`orientation_id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `filieres`
+--
+ALTER TABLE `filieres`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT pour la table `metiers`
+--
+ALTER TABLE `metiers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=389;
+
+--
+-- AUTO_INCREMENT pour la table `metiers_filieres`
+--
+ALTER TABLE `metiers_filieres`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=613;
+
+--
+-- AUTO_INCREMENT pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `orientations`
+--
+ALTER TABLE `orientations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT pour la table `preinscriptions`
+--
+ALTER TABLE `preinscriptions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `metiers_filieres`
+--
+ALTER TABLE `metiers_filieres`
+  ADD CONSTRAINT `fk_mf_filiere` FOREIGN KEY (`filiere_id`) REFERENCES `filieres` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_mf_metier` FOREIGN KEY (`metier_id`) REFERENCES `metiers` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `fk_notif_admin` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`);
+
+--
+-- Contraintes pour la table `preinscriptions`
+--
+ALTER TABLE `preinscriptions`
+  ADD CONSTRAINT `fk_preinsc_filiere` FOREIGN KEY (`filiere_choisie`) REFERENCES `filieres` (`id`),
+  ADD CONSTRAINT `fk_preinsc_orientation` FOREIGN KEY (`orientation_id`) REFERENCES `orientations` (`id`) ON DELETE SET NULL;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

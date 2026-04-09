@@ -11,6 +11,16 @@ if (Auth::isLoggedIn()) {
 }
 
 $error = '';
+$success = '';
+
+$flash = get_flash();
+if ($flash) {
+    if ($flash['type'] === 'error') {
+        $error = $flash['message'];
+    } else {
+        $success = $flash['message'];
+    }
+}
 
 // Traitement du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -241,6 +251,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             animation: shakeError 0.4s ease;
         }
 
+        .success-message {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #059669;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         @keyframes shakeError {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-6px); }
@@ -285,6 +308,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="error-message">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                 <?= e($error) ?>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($success): ?>
+            <div class="success-message">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <?= e($success) ?>
             </div>
             <?php endif; ?>
 
