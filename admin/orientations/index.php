@@ -203,11 +203,11 @@ require_once dirname(__DIR__) . '/includes/sidebar.php';
             <div id="selected-count" style="padding:12px;background:#e8f5e9;border-radius:6px;margin-bottom:16px;color:#2e7d32;font-weight:500"></div>
             <div class="form-group">
                 <label class="form-label">Sujet</label>
-                <input type="text" class="form-control" name="sujet" placeholder="Ex: Votre orientation UCAO" required>
+                <input type="text" class="form-control" name="sujet" placeholder="Optionnel - Sujet par défaut si vide">
             </div>
             <div class="form-group">
                 <label class="form-label">Message</label>
-                <textarea class="form-control" name="message" rows="8" placeholder="Composez votre message..." required></textarea>
+                <textarea class="form-control" name="message" rows="8" placeholder="Optionnel - Message par défaut si vide"></textarea>
             </div>
             <div class="form-group" style="display:flex;align-items:center;gap:10px;padding:12px;background:#f0f7ff;border-radius:6px">
                 <input type="checkbox" name="joindre_pdf" id="joindre_pdf" value="1" checked style="width:18px;height:18px">

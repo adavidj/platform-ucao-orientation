@@ -1192,6 +1192,24 @@ CREATE TABLE `orientations` (
 
 -- --------------------------------------------------------
 
+-- =================================================================
+-- CRÉATION DE LA TABLE DE LIAISON 'orientation_filiere'
+-- =================================================================
+
+--
+-- Structure de la table `orientation_filiere`
+--
+-- Cette table fait le lien entre une orientation (un étudiant qui a rempli le formulaire)
+-- et les multiples filières qui lui ont été recommandées.
+--
+
+CREATE TABLE `orientation_filiere` (
+  `orientation_id` int(11) NOT NULL,
+  `filiere_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
 --
 -- Structure de la table `parametres`
 --
@@ -1292,6 +1310,13 @@ ALTER TABLE `orientations`
   ADD KEY `idx_orientations_metier` (`metier_souhaite`);
 
 --
+-- Index pour la table `orientation_filiere`
+--
+ALTER TABLE `orientation_filiere`
+  ADD PRIMARY KEY (`orientation_id`,`filiere_id`),
+  ADD KEY `filiere_id` (`filiere_id`);
+
+--
 -- Index pour la table `parametres`
 --
 ALTER TABLE `parametres`
@@ -1377,8 +1402,20 @@ ALTER TABLE `notifications`
 ALTER TABLE `preinscriptions`
   ADD CONSTRAINT `fk_preinsc_filiere` FOREIGN KEY (`filiere_choisie`) REFERENCES `filieres` (`id`),
   ADD CONSTRAINT `fk_preinsc_orientation` FOREIGN KEY (`orientation_id`) REFERENCES `orientations` (`id`) ON DELETE SET NULL;
+
+--
+-- Contraintes pour la table `orientation_filiere`
+--
+ALTER TABLE `orientation_filiere`
+  ADD CONSTRAINT `orientation_filiere_ibfk_1` FOREIGN KEY (`orientation_id`) REFERENCES `orientations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orientation_filiere_ibfk_2` FOREIGN KEY (`filiere_id`) REFERENCES `filieres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
+
